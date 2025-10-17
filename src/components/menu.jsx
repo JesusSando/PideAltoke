@@ -1,0 +1,85 @@
+import React, { useEffect } from 'react'; 
+
+import data from '../assets/json/comida.json'
+import PasarSeccionComida from '../assets/js/pasarSeccionComida';
+import { Link } from "react-router-dom";
+
+export function Menu() {
+  const limite =4;
+    return (
+        <section className="seccion_comida relleno_diseño_inferior">
+    <div className="container">
+      <h2>Menú</h2>
+      <div className="contenido_filtro">
+        <div className="row grid">
+
+          {data.slice(0,limite).map((producto)=>( 
+          <div className="col-sm-7 col-lg-4 all">
+            <div className="card" style={{width: '18rem', marginTop: 8}}>
+              <img src={producto.img} className="img_carta" alt={producto.nombre} />
+              <div className="card-body">
+                <h5 className="card-title">{producto.nombre}</h5>
+                <p className="card-text">{producto.descripcion}</p>
+                <Link to="/carrito" className="btn btn-danger">Pedir</Link>
+              </div>
+            </div>
+          </div>
+           ))}
+           
+        </div>
+      </div>
+      <div className="boton-caja">
+        <Link to="/pedirmenu" className="btn btn-danger">Ver más</Link>
+      </div>
+    </div>
+  </section>
+    );
+}
+
+export function PedirMenu(){
+  useEffect(()=>{
+    PasarSeccionComida()
+  },[]);
+
+  return(
+    <section className="seccion_comida relleno_diseño_inferior">
+  <div className="container">
+    <div className="contenido_titulo encabezado_centro">
+      <h2>
+        Menú
+      </h2>
+    </div>
+    <ul className="filtro_menu">
+      <li className="active" data-filter="*">Todo</li>
+      <li data-filter=".hamburguesas">Hamburguesas</li>
+      <li data-filter=".pizza">Pizzas</li>
+      <li data-filter=".pasta">Pastas</li>
+      <li data-filter=".papas">Papas fritas</li>
+    </ul>
+    <div className="contenido_filtro">
+      <div className="row grid">
+
+         {data.map((producto)=>( 
+          <div className={`col-sm-7 col-lg-4 all ${producto.categoria}`}>
+            <div className="card" style={{width: '18rem', marginTop: 8}}>
+              <img src={producto.img} className="img_carta" alt={producto.nombre} />
+              <div className="card-body">
+                <h5 className="card-title">{producto.nombre}</h5>
+                <p className="card-text">{producto.descripcion}</p>
+                <Link to="/carrito" className="btn btn-danger">Pedir</Link>
+              </div>
+            </div>
+          </div>
+           ))}
+         
+   
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+  );
+}
+
+

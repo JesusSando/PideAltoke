@@ -1,0 +1,96 @@
+@media (max-width: 1300px) {}
+
+@media (max-width: 1120px) {}
+
+@media (max-width: 992px) {
+  .area_principal {
+    min-height: auto;
+  }
+
+  .contenedor_navegacion-persolizado .navbar-nav {
+    padding-top: 15px;
+padding-left: 0;
+    align-items: center;
+  }
+
+  .usuario_opcion{
+    justify-content: center;
+    margin-top: 15px;
+  }
+  .contenedor_navegacion-persolizado .navbar-nav .nav-item .nav-link {
+    padding: 5px 25px;
+    margin: 5px 0;
+  }
+
+  .seccion_deslizante .carousel-indicators {
+    margin-top: 45px;
+  }
+
+  .seccion_oferta .box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .seccion_oferta .box .caja-img {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .seccion_sobre .detalle-caja,
+  .reserva_seccion .formulario_contenedor {
+    margin-bottom: 45px;
+  }
+
+  .seccion_sobre .row {
+    flex-direction: column-reverse;
+  }
+
+  .seccion_oferta .box {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .seccion_oferta .box .caja-img {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+}
+
+ 
+
+@media (max-width: 430px) {
+  .seccion_oferta .box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .seccion_oferta .box .caja-img {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 376px) {
+  .seccion_deslizante .detalle-caja h1 {
+    font-size: 3rem;
+  }
+  
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+
+
+@media (min-width:576px) and (max-width:991px) {
+  .rent_solution_container .col-md-4.col-sm-6 {
+    float: left;
+    width: 50%;
+  }
+}

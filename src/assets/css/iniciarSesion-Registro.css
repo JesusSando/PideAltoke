@@ -1,0 +1,296 @@
+body{ 
+     
+    justify-content: center;
+    align-items: center;
+ 
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin: 0;
+}
+ 
+body img{
+    width: 600px;
+    height: auto;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 60%;
+    width: 100%;
+}
+
+.formulario{
+   
+    border-radius: 5px;
+    width: 300px;   
+    background-position: center bottom; 
+    align-items: center;
+    color: white;
+    text-shadow: black;
+    align-items: center;
+    justify-content: center;
+  
+    
+
+
+}
+
+ 
+  
+input[type="usuario"],
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+    width: 100%;
+    padding:4px;
+    margin-bottom:5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+button{
+    display: flex;
+    font-size: 30px;
+    background-color: #f88b6f;
+ 
+    width: 200px;     
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;  
+}
+
+.enviar , .enviar2,.iniGoogle{
+    margin: 3px 0px 0px 28px;
+ 
+}
+
+button:hover{
+    transform: scale(1.1);
+    transition: 0.2s;
+    background-color: #a3a29f;
+}
+
+
+.olvidaste{
+    display: block;
+    position: absolute;
+    bottom: 19px;
+    left: 41%;
+    color: white;
+}
+
+.olvidaste:hover{
+      transform: scale(1.1);
+    transition: 0.2s;
+}
+
+ 
+ 
+
+.titulo{
+    align-items: center;
+    text-align: center;
+    font-size: 40px;
+}
+
+.iniciarSesiontxt{
+    color: black;
+ 
+}
+ 
+.iniGoogle{
+    background-color: #ffffff;
+}
+
+
+
+@media (max-width:767) {
+    .contenedor{
+        padding: 7px;
+    }
+    .formulario{
+    max-width: 80%;
+    padding: 13px;
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+    font-size: 15px;
+    }
+    .olvidaste{
+    font-size: 12px;}
+    
+    
+}
+
+@media(max-width: 364px){
+    .contenedor{
+        padding: 5px;
+    }
+    .formulario{
+    max-width: 90%;
+    padding: 6px;
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+    font-size: 4px;
+    }
+    .olvidaste{
+    font-size: 10px;}
+     
+
+}
+
+@media(max-width: 280px){
+    .contenedor{
+        padding: 3px;
+    }
+    .formulario{
+    max-width: 95%;
+    padding: 7px;
+    }
+    .titulo{
+    font-size: 18px;
+    }
+    input,button{
+    font-size: 10px;
+    }
+    .olvidaste{
+    font-size: 8px;}
+ 
+
+}
+
+@media(max-width: 250px){
+    .contenedor{
+        padding: 3px;
+    }
+    .formulario{
+    max-width: 96%;
+ 
+    }
+    .titulo{
+    font-size: 10px;
+    }
+    input,button{
+    font-size: 1px;
+ 
+    }
+    .olvidaste{
+    font-size: 8px;}
+    .enviar , .enviar2,.iniGoogle{
+    margin: 1px 2px 0px 2px;
+ 
+}
+
+@media(max-width: 155px){
+    .contenedor{
+        padding: 3px;
+    }
+    .formulario{
+    max-width: 96%;
+ 
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+    font-size: 1px;
+    width: 1px;
+    height: 1px;
+    }
+    .olvidaste{
+    font-size: 8px;}
+    .enviar , .enviar2,.iniGoogle{
+    margin: 1px 2px 0px 2px;
+ 
+}
+
+}
+
+@media(max-width:480px){
+    body{
+    font-size: 10px;
+    }
+    .contenedor{
+        padding: 5px;
+        gap: 15px;
+    }
+    .formulario{
+    max-width: 95%;
+    padding: 7px;
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+    font-size: 10px;
+ 
+    }
+    .olvidaste{
+    font-size: 8px;}
+
+}
+ 
+ @media(max-width:420px){
+    body{
+    font-size: 10px;
+    }
+    .contenedor{
+        padding: 5px;
+        gap: 15px;
+    }
+    .formulario{
+    max-width: 95%;
+ 
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+    font-size: 10px;
+ 
+    }
+    .olvidaste{
+    font-size: 8px;}
+
+}
+ 
+ @media(max-width:170px){
+     
+    .contenedor{
+        padding: 5px;
+  
+    }
+    .formulario{
+    max-width: 95%;
+    padding: 7px;
+    }
+    .titulo{
+    font-size: 44px;
+    }
+    input,button{
+        display: flex;
+    font-size: 1px;
+    width: 2px;
+    height: 2px;
+    
+    }
+    .olvidaste{
+    font-size: 8px;}
+
+    }
+}

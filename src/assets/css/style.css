@@ -110,7 +110,43 @@ a:focus {
 
 
 
+ /*texto carrusel*/
+ .carrusel-container{
+  position: relative;
+ }
+ .carrusel_texto{
  
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+  color: #ffffff;
+  font-size: 90px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 2;
+  text-align: center;
+  text-shadow: 4px 4px 8px rgb(0, 0, 0) ;
+ }
+.carrusel_texto .titulo_carrusel{
+ 
+  font-family: "Comic Sans MS",Impact,    'Arial Narrow Bold', sans-serif, Arial, Helvetica, sans-serif;
+  font-weight: 900;;
+  color: rgb(245, 17, 17);
+}
+
+.carrusel_texto .titulo_carrusel :hover{
+  font-size: 120px;
+  transition: 1.0s;
+}
+.carrusel_texto .titulo_carrusel :hover{
+  font-size: 120px;
+  transition: 1.0s;
+}
+.comida_txt{
+    font-size: 41px;
+  color: rgb(245, 17, 17);
+}
 
 
 

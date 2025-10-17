@@ -58,20 +58,59 @@ export function Encabezado() {
 export function Carrusel(){
   return(
  
-   <div id="carouselExampleSlidesOnly" className="carousel slide" data-ride="carousel">
-  <div className="carousel-inner">
-    <div className="carousel-item active">
-      <img src={carrusel1} className="d-block w-100" alt="..." />
-    </div>
-    <div className="carousel-item">
-      <img src={carrusel2} className="d-block w-100" alt="..." />
-    </div>
-    <div className="carousel-item">
-      <img src={carrusel3} className="d-block w-100" alt="..." />
-    </div>
-  </div>
-</div>
+<div className="position-relative">
+      {/* Carrusel */}
+      <div
+        id="carouselExampleControls"
+        className="carousel slide"
+        data-ride="carousel"
+      >
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img className="d-block w-100" src={carrusel1} alt="First slide" />
+          </div>
+          <div className="carousel-item">
+            <img className="d-block w-100" src={carrusel2} alt="Second slide" />
+          </div>
+          <div className="carousel-item">
+            <img className="d-block w-100" src={carrusel3} alt="Third slide" />
+          </div>
+        </div>
+        <a
+          className="carousel-control-prev"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" aria-hidden="true" />
+           
+        </a>
+        <a
+          className="carousel-control-next"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true" />
+ 
+        </a>
+        
+      <div className="carrusel_texto">
+        <div className="titulo_carrusel">
+          <span>Pide Altoke</span>
+        </div>
+        <h3>La <br />
+          Mejor</h3>
+        <h3 className='comida_txt'>COMIDA</h3>
+      </div>
+     
 
+      </div>
+
+       
+    </div>
+
+ 
 
      
  

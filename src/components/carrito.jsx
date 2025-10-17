@@ -14,7 +14,7 @@ function Carrito() {
     setMensaje(`${producto.nombre} fue eliminado del carrito`);
   };
 
-  // 🔑 función para cambiar cantidad
+
   const cambiarCantidad = (id, nuevaCantidad) => {
     setProductos(
       productos.map((p) =>

@@ -27,96 +27,101 @@ function Carrito() {
   const totalPagar = productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
   return (
+    <>
     <div className="container mt-4">
-      {/* mensaje condicional */}
-      {mensaje && (
-        <div className="alert alert-warning text-center" role="alert">
-          {mensaje}
-        </div>
-      )}
 
-      <div className="row">
-        <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">
-              <h2>Carrito de compras</h2>
-            </div>
-            <div className="card-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>img</th>
-                    <th>producto</th>
-                    <th>precio</th>
-                    <th>cantidad</th>
-                    <th>total</th>
-                    <th>eliminar</th>
+  {mensaje && (
+    <div className="alert alert-warning text-center" role="alert">
+      {mensaje}
+    </div>
+  )}
+
+  <div className="row">
+    <div className="col-md-8">
+      <div className="card">
+        <div className="card-header">
+          <h2>Carrito de compras</h2>
+        </div>
+        <div className="card-body">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>img</th>
+                <th>producto</th>
+                <th>precio</th>
+                <th>cantidad</th>
+                <th>total</th>
+                <th>eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {productos.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    No hay productos en el carrito
+                  </td>
+                </tr>
+              ) : (
+                productos.map((p) => (
+                  <tr key={p.id}>
+                    <td data-label="img">
+                      <img src={p.img} alt={p.nombre} style={{ width: 60 }} />
+                    </td>
+                    <td data-label="producto">{p.nombre}</td>
+                    <td data-label="precio">${p.precio.toLocaleString()}</td>
+                    <td data-label="cantidad">
+                      <input
+                        type="number"
+                        className="form-control"
+                        value={p.cantidad}
+                        min={1}
+                        max={10}
+                        style={{ width: 80 }}
+                        onChange={(e) => cambiarCantidad(p.id, e.target.value)}
+                      />
+                    </td>
+                    <td data-label="total">${(p.precio * p.cantidad).toLocaleString()}</td>
+                    <td data-label="eliminar">
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => eliminarProducto(p.id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {productos.map((p) => (
-                    <tr key={p.id}>
-                      <td>
-                        <img src={p.img} alt={p.nombre} style={{ width: 60 }} />
-                      </td>
-                      <td>{p.nombre}</td>
-                      <td>${p.precio.toLocaleString()}</td>
-                      <td>
-                        <input
-                          type="number"
-                          className="form-control"
-                          value={p.cantidad}
-                          min={1}
-                          max={10}
-                          style={{ width: 80 }}
-                          onChange={(e) => cambiarCantidad(p.id, e.target.value)}
-                        />
-                      </td>
-                      <td>${(p.precio * p.cantidad).toLocaleString()}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => eliminarProducto(p.id)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                  {productos.length === 0 && (
-                    <tr>
-                      <td colSpan="6" className="text-center">
-                        No hay productos en el carrito
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Resumen */}
-        <div className="col-md-4">
-          <div className="card">
-            <div className="card-header">
-              <h3>Resumen</h3>
-            </div>
-            <div className="card-body">
-              <p>
-                <strong>Total productos</strong>: {totalProductos}
-              </p>
-              <p>
-                <strong>Total a pagar</strong>: ${totalPagar.toLocaleString()}
-              </p>
-              <button className="btn btn-primary w-100">
-                Proceder a pagar
-              </button>
-            </div>
-          </div>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
+
+
+    <div className="col-md-4">
+      <div className="card">
+        <div className="card-header">
+          <h3>Resumen</h3>
+        </div>
+        <div className="card-body">
+          <p>
+            <strong>Total productos</strong>: {totalProductos}
+          </p>
+          <p>
+            <strong>Total a pagar</strong>: ${totalPagar.toLocaleString()}
+          </p>
+          <button className="btn btn-primary w-100">
+            Proceder a pagar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</>
+
   );
 }
 

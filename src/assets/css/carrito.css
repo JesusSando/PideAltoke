@@ -1,0 +1,136 @@
+ 
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+    margin: 20px auto;
+  }
+
+  .row {
+    display: block;  
+  }
+
+  .col-md-8,
+  .col-md-4 {
+    width: 100% ;
+    max-width: 100% ;
+    margin-bottom: 20px;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+
+  .table thead {
+    display: none;  
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+  }
+
+  .table tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+  }
+
+  .table tbody tr td:last-child {
+    border-bottom: none;
+  }
+
+  .table tbody tr td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    text-transform: capitalize;
+    flex-basis: 50%;
+    text-align: left;
+  }
+
+  .table tbody tr td img {
+    margin: 0;
+    max-width: 50px;
+  }
+
+  input[type="number"].form-control {
+    width: 60px;
+  }
+  
+ 
+  .btn.w-100 {
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+.position-relative {
+  position: relative;  
+}
+
+#container-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 75px;
+  font-weight: bold;
+  z-index: 10;  
+  pointer-events: none;  
+}
+
+#container {
+  display: inline-block;
+}
+
+#flip {
+  height: 57px;
+  overflow: hidden;
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+#flip > div > div {
+  color: #ffffff;
+  padding: 4px 20px;
+  height: 45px;
+  margin-bottom: 45px;
+  display: inline-block;
+ 
+}
+
+#flip div:first-child {
+  animation: show 5s linear infinite;
+}
+
+ 
+
+@keyframes show {
+  0% { margin-top: -270px; }
+  5% { margin-top: -180px; }
+  33% { margin-top: -180px; }
+  38% { margin-top: -90px; }
+  66% { margin-top: -90px; }
+  71% { margin-top: 0px; }
+  99.99% { margin-top: 0px; }
+  100% { margin-top: -270px; }
+}
+
+ 

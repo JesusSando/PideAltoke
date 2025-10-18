@@ -50,6 +50,8 @@ export function IniciarSesion() {
             onChange={(e) => setContraseña(e.target.value)}
           />
           <button type="submit" className="enviar">Iniciar Sesión</button>
+          <button type="submit" className="enviar">registrarse</button>
+          <button type="submit" className="enviar">google</button>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>

@@ -1,0 +1,17 @@
+[
+{
+    "correo": "admin@admin",
+    "contraseña":"admin",
+    "cargo":"admin"
+},
+{
+    "correo": "empleado@empledo",
+    "contraseña":"empleado",
+    "cargo":"empleado"
+},
+{
+    "correo": "usuario@usuario",
+    "contraseña":"usuario",
+    "cargo":"usuario"
+}
+]

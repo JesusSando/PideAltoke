@@ -15,7 +15,7 @@ import {Menu,PedirMenu} from './components/menu';
 import Nosotros from './components/nosotros';
 import Pie from './components/pie';
 import Carrito from './components/carrito'
-import IniciarSesion from './components/iniciarsesion';
+import {IniciarSesion} from './components/iniciarsesion';
 import AdminProducto from './components/PanelAdmin';
  
 

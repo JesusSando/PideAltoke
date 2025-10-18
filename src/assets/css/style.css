@@ -1108,3 +1108,107 @@ ul{
   color: inherit;
 }
  
+
+
+
+
+
+
+/*producto completo*/
+.vistaProducto{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+  gap: 15px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ropaPricipal{
+  display: flex;
+  flex: 1;
+  min-width: 200px;
+  max-width: 350px;
+ justify-content: center;
+ background-color: #ffffff;
+ border-radius: 8px;
+ padding: 15px;
+}
+.principalimg{
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.textoVistaProducto{
+  display: flex;
+  flex: 1;
+  min-width: 200px;
+  max-width: 380px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titulosProductos h1{
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+ 
+.textoVistaProducto h1{
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+ .botonVista{
+  text-align: center;
+  margin-top: 20px;
+ }
+
+.botonVista button{
+  margin-top: 10px;
+  background-color: #e93030;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 5px;
+
+ }
+
+.botonVista button:hover{
+  background-color: #7a0606;
+  transition: 0.3s;
+}
+
+ @media(max-width: 768px){
+  .vistaProducto{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ropaPricipal, .textoVistaProducto{
+    max-width: 90%;
+    margin-bottom: 20px;
+  }
+  
+ }
+
+@media (max-width: 600px) {
+  
+
+  .titulosProductos h1 {
+    font-size: 22px;
+  }
+
+  .botonVista button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

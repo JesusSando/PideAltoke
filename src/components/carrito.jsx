@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
+import f2 from "../assets/images/f2.png";
+import f8 from "../assets/images/f8.png";
+
+
 function Carrito() {
   const [productos, setProductos] = useState([
-    { id: 1, nombre: "Hamburguesa grande", precio: 9990, cantidad: 1, img: "images/f2.png" },
-    { id: 2, nombre: "Hamburguesa pollo rostizado", precio: 7990, cantidad: 1, img: "images/f8.png" },
+    { id: 1, nombre: "Hamburguesa grande", precio: 9990, cantidad: 1, img: f2  },
+    { id: 2, nombre: "Hamburguesa pollo rostizado", precio: 7990, cantidad: 1, img: f8  },
   ]);
 
   const [mensaje, setMensaje] = useState("");

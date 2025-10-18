@@ -1,4 +1,6 @@
 import React from 'react'; 
+import f5 from "../assets/images/sobre.png";
+
 
 function Nosotros() {
     return (
@@ -8,15 +10,15 @@ function Nosotros() {
       <div className="row">
         <div className="col-md-6 ">
           <div className="caja-img">
-            <img src="images/f6.png" alt />
+            <img src={f5} alt="Sobre Nosotros" className="img-fluid" />
+
+
           </div>
         </div>
         <div className="col-md-6">
           <div className="detalle-caja">
             <div className="heading_container">
-              <h2>
-                Sobre Nosotros
-              </h2>
+              
             </div>
             <p>
               Somos una empresa dedicada a la venta de comida rápida, con más de 10 años en el mercado.

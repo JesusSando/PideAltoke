@@ -1,6 +1,6 @@
-import React from 'react'; 
+ 
 
-
+ 
  
 
 import carrusel1 from '../assets/images/carrusel1.jpg'
@@ -8,9 +8,34 @@ import carrusel2 from '../assets/images/carrusel2.jpg'
 import carrusel3 from '../assets/images/carrusel3.jpg'
 
 
+
+
+import { obtenerUsuario, cerrarSesion } from '../assets/js/cargo';
+import React, { useEffect,useState } from 'react'; 
 import { Link } from 'react-router-dom';
  
 export function Encabezado() {
+
+  const [usuario,setUsuario]=useState(null);
+  useEffect(()=>{
+    const actualizarUsuario=()=>{;
+    const usr=obtenerUsuario();
+    setUsuario(usr);
+  };
+  actualizarUsuario();
+
+  window.addEventListener('usuarioCargado',actualizarUsuario);
+  return()=>{
+      window.removeEventListener('usuarioCargado',actualizarUsuario);
+  };
+  },[]);
+
+  const cerrarSesionHandler=()=>{
+    cerrarSesion();
+    setUsuario(null);
+  }
+
+
   return (
     <> 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,13 +59,16 @@ export function Encabezado() {
             <li className="nav-item">
               <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
             </li>
+            {!usuario &&(
             <li className="nav-item">
-              <Link to='/iniciarsesion'><a className="nav-link" href="#">Cuenta</a></Link>
+              <Link to='/iniciarsesion'><a className="nav-link" href="#">Iniciar sesión</a></Link>
             </li>
+            )}
+            {usuario &&(usuario.cargo==='admin' || usuario.cargo==='empleado') &&(
             <li className="nav-item">
               <Link to='/Admin'><a className="nav-link" href="#">Admin</a></Link>
             </li>
-             
+             )}
             
           </ul>
         
@@ -59,7 +87,7 @@ export function Carrusel(){
   return(
  
 <div className="position-relative">
-      {/* Carrusel */}
+ 
       <div
         id="carouselExampleControls"
         className="carousel slide"

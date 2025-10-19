@@ -78,6 +78,7 @@ export function Encabezado() {
             <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
             <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
             <div className="boton_baja_contenido">
+              <Link to='/producto'><a className="nav-link link_opciones" href="#">Productos</a></Link>
               <Link to='/adminComida'><a className="nav-link link_opciones" href="#">Comida</a></Link>
               <Link to='/oferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
               <Link to='/adminBlog'><a className="nav-link link_opciones" href="#">Blog</a></Link>

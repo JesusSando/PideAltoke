@@ -117,7 +117,7 @@ function AdminOferta() {
      <div className="container">
 
       <div className="form-container">
-        <h2>{editando ? 'Editar Producto' : 'Agregar Producto'}</h2>
+        <h2>{editando ? 'Editar Oferta' : 'Agregar Oferta'}</h2>
         <form onSubmit={handleSubmit}>
  
           <input

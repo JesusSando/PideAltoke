@@ -25,7 +25,7 @@ import PaginaBlog from './components/paginaBlog';
 import {Oferta,TodasOfertas} from './components/oferta';
 import  AdminOferta  from './components/adminOferta';
 import AdminBlog from './components/adminBlog';
- 
+import AdminProducto from './components/adminProductos';
 function App() {
  
 
@@ -52,6 +52,7 @@ function App() {
       <Route path='blog' element={<><Blog/> </>}/>
       <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
       <Route path='/producto/:id' element={<Producto/>}/>
+      <Route path='producto' element={<><AdminProducto/> </>}/>
       <Route path='adminComida' element={<><ComidaAdmin/> </>}/>
       <Route path='oferta' element={<><AdminOferta/> </>}/>
       <Route path='adminBlog' element={<><AdminBlog/> </>}/>

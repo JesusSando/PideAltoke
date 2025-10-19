@@ -1,0 +1,224 @@
+ 
+
+import React, { useEffect ,useState} from 'react';
+ 
+
+function AdminProducto() {
+ 
+  const [productoEditado, setProductoEditado] = useState({
+    id:'',
+     nombre:'',
+     stok:'',
+     fecha_vencimiento:'',
+     img:null,
+ 
+     nombre_modificado:'',
+     fecha_modificacion  :''
+
+  });
+
+ 
+  const [editando, setEditando] = useState(false);
+
+ 
+  const handleEdit = (producto) => {
+ 
+    setProductoEditado({
+      id:producto.id,
+     nombre:producto.nombre,
+     stok:producto.stok,
+     fecha_vencimiento:producto.fecha_vencimiento,
+     img:producto.img,
+ 
+     nombre_modificado:producto.nombre_modificado,
+     fecha_modificacion  :producto.fecha_modificacion
+    });
+    setEditando(true);  
+  };
+
+ 
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;  
+    if (name === 'imagen' && files.length > 0) {
+ 
+      setProductoEditado({
+        ...productoEditado,
+        imagen: files[0],
+        imagenPreview: URL.createObjectURL(files[0]),  
+      });
+    } else {
+ 
+      setProductoEditado({
+        ...productoEditado,
+        [name]: value,
+      });
+    }
+  };
+
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();  
+    console.log(editando ? 'Producto editado:' : 'Nuevo producto agregado:', productoEditado);
+    
+ 
+    setProductoEditado({
+      id:'',
+     nombre:'',
+     stok:'',
+     fecha_vencimiento:'',
+     img:null,
+ 
+     nombre_modificado:'',
+     fecha_modificacion  :''
+    });
+    setEditando(false); 
+  };
+
+ 
+  const handleCancel = () => {
+    setProductoEditado({
+      id:'',
+     nombre:'',
+     stok:'',
+     fecha_vencimiento:'',
+     img:null,
+ 
+     nombre_modificado:'',
+     fecha_modificacion  :''
+    });
+    setEditando(false); 
+  };
+
+
+
+
+  const [productos, setProductos] = useState([]);
+  
+     useEffect(()=>{
+      const cargarComida=async()=>{
+        const res=await fetch('/json/productos.json');
+      if(!res.ok){
+          throw new Error ('Error al cargar los usuarios');
+      }
+      const data = await res.json();
+      setProductos(data);
+  };
+    cargarComida();
+     },[]);
+
+  return (
+
+<> 
+      
+     <div className="container">
+
+      <div className="form-container">
+        <h2>{editando ? 'Editar Productos' : 'Agregar Productos'}</h2>
+        <form onSubmit={handleSubmit}>
+ 
+           
+
+          <input
+            name="nombre"
+            type="text"
+            value={productoEditado.nombre}
+            onChange={handleChange}
+            placeholder="Nombre del producto"
+            required
+          />
+
+          <input
+            name="stok"
+            type="number"
+            value={productoEditado.stok}
+            onChange={handleChange}
+            placeholder="cantidad"
+            required
+          />
+          
+          <input
+            name="fecha_vencimiento"
+            type="text"
+            value={productoEditado.fecha_vencimiento}
+            onChange={handleChange}
+            placeholder="Fecha de vencimiento del producto"
+            required
+          />
+
+          <input
+            name="nombre_modificado"
+            type="text"
+            value={productoEditado.nombre_modificado}
+            onChange={handleChange}
+            placeholder="Nombre que a modificado el producto"
+            required
+          />
+
+          <input
+            name="fecha_modificacion"
+            type="text"
+            value={productoEditado.fecha_modificacion}
+            onChange={handleChange}
+            placeholder="Fecha de modificacion del producto"
+            required
+          /> 
+          
+            
+
+          <input
+            name="imagen"
+            type="file"
+            onChange={handleChange}
+          />
+
+          {productoEditado.imagenPreview && (
+            <img src={productoEditado.imagenPreview} alt="Vista previa" style={{width:'150px'}}/>
+          )}
+
+       
+        
+
+          <button type="submit">
+            {editando ? 'Guardar Cambios' : 'Agregar Producto'}
+          </button>
+
+          {editando && (
+            <button type="button" onClick={handleCancel}>Cancelar</button>
+          )}
+        </form>
+      </div>
+
+
+      <div className="product-list">
+        {productos.map((producto) => (
+          <div key={producto.id} className="product-item">
+
+            <div className="product-details">
+              <p>Nombre: {producto.nombre}</p>
+              <p>Stok:{producto.stok}</p>
+              <p>Fecha de vencimiento: {producto.fecha_vencimiento}</p>
+              <p>Nombre del ultimo moficador : {producto.nombre_modificado}</p>
+              <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
+            </div>
+
+            {producto.img && <img src={producto.img} alt="Producto" style={{width:'150px', height:'auto'}}/>}
+           
+
+
+            <div className="product-actions">
+              <button onClick={() => handleEdit(producto)}>Editar</button>
+              <button>Eliminar</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+ 
+
+
+    
+    </>
+  );
+}
+
+export default AdminProducto;

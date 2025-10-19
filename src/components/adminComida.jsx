@@ -90,7 +90,7 @@ function ComidaAdmin() {
      <div className="container">
       {/* Formulario de edición o creación de productos */}
       <div className="form-container">
-        <h2>{editando ? 'Editar Producto' : 'Agregar Producto'}</h2>
+        <h2>{editando ? 'Editar Comida' : 'Agregar Comida'}</h2>
         <form onSubmit={handleSubmit}>
           {/* Campos del formulario */}
           <input

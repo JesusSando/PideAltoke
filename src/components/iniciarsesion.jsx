@@ -6,7 +6,7 @@ import { inicioSesion } from '../assets/js/cargo';
 export function IniciarSesion() {
   const [correo,setCorreo]=useState('');
   const [contraseña, setContraseña] =useState('');
-  const [error,setError]=useState('');
+ 
   const navigate=useNavigate();
 
   const handleSubmit=async(e) => {
@@ -14,15 +14,12 @@ export function IniciarSesion() {
 
     const usuario =await inicioSesion(correo,contraseña);
     if (usuario) {
-      setError('');
- 
-      if (usuario.cargo==='admin' || usuario.cargo=== 'empleado') {
-        navigate('/admin');
-      } else {
+   
+  
         navigate('/');
-      }
+   
     } else {
-      setError('Correo o contraseña incorrectos');
+      alert('Correo o contraseña incorrectos');
     }
   };
 

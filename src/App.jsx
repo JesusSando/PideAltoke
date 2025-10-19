@@ -20,9 +20,12 @@ import {IniciarSesion} from './components/iniciarsesion';
 import ComidaAdmin from './components/adminComida';
  
 import Producto from './components/produto';
-
-import Oferta from './components/oferta';
-
+import Blog from './components/blog';
+import PaginaBlog from './components/paginaBlog';
+import {Oferta,TodasOfertas} from './components/oferta';
+import  AdminOferta  from './components/adminOferta';
+import AdminBlog from './components/adminBlog';
+ 
 function App() {
  
 
@@ -45,8 +48,15 @@ function App() {
       <Route path='carrito' element={<><Carrito/> </>}/>
       <Route path='iniciarsesion' element={<><IniciarSesion/> </>}/>
       <Route path='pedirMenu' element={<><PedirMenu/> </>}/>
+      <Route path='ofertas' element={<><Oferta/><TodasOfertas/></>}/>
+      <Route path='blog' element={<><Blog/> </>}/>
+      <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
       <Route path='/producto/:id' element={<Producto/>}/>
-      <Route path='Admin' element={<><ComidaAdmin/> </>}/>
+      <Route path='adminComida' element={<><ComidaAdmin/> </>}/>
+      <Route path='oferta' element={<><AdminOferta/> </>}/>
+      <Route path='adminBlog' element={<><AdminBlog/> </>}/>
+
+        
            
       </Routes>
       

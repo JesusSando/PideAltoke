@@ -58,7 +58,13 @@ export function Encabezado() {
               <Link to='/pedirMenu'><a className="nav-link" href="#">Menu</a></Link>
             </li>
             <li className="nav-item">
+              <Link to='/ofertas'><a className="nav-link" href="#">Ofertas</a></Link>
+            </li>
+            <li className="nav-item">
               <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
+            </li>
+             <li className="nav-item">
+              <Link to='/blog'><a className="nav-link" href="#">Blog</a></Link>
             </li>
             {!usuario &&(
             <li className="nav-item">
@@ -66,17 +72,30 @@ export function Encabezado() {
             </li>
             )}
             {usuario &&(usuario.cargo==='admin' || usuario.cargo==='empleado') &&(
-            <li className="nav-item">
-              <Link to='/Admin'><a className="nav-link" href="#">Admin</a></Link>
-              
-            </li>
+           
+
+          <div className="boton_baja">
+            <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
+            <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
+            <div className="boton_baja_contenido">
+              <Link to='/adminComida'><a className="nav-link link_opciones" href="#">Comida</a></Link>
+              <Link to='/oferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
+              <Link to='/adminBlog'><a className="nav-link link_opciones" href="#">Blog</a></Link>
+              <Link to='/estadisticas'><a className="nav-link link_opciones" href="#">Estadisticas</a></Link>
+
+            </div>
+          </div>
+
+
+          
+
              )}
 
 
              {usuario && (
             <li className="nav-item">
  
-               <Link to='/' onClick={cerrarSesionHandler}><a className="nav-link" href="#">Salir</a></Link>
+               <Link to='/' onClick={cerrarSesionHandler}><a className="nav-link" href="/">Salir</a></Link>
               
  
             </li>

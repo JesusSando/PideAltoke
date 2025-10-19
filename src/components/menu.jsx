@@ -38,6 +38,7 @@ export function Menu() {
               <div className="card-body">
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
+                <p className="card-text">${producto.precio}</p>
                 <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
               </div>
             </div>
@@ -84,6 +85,7 @@ export function PedirMenu(){
               <div className="card-body">
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
+                <p className="card-text">${producto.precio}</p>
                 <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
               </div>
             </div>

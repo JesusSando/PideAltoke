@@ -1,5 +1,5 @@
  
-import React, { useState } from 'react';
+import React, { useEffect ,useState} from 'react';
 import data from '../assets/json/comida.json';
 
 function ComidaAdmin() {
@@ -26,8 +26,8 @@ function ComidaAdmin() {
       precio: producto.precio,
       descripcion: producto.descripcion,
       categoria: producto.categoria,
-      imagen: producto.imagen || null,
-      imagenPreview: producto.imagen ? URL.createObjectURL(producto.imagen) : '',  
+      imagen: producto.img || null,
+      imagenPreview: producto.img || '',  
     });
     setEditando(true);  
   };
@@ -133,7 +133,7 @@ function ComidaAdmin() {
           />
           {/* Si hay una imagen seleccionada, mostrar la vista previa */}
           {productoEditado.imagenPreview && (
-            <img src={productoEditado.imagenPreview} alt="Vista previa" />
+            <img src={productoEditado.imagenPreview} alt="Vista previa" style={{width:'150px'}} />
           )}
           {/* Botón para enviar el formulario */}
           <button type="submit">
@@ -152,10 +152,10 @@ function ComidaAdmin() {
           <div key={producto.id} className="product-item">
             {/* Detalles del producto */}
             <div className="product-details">
-              <p>{producto.nombre}</p>
-              <p>{producto.precio}</p>
-              <p>{producto.categoria}</p>
-              <p>{producto.descripcion}</p>
+              <p>Nombre: {producto.nombre}</p>
+              <p>Precio: {producto.precio}</p>
+              <p>Categoria: {producto.categoria}</p>
+              <p>Descripcion: {producto.descripcion}</p>
             </div>
             {/* Mostrar la imagen del producto si existe */}
             {producto.img && <img src={producto.img} alt="Producto" style={{width:'150px', height:'auto'}}/>}

@@ -23,3 +23,6 @@ function PasarSeccionComida(){
 }
 
 export default PasarSeccionComida;
+
+
+

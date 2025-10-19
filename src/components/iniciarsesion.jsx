@@ -53,8 +53,10 @@ export function IniciarSesion() {
           <button type="submit" className="enviar">registrarse</button>
           <button type="submit" className="enviar">google</button>
         </form>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+ 
       </div>
     </div>
   );
 }
+
+

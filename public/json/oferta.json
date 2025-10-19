@@ -1,0 +1,19 @@
+[
+    {"id":1,
+     "nombre":"Pizza 4 estaciones",
+     "descripcion":"Pizza clásica con jamón, champiñones, aceitunas y alcachofas en cuatro secciones.",
+     "precio":1000,
+     "img":"../src/assets/images/f1.png",
+     "img_oferta":"../src/assets/images/carrusel6.jpg",
+     "categoria":"pizza"
+    },
+    {"id":2,
+     "nombre":"Haburguesa grande",
+     "descripcion":"Hamburguesa con queso, lechuga, tomate y ketchup.Uno de los mas pedidos",
+     "precio":8000,
+     "img":"../src/assets/images/f2.png",
+     "img_oferta":"../src/assets/images/carrusel5.jpg",
+     "categoria":"hamburguesas"
+    }
+
+]

@@ -65,7 +65,7 @@ h2 {
 .contenido_titulo h2 {
   position: relative;
   margin-bottom: 0;
-  font-size: 2.5rem;
+  font-size: 70px;
   font-weight: bold;
 }
 
@@ -109,44 +109,6 @@ a:focus {
 
 
 
-
- /*texto carrusel*/
- .carrusel-container{
-  position: relative;
- }
- .carrusel_texto{
- 
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-
-  color: #ffffff;
-  font-size: 90px;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 2;
-  text-align: center;
-  text-shadow: 4px 4px 8px rgb(0, 0, 0) ;
- }
-.carrusel_texto .titulo_carrusel{
- 
-  font-family: "Comic Sans MS",Impact,    'Arial Narrow Bold', sans-serif, Arial, Helvetica, sans-serif;
-  font-weight: 900;;
-  color: rgb(245, 17, 17);
-}
-
-.carrusel_texto .titulo_carrusel :hover{
-  font-size: 120px;
-  transition: 1.0s;
-}
-.carrusel_texto .titulo_carrusel :hover{
-  font-size: 120px;
-  transition: 1.0s;
-}
-.comida_txt{
-    font-size: 41px;
-  color: rgb(245, 17, 17);
-}
 
 
 
@@ -478,7 +440,7 @@ a:focus {
 
 .seccion_oferta {
   position: relative;
-  padding-top: 45px;
+ 
 }
 
 .seccion_oferta .box {
@@ -729,7 +691,7 @@ ul{
 .seccion_sobre {
   background: #222831;
   color: #ffffff;
-  margin-bottom: 40px;
+ 
   
 }
 
@@ -1119,7 +1081,7 @@ ul{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 10px;
+  padding: 150px;
   gap: 15px;
   max-width: 900px;
   margin: 0 auto;
@@ -1157,13 +1119,13 @@ ul{
 
 .titulosProductos h1{
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 5px;
 }
  
 .textoVistaProducto h1{
-  font-size: 18px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
@@ -1212,3 +1174,182 @@ ul{
     padding: 8px 16px;
   }
 }
+
+
+
+
+
+/*oferta*/
+ 
+ .area_producto_oferta {
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+ 
+}
+
+ 
+
+
+.area_producto_oferta .contenido_producto_oferta {
+  display: flex;  
+  flex-wrap: wrap; 
+}
+
+.area_producto_oferta .contenido_producto_oferta .producto_producto_oferta {
+  position: relative;
+  width: 50%;  
+  padding: 0;   
+}
+
+.imagen_producto_oferta img {
+  width: 100%;
+  transition: 0.5s;
+}
+
+.producto_producto_oferta .descripcion_producto_oferta {
+  position: absolute;
+  bottom: 90px; 
+  left: 17px;    
+}
+
+.producto_producto_oferta .descripcion_producto_oferta span {
+  font-size: 30px;
+  font-weight: 700;
+  border-color: #000000;
+  color: #daff09;
+}
+
+.txt_producto_oferta{
+ -webkit-text-stroke: 0.3px #000000;
+}
+
+.producto_producto_oferta .descripcion_producto_oferta h3 {
+  font-size: 34px;
+  color: #fffb11;
+  font-weight: 700;
+ 
+}
+
+.producto_producto_oferta .descripcion_producto_oferta p {
+  font-size: 16px;
+  color: #e6ff03;
+  font-weight: 600;
+  margin-top: 9px;
+  margin-bottom: 18px;
+}
+
+.producto_producto_oferta .descripcion_producto_oferta a {
+  color: #080808;
+  font-weight: 600;
+  padding: 5px 20px;
+  background-color: #c22727;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.producto_producto_oferta:hover img {
+  transform: scale(1.01);
+}
+
+.producto_producto_oferta:hover .descripcion_producto_oferta a {
+  color: #2c2c2c;
+}
+
+ 
+@media (max-width: 767px) {
+   
+  .producto_producto_oferta {
+    width: 100%;  
+  }
+
+  .producto_producto_oferta .descripcion_producto_oferta {
+    left: 2px;    
+    bottom: 19px;  
+  }
+
+  .producto_producto_oferta .descripcion_producto_oferta h3 {
+    font-size: 1px;
+  }
+
+  .producto_producto_oferta .descripcion_producto_oferta p {
+    font-size: 12px;
+    margin-top: 4px;
+    margin-bottom: 5px;
+  }
+
+  .producto_producto_oferta .descripcion_producto_oferta a {
+    padding: 6px 20px;
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/*eslogan*/
+
+.contenedor_eslogan.position-absolute{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(255, 251, 0);
+  z-index: 1;
+  padding: 20px;
+  font-family: "Permanent Marker", sans-serif;
+}
+
+.pri_terxto h4{
+  color: #1ce71c;
+  font-family: "Permanent Marker", sans-serif;
+  font-size: 50px;
+  margin-top: -50px;
+ 
+}
+
+.pri_terxto .seg_texto span{
+  font-size: 30px;
+  font-family: "Permanent Marker", sans-serif;
+  font-weight: 400;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+
+.pri_terxto h3{
+  font-size: 80px;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 1.2;
+ 
+  color: #ff0000;
+  font-family: "Luckiest Guy", sans-serif;
+}
+
+ 
+@media(max-width:767px){
+  .pri_terxto h3{
+    font-size: 40px;
+    line-height: 45px;
+  }
+}
+ 
+@media (min-width: 768px) and (max-width: 991px) {
+  .pri_terxto h3 {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+}
+
+
+
+ 
+ 

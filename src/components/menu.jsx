@@ -1,11 +1,29 @@
-import React, { useEffect } from 'react'; 
+import React, { useEffect ,useState} from 'react'; 
 
 import data from '../assets/json/comida.json'
 import PasarSeccionComida from '../assets/js/pasarSeccionComida';
 import { Link } from "react-router-dom";
 
 export function Menu() {
+
+
+
   const limite =4;
+
+    const [productos, setProductos] = useState([]);
+
+   useEffect(()=>{
+    const cargarComida=async()=>{
+      const res=await fetch('/json/comida.json');
+    if(!res.ok){
+        throw new Error ('Error al cargar los usuarios');
+    }
+    const data = await res.json();
+    setProductos(data);
+};
+  cargarComida();
+   },[]);
+
     return (
         <section className="seccion_comida relleno_diseño_inferior">
     <div className="container">
@@ -13,14 +31,14 @@ export function Menu() {
       <div className="contenido_filtro">
         <div className="row grid">
 
-          {data.slice(0,limite).map((producto)=>( 
+          {productos.slice(0,limite).map((producto)=>( 
           <div className="col-sm-7 col-lg-4 all">
             <div className="card" style={{width: '18rem', marginTop: 8}}>
               <img src={producto.img} className="img_carta" alt={producto.nombre} />
               <div className="card-body">
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
-                <Link to="/carrito" className="btn btn-danger">Pedir</Link>
+                <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
               </div>
             </div>
           </div>
@@ -66,7 +84,7 @@ export function PedirMenu(){
               <div className="card-body">
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
-                <Link to="/carrito" className="btn btn-danger">Pedir</Link>
+                <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
               </div>
             </div>
           </div>

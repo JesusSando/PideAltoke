@@ -127,7 +127,10 @@ a.olvidaste:hover{
     color: #fda2a2;
     text-decoration: none;
 }
- 
+ #registro {
+  display: block !important;
+}
+
 
 
 #registro,

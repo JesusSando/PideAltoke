@@ -1,6 +1,4 @@
-// Archivo para manejar las estadísticas de visitas y compras
-
-// Datos de ejemplo (puedes reemplazar por datos dinámicos)
+ 
 const visitas = 1200;
 const compras = 150;
 

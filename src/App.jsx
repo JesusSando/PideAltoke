@@ -26,6 +26,12 @@ import {Oferta,TodasOfertas} from './components/oferta';
 import  AdminOferta  from './components/adminOferta';
 import AdminBlog from './components/adminBlog';
 import AdminProducto from './components/adminProductos';
+
+import Registrarse  from './components/registrarse';
+import { OlvidadoContrasena } from './components/olvidadocontrasena';
+import Pago from './components/pago';
+import Boleta from './components/boleta';
+import Contacto from './components/contacto';
 function App() {
  
 
@@ -46,9 +52,15 @@ function App() {
 
       <Route path='nosotros' element={<><Nosotros/> </>}/>
       <Route path='carrito' element={<><Carrito/> </>}/>
+            <Route path='pago' element={<><Pago/> </>}/>
+      <Route path='boleta' element={<><Boleta/> </>}/>
       <Route path='iniciarsesion' element={<><IniciarSesion/> </>}/>
+      <Route path='registrarse' element={<Registrarse/>}/>
+      <Route path='olvidadocontrasena' element={<OlvidadoContrasena/>}/>
       <Route path='pedirMenu' element={<><PedirMenu/> </>}/>
       <Route path='ofertas' element={<><Oferta/><TodasOfertas/></>}/>
+
+      <Route path='contacto' element={<Contacto/>}/>
       <Route path='blog' element={<><Blog/> </>}/>
       <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
       <Route path='/producto/:id' element={<Producto/>}/>

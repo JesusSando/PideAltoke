@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { validarTarjeta } from "../assets/js/validarTarjeta";
 
 const IVA = 0.19;
 
@@ -42,8 +43,12 @@ function Pago() {
     const { nombre, numeroTarjeta, vencimiento, cvv } = form;
 
     if (!nombre.trim()) return "Ingresa el nombre del titular.";
-    const soloDigitos = numeroTarjeta.replace(/\s/g, "");
-    if (soloDigitos.length !== 16) return "El número de tarjeta debe tener 16 dígitos.";
+
+    // Validación de tarjeta con Luhn + 16 dígitos
+    if (!validarTarjeta(numeroTarjeta)) {
+      return "El número de tarjeta no es válido.";
+    }
+
     if (!vencimiento) return "Selecciona el mes/año de vencimiento.";
     if (cvv.length !== 3) return "El CVV debe tener 3 dígitos.";
 
@@ -80,8 +85,10 @@ function Pago() {
   };
 
   return (
-    <section className="seccion_pago relleno_diseño_inferior" style={{ position: "relative" }}>
-      
+    <section
+      className="seccion_pago relleno_diseño_inferior"
+      style={{ position: "relative" }}
+    >
       <button
         type="button"
         className="btn btn-outline-secondary"
@@ -120,10 +127,16 @@ function Pago() {
                         {productos.map((p) => (
                           <tr key={p.id}>
                             <td>
-                              <img src={p.img} alt={p.nombre} style={{ width: 60 }} />
+                              <img
+                                src={p.img}
+                                alt={p.nombre}
+                                style={{ width: 60 }}
+                              />
                             </td>
                             <td>{p.nombre}</td>
-                            <td className="text-end">${p.precio.toLocaleString()}</td>
+                            <td className="text-end">
+                              ${p.precio.toLocaleString()}
+                            </td>
                             <td className="text-end">{p.cantidad}</td>
                             <td className="text-end">
                               ${(p.precio * p.cantidad).toLocaleString()}
@@ -134,8 +147,12 @@ function Pago() {
                     </table>
 
                     <div className="d-flex flex-column align-items-end">
-                      <div><strong>Neto</strong>: ${neto.toLocaleString()}</div>
-                      <div><strong>IVA (19%)</strong>: ${iva.toLocaleString()}</div>
+                      <div>
+                        <strong>Neto</strong>: ${neto.toLocaleString()}
+                      </div>
+                      <div>
+                        <strong>IVA (19%)</strong>: ${iva.toLocaleString()}
+                      </div>
                       <div className="fs-5">
                         <strong>Total a pagar</strong>: ${total.toLocaleString()}
                       </div>

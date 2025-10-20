@@ -59,6 +59,9 @@ export function Encabezado() {
             <li className="nav-item">
               <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
             </li>
+            <li className="nav-item">
+              <Link to='/contacto'><a className="nav-link" href="#">Contacto</a></Link>
+            </li>
             {!usuario &&(
             <li className="nav-item">
               <Link to='/iniciarsesion'><a className="nav-link" href="#">Iniciar sesión</a></Link>

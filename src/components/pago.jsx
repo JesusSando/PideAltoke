@@ -68,12 +68,12 @@ function Pago() {
       return;
     }
 
-    const last4 = form.numeroTarjeta.replace(/\D/g, "").slice(-4);
+    const Ultimos4 = form.numeroTarjeta.replace(/\D/g, "").slice(-4);
     navigate("/boleta", {
       state: {
         productos,
         totales: { neto, iva, total },
-        comprador: { nombre: form.nombre, last4 },
+        comprador: { nombre: form.nombre, Ultimos4 },
         metodoPago: "Tarjeta de Débito",
       },
     });

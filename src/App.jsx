@@ -17,6 +17,7 @@ import { Registrarse } from './components/registrarse';
 import { OlvidadoContrasena } from './components/olvidadocontrasena';
 import Pago from './components/pago';
 import Boleta from './components/boleta';
+import Contacto from './components/contacto';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path='admin' element={<AdminProducto/>}/>
         <Route path='registrarse' element={<Registrarse/>}/>
         <Route path='olvidadocontrasena' element={<OlvidadoContrasena/>}/>
+        <Route path='contacto' element={<Contacto/>}/>
       </Routes>
       <Pie/>
     </>

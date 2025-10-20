@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const IVA_RATE = 0.19;
+const IVA = 0.19;
 
 function Boleta() {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ function Boleta() {
 
   const productos = Array.isArray(state?.productos) ? state.productos : [];
   const metodoPago = state?.metodoPago || "Tarjeta de Débito";
-  const comprador = state?.comprador || { nombre: "Cliente", last4: "****" };
+  const comprador = state?.comprador || { nombre: "Cliente", Ultimos4: "****" };
 
   const total = useMemo(
     () => productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0),
     [productos]
   );
   
-  const neto = state?.totales?.neto ?? Math.round(total / (1 + IVA_RATE));
+  const neto = state?.totales?.neto ?? Math.round(total / (1 + IVA));
   const iva = state?.totales?.iva ?? (total - neto);
 
   
@@ -45,7 +45,7 @@ function Boleta() {
 
         <div className="mb-3">
           <div><strong>Cliente:</strong> {comprador.nombre}</div>
-          <div><strong>Método de pago:</strong> {metodoPago} • **** {comprador.last4}</div>
+          <div><strong>Método de pago:</strong> {metodoPago} • **** {comprador.Ultimos4}</div>
         </div>
 
         <div className="card mb-3">

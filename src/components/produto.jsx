@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Producto() {
-  const { id } = useParams();  // Obtenemos el id del producto desde la URL
+  const { id } = useParams();   
   const [producto, setProducto] = useState(null);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function Producto() {
         throw new Error('Error al cargar el producto');
       }
       const data = await res.json();
-      const productoEncontrado = data.find((prod) => prod.id === parseInt(id)); // Buscamos el producto por id
+      const productoEncontrado = data.find((prod) => prod.id === parseInt(id));  
       setProducto(productoEncontrado);
     };
 
@@ -35,7 +35,8 @@ function Producto() {
           <h2>${producto.precio}</h2>
         </div>
         <div className="botonVista">
-          <button>Comprar</button>
+         
+                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
         </div>
       </div>
     </div>

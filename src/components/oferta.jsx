@@ -99,7 +99,8 @@ export function TodasOfertas() {
                 <p classname="card-text">ANTES $<del>{producto.precio}<del> </del></del></p>
 
                 <p className="card-text">AHORA ${producto.precio_oferta}</p>
-                <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
+                <Link to={`/producto/${producto.id}`}className="btn btn-danger mr-3">ver producto</Link>
+                                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
               </div>
             </div>
           </div>

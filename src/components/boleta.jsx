@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 const IVA = 0.19;
@@ -15,11 +16,10 @@ function Boleta() {
     () => productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0),
     [productos]
   );
-  
+
   const neto = state?.totales?.neto ?? Math.round(total / (1 + IVA));
   const iva = state?.totales?.iva ?? (total - neto);
 
-  
   if (!state || productos.length === 0) {
     return (
       <div className="container py-5">
@@ -45,11 +45,15 @@ function Boleta() {
 
         <div className="mb-3">
           <div><strong>Cliente:</strong> {comprador.nombre}</div>
+
           <div><strong>Método de pago:</strong> {metodoPago} • **** {comprador.Ultimos4}</div>
+
+          <div><strong>Número de orden:</strong> 123412341234</div>
         </div>
 
         <div className="card mb-3">
           <div className="card-header">
+
             <h5 className="mb-0">Detalle de la compra</h5>
           </div>
           <div className="card-body">
@@ -58,13 +62,17 @@ function Boleta() {
                 <tr>
                   <th>Producto</th>
                   <th className="text-end">Precio unit.</th>
+
                   <th className="text-end">Cantidad</th>
+
                   <th className="text-end">Subtotal</th>
                 </tr>
               </thead>
               <tbody>
                 {productos.map((p) => (
+
                   <tr key={p.id}>
+
                     <td>{p.nombre}</td>
                     <td className="text-end">${p.precio.toLocaleString()}</td>
                     <td className="text-end">{p.cantidad}</td>
@@ -89,24 +97,30 @@ function Boleta() {
                 </tr>
               </tfoot>
             </table>
-
             <div className="alert alert-success mt-3 mb-0">
-              ¡Compra confirmada! Gracias por tu pedido 🙌
+              Compra confirmada - Gracias por tu pedido 
             </div>
           </div>
         </div>
-
         <div className="d-flex gap-2">
+
           <button className="btn btn-primary" onClick={() => navigate("/")}>
+
             Ir al inicio
+
           </button>
           <button className="btn btn-outline-secondary" onClick={() => navigate("/carrito")}>
+
             Volver al carrito
+
           </button>
         </div>
       </div>
     </section>
+
   );
+
 }
+
 
 export default Boleta;

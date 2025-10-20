@@ -27,7 +27,7 @@ export function Menu() {
     return (
         <section className="seccion_comida relleno_diseño_inferior">
     <div className="container">
-      <h2>Menú</h2>
+      <h2 className='menuTitulo'>Menú</h2>
       <div className="contenido_filtro">
         <div className="row grid">
 
@@ -39,7 +39,8 @@ export function Menu() {
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
                 <p className="card-text">${producto.precio}</p>
-                <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
+                <Link to={`/producto/${producto.id}`}className="btn btn-danger mr-3">ver producto</Link>
+                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
               </div>
             </div>
           </div>
@@ -64,7 +65,7 @@ export function PedirMenu(){
     <section className="seccion_comida relleno_diseño_inferior">
   <div className="container">
     <div className="contenido_titulo encabezado_centro">
-      <h2>
+      <h2 className='menuTitulo'>
         Menú
       </h2>
     </div>
@@ -86,7 +87,8 @@ export function PedirMenu(){
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>
                 <p className="card-text">${producto.precio}</p>
-                <Link to={`/producto/${producto.id}`}className="btn btn-danger">ver producto</Link>
+                <Link to={`/producto/${producto.id}`}className="btn btn-danger mr-3">ver producto</Link>
+                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
               </div>
             </div>
           </div>

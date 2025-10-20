@@ -26,3 +26,4 @@ export function validarTarjeta(numeroTarjeta) {
 
   return suma % 10 === 0;
 }
+ 

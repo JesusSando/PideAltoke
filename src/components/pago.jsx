@@ -8,7 +8,7 @@ function Pago() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  // carrito envía los productos en "items"
+ 
   const productos = Array.isArray(state?.items) ? state.items : [];
   const total = state?.total || 0;
 
@@ -44,7 +44,7 @@ function Pago() {
 
     if (!nombre.trim()) return "Ingresa el nombre del titular.";
 
-    // Validación de tarjeta con Luhn + 16 dígitos
+ 
     if (!validarTarjeta(numeroTarjeta)) {
       return "El número de tarjeta no es válido.";
     }

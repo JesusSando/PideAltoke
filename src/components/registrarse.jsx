@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/iniciarSesion-Registro.css";
-import { validarCorreo } from "../assets/js/validarcorreo"; 
+import { validarCorreo } from "../assets/js/validarcorreo";
+import { validarRut } from "../assets/js/validarrut"; // 👈 import nuevo
 
 export function Registrarse() {
   const [nombre, setNombre] = useState("");
+  const [rut, setRut] = useState("");
+  const [comuna, setComuna] = useState("");
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -14,31 +17,23 @@ export function Registrarse() {
     e.preventDefault();
     setMensaje("");
 
-    
-    if (!nombre || !correo || !contraseña) {
+    // Validar campos vacíos
+    if (!nombre || !rut || !comuna || !correo || !contraseña) {
       setMensaje("Por favor completa todos los campos.");
       return;
     }
 
-    
+    // Validar correo
     if (!validarCorreo(correo)) {
       setMensaje("Por favor ingresa un correo electrónico válido.");
       return;
     }
 
-    
-    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const existe = usuariosGuardados.find((u) => u.correo === correo);
-
-    if (existe) {
-      setMensaje("Este correo ya está registrado.");
+    // ✅ Validar RUT usando la función externa
+    if (!validarRut(rut)) {
+      setMensaje("Por favor ingresa un RUT válido (ej: 12345678-9).");
       return;
     }
-
-    // ✅ Crear nuevo usuario
-    const nuevoUsuario = { nombre, correo, contraseña, cargo: "cliente" };
-    usuariosGuardados.push(nuevoUsuario);
-    localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
 
     setMensaje("Registro exitoso. Serás redirigido al inicio de sesión...");
     setTimeout(() => navigate("/iniciarsesion"), 1500);
@@ -48,6 +43,7 @@ export function Registrarse() {
     <div className="contenedor">
       <div className="formulario" id="registro">
         <h2 className="titulo">Registro de usuario</h2>
+
         {mensaje && (
           <p
             style={{
@@ -67,6 +63,26 @@ export function Registrarse() {
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             required
+          />
+
+          <label htmlFor="rut">RUT</label>
+          <input
+            type="text"
+            id="rut"
+            value={rut}
+            onChange={(e) => setRut(e.target.value)}
+            required
+            placeholder="Ej: 12345678-9"
+          />
+
+          <label htmlFor="comuna">Comuna</label>
+          <input
+            type="text"
+            id="comuna"
+            value={comuna}
+            onChange={(e) => setComuna(e.target.value)}
+            required
+            placeholder="Ej: Santiago Centro"
           />
 
           <label htmlFor="email">Correo electrónico</label>

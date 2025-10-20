@@ -89,14 +89,7 @@ function Pago() {
       className="seccion_pago relleno_diseño_inferior"
       style={{ position: "relative" }}
     >
-      <button
-        type="button"
-        className="btn btn-outline-secondary"
-        style={{ position: "fixed", bottom: 20, left: 20, zIndex: 9999 }}
-        onClick={() => navigate("/carrito")}
-      >
-        ← Volver al carrito
-      </button>
+   
 
       <div className="container">
         <h2 className="text-center mb-4">Pago con Tarjeta de Débito</h2>

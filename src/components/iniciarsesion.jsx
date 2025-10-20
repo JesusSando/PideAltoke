@@ -4,33 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { inicioSesion } from '../assets/js/cargo';  
 
 export function IniciarSesion() {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    
-    if (!validarCorreo(correo)) {
-      setError('Por favor ingresa un correo válido.');
-      return;
-    }
-
-    try {
-      const usuario = await inicioSesion(correo, contraseña);
-      if (usuario) {
-         
-          navigate('/');
+  const [correo,setCorreo]=useState('');
+  const [contraseña, setContraseña] =useState('');
  
-      } else {
-        setError('Correo o contraseña incorrectos');
-      }
-    } catch (err) {
-      console.error(err);
-      setError('No se pudo iniciar sesión. Revisa la consola.');
+  const navigate=useNavigate();
+
+  const handleSubmit=async(e) => {
+    e.preventDefault();  
+
+    const usuario =await inicioSesion(correo,contraseña);
+    if (usuario) {
+   
+  
+        navigate('/');
+   
+    } else {
+      alert('Correo o contraseña incorrectos');
     }
   };
 
@@ -43,54 +32,25 @@ export function IniciarSesion() {
           <input
             type="email"
             id="email"
+            name="email"
             required
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
-            placeholder="ejemplo@correo.com"
           />
-
           <label htmlFor="contraseña">Contraseña</label>
           <input
             type="password"
             id="contraseña"
+            name="contraseña"
             required
-            value={contraseña}
+            value={contraseña}   
             onChange={(e) => setContraseña(e.target.value)}
-            placeholder="********"
           />
-
           <button type="submit" className="enviar">Iniciar Sesión</button>
-
-          <button
-            type="button"
-            className="enviar"
-            onClick={() => navigate("/registrarse")}
-          >
-            Registrarse
-          </button>
-
-          <button
-            type="button"
-            className="enviar"
-            onClick={() => window.location.href = "https://accounts.google.com/"}
-          >
-            Iniciar sesión con Google
-          </button>
+          <button type="submit" className="enviar">registrarse</button>
+          <button type="submit" className="enviar">google</button>
         </form>
-
-        <p style={{ marginTop: "10px" }}>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/olvidadocontrasena");
-            }}
-          >
-            ¿Olvidaste tu contraseña?
-          </a>
-        </p>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+ 
       </div>
     </div>
   );

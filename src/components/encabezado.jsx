@@ -66,6 +66,9 @@ export function Encabezado() {
              <li className="nav-item">
               <Link to='/blog'><a className="nav-link" href="#">Blog</a></Link>
             </li>
+             <li className="nav-item">
+              <Link to='/contacto'><a className="nav-link" href="#">Contacto</a></Link>
+            </li>
             {!usuario &&(
             <li className="nav-item">
               <Link to='/iniciarsesion'><a className="nav-link" href="#">Cuenta</a></Link>
@@ -78,12 +81,12 @@ export function Encabezado() {
             <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
             <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
             <div className="boton_baja_contenido">
-              <Link to='/producto'><a className="nav-link link_opciones" href="#">Productos</a></Link>
+              <Link to='/adminProducto'><a className="nav-link link_opciones" href="#">Productos</a></Link>
               <Link to='/adminComida'><a className="nav-link link_opciones" href="#">Comida</a></Link>
-              <Link to='/oferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
+              <Link to='/adminOferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
               <Link to='/adminBlog'><a className="nav-link link_opciones" href="#">Blog</a></Link>
-              <Link to='/estadisticas'><a className="nav-link link_opciones" href="#">Estadisticas</a></Link>
-
+              <Link to='/adminEstadisticas'><a className="nav-link link_opciones" href="#">Estadisticas</a></Link>
+              <Link to='/adminCuenta'><a className="nav-link link_opciones" href="#">Cuenta</a></Link>
             </div>
           </div>
 

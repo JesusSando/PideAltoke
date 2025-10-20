@@ -32,6 +32,7 @@ import { OlvidadoContrasena } from './components/olvidadocontrasena';
 import Pago from './components/pago';
 import Boleta from './components/boleta';
 import Contacto from './components/contacto';
+import AdminCuenta from './components/adminCuentas';
 function App() {
  
 
@@ -64,11 +65,11 @@ function App() {
       <Route path='blog' element={<><Blog/> </>}/>
       <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
       <Route path='/producto/:id' element={<Producto/>}/>
-      <Route path='producto' element={<><AdminProducto/> </>}/>
+      <Route path='adminProducto' element={<><AdminProducto/> </>}/>
       <Route path='adminComida' element={<><ComidaAdmin/> </>}/>
-      <Route path='oferta' element={<><AdminOferta/> </>}/>
+      <Route path='adminOferta' element={<><AdminOferta/> </>}/>
       <Route path='adminBlog' element={<><AdminBlog/> </>}/>
-
+      <Route path='adminCuenta' element={<><AdminCuenta/> </>}/>
         
            
       </Routes>

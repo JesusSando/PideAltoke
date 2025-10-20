@@ -1,17 +1,26 @@
 [
 {
+    "rut":"9212333-k",
+    "nombre":"Danuel perez",
     "correo": "admin@admin",
     "contraseña":"admin",
-    "cargo":"admin"
+    "cargo":"admin",
+    "comuna":"santiago"
 },
 {
+    "rut":"21096418-2",
+    "nombre":"Nicole cardona",
     "correo": "empleado@empledo",
     "contraseña":"empleado",
-    "cargo":"empleado"
+    "cargo":"empleado",
+    "comuna":"santiago"
 },
 {
+    "rut":"19876111-2",
+    "nombre":"Felipe gomez",
     "correo": "usuario@usuario",
     "contraseña":"usuario",
-    "cargo":"usuario"
+    "cargo":"usuario",
+    "comuna":"santiago"
 }
 ]

@@ -46,6 +46,7 @@ function Boleta() {
         <div className="mb-3">
           <div><strong>Cliente:</strong> {comprador.nombre}</div>
           <div><strong>Método de pago:</strong> {metodoPago} • **** {comprador.Ultimos4}</div>
+          <div><strong>Número de orden:</strong> F123J</div>
         </div>
 
         <div className="card mb-3">

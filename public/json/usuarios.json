@@ -1,16 +1,16 @@
 [
 {
-    "correo": "admin@admin",
+    "correo": "admin@admin.com",
     "contraseña":"admin",
     "cargo":"admin"
 },
 {
-    "correo": "empleado@empledo",
+    "correo": "empleado@empleado.com",
     "contraseña":"empleado",
     "cargo":"empleado"
 },
 {
-    "correo": "usuario@usuario",
+    "correo": "usuario@usuario.com",
     "contraseña":"usuario",
     "cargo":"usuario"
 }

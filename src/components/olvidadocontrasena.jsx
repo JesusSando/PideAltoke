@@ -10,7 +10,7 @@ export function OlvidadoContrasena() {
       setMensaje("Por favor, ingresa tu correo.");
       return;
     }
-    // Simulación de envío:
+ 
     setMensaje("Si el correo existe, te enviaremos un enlace para restablecer tu contraseña.");
   };
 

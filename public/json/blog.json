@@ -1,0 +1,13 @@
+ [
+ {"id":1,
+    "fecha":"2024-06-15",
+     "titulo":"La mejor Haburguesa de la ciudad",
+     "descripcion_breve":"Descubre por qué nuestra hamburguesa es la favorita de todos los amantes de la comida rápida.",
+     "descripcion":"Nuestra hamburguesa está elaborada con ingredientes frescos y de alta calidad. La jugosa carne se cocina a la perfección y se combina con queso derretido, lechuga crujiente, tomate fresco y nuestra salsa especial, todo ello servido en un pan suave y ligeramente tostado. Cada bocado es una explosión de sabor que te dejará deseando más. Ven y prueba la mejor hamburguesa de la ciudad, ¡te garantizamos que no te arrepentirás!",
+     "descripcion_destacada":"Nuestra hamburguesa está hecha con ingredientes frescos y de alta calidad, combinando jugosa carne, queso derretido y vegetales crujientes en un pan suave.",
+     "img":"../src/assets/images/carrusel5.jpg",
+     "autor":"Jose Miguel",
+     "img_autor":"../src/assets/images/autor1.jpg",
+     "frese":"¡Una explosión de sabor en cada bocado!"
+    }
+]

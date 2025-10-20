@@ -1,0 +1,40 @@
+[
+    
+     {"id":7,
+     "nombre":"Hamburguesa de pollo",
+     "descripcion":"Una alternativa ligera con lechuga, tomate, queso y el clasico pollo",
+     "precio":10000,
+     "precio_oferta":4000,
+     "img":"../src/assets/images/f7.png",
+       "img_oferta":"../src/assets/images/carrusel6.jpg",
+     "categoria":"hamburguesas"
+    },
+    {"id":2,
+     "nombre":"Haburguesa grande",
+     "descripcion":"Hamburguesa con queso, lechuga, tomate y ketchup.Uno de los mas pedidos",
+     "precio":8000,
+     "precio_oferta":5000,
+     "img":"../src/assets/images/f2.png",
+     "img_oferta":"../src/assets/images/carrusel5.jpg",
+     "categoria":"hamburguesas"
+    },
+    {"id":8,
+     "nombre":"Hamburguesa pollo rostizado",
+     "descripcion":"Una de las mas gutosa con lechuga y tomate. Poco pero mucho",
+     "precio":13000,
+     "precio_oferta":9000,
+     "img":"../src/assets/images/f8.png",
+     "img_oferta":"../src/assets/images/carrusel5.jpg",
+     "categoria":"hamburguesas"
+    },
+    {"id":9,
+     "nombre":"Pasta tradicional",
+     "descripcion":"Pasta tradicional con salsa de tomate del chef",
+     "precio":13000,
+     "precio_oferta":10000,
+     "img":"../src/assets/images/f9.png",
+     "img_oferta":"../src/assets/images/carrusel5.jpg",
+     "categoria":"pasta"
+    }
+
+]

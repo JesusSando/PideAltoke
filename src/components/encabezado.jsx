@@ -12,7 +12,7 @@ import carrusel3 from '../assets/images/carrusel3.jpg'
 
 import { obtenerUsuario, cerrarSesion } from '../assets/js/cargo';
 import React, { useEffect,useState } from 'react'; 
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
  
 export function Encabezado() {
 
@@ -33,6 +33,7 @@ export function Encabezado() {
   const cerrarSesionHandler=()=>{
     cerrarSesion();
     setUsuario(null);
+    navigate('/');
   }
 
 
@@ -57,10 +58,13 @@ export function Encabezado() {
               <Link to='/pedirMenu'><a className="nav-link" href="#">Menu</a></Link>
             </li>
             <li className="nav-item">
-              <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
+              <Link to='/ofertas'><a className="nav-link" href="#">Ofertas</a></Link>
             </li>
             <li className="nav-item">
-              <Link to='/contacto'><a className="nav-link" href="#">Contacto</a></Link>
+              <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
+            </li>
+             <li className="nav-item">
+              <Link to='/blog'><a className="nav-link" href="#">Blog</a></Link>
             </li>
             {!usuario &&(
             <li className="nav-item">
@@ -68,11 +72,35 @@ export function Encabezado() {
             </li>
             )}
             {usuario &&(usuario.cargo==='admin' || usuario.cargo==='empleado') &&(
-            <li className="nav-item">
-              <Link to='/Admin'><a className="nav-link" href="#">Admin</a></Link>
-            </li>
+           
+
+          <div className="boton_baja">
+            <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
+            <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
+            <div className="boton_baja_contenido">
+              <Link to='/producto'><a className="nav-link link_opciones" href="#">Productos</a></Link>
+              <Link to='/adminComida'><a className="nav-link link_opciones" href="#">Comida</a></Link>
+              <Link to='/oferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
+              <Link to='/adminBlog'><a className="nav-link link_opciones" href="#">Blog</a></Link>
+              <Link to='/estadisticas'><a className="nav-link link_opciones" href="#">Estadisticas</a></Link>
+
+            </div>
+          </div>
+
+
+          
+
              )}
-            
+
+
+             {usuario && (
+            <li className="nav-item">
+ 
+               <Link to='/' onClick={cerrarSesionHandler}><a className="nav-link" href="/">Salir</a></Link>
+              
+ 
+            </li>
+            )}
           </ul>
         
         </div>
@@ -107,6 +135,26 @@ export function Carrusel(){
             <img className="d-block w-100" src={carrusel3} alt="Third slide" />
           </div>
         </div>
+
+   
+
+    
+     <div className="contenedor_eslogan  position-absolute top-50 start-50 translate-middle text-center text-white">
+  <div className="pri_terxto  ">
+    <div className="seg_texto">
+      <span>A tu ritmo</span>
+    </div>
+    <h3>Pide <br />
+      Altoke</h3>
+    <h4>Y Disfruta</h4>
+  </div>
+</div>
+
+
+
+
+
+
         <a
           className="carousel-control-prev"
           href="#carouselExampleControls"
@@ -126,14 +174,7 @@ export function Carrusel(){
  
         </a>
         
-      <div className="carrusel_texto">
-        <div className="titulo_carrusel">
-          <span>Pide Altoke</span>
-        </div>
-        <h3>La <br />
-          Mejor</h3>
-        <h3 className='comida_txt'>COMIDA</h3>
-      </div>
+     
      
 
       </div>

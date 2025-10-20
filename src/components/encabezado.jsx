@@ -48,30 +48,30 @@ export function Encabezado() {
         <div className="collapse navbar-collapse justify-content-end" id="navbarColor01">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item ">
-              <Link to='/'><a className="nav-link" href="#">Principal</a></Link>
+              <Link to='/' className="nav-link">Principal</Link>
                
             </li>
             <li className="nav-item">
-              <Link to='/nosotros'><a className="nav-link" href="#">Acerca</a></Link>
+              <Link to='/nosotros' className="nav-link">Acerca</Link>
             </li>
             <li className="nav-item">
-              <Link to='/pedirMenu'><a className="nav-link" href="#">Menu</a></Link>
+              <Link to='/pedirMenu' className="nav-link">Menu</Link>
             </li>
             <li className="nav-item">
-              <Link to='/ofertas'><a className="nav-link" href="#">Ofertas</a></Link>
+              <Link to='/ofertas' className="nav-link">Ofertas</Link>
             </li>
             <li className="nav-item">
-              <Link to='/carrito'><a className="nav-link" href="#">Carrito</a></Link>
+              <Link to='/carrito' className="nav-link">Carrito</Link>
             </li>
              <li className="nav-item">
-              <Link to='/blog'><a className="nav-link" href="#">Blog</a></Link>
+              <Link to='/blog' className="nav-link">Blog</Link>
             </li>
              <li className="nav-item">
-              <Link to='/contacto'><a className="nav-link" href="#">Contacto</a></Link>
+              <Link to='/contacto' className="nav-link">Contacto</Link>
             </li>
             {!usuario &&(
             <li className="nav-item">
-              <Link to='/iniciarsesion'><a className="nav-link" href="#">Cuenta</a></Link>
+              <Link to='/iniciarsesion' className="nav-link">Cuenta</Link>
             </li>
             )}
             {usuario &&(usuario.cargo==='admin' || usuario.cargo==='empleado') &&(
@@ -81,12 +81,12 @@ export function Encabezado() {
             <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
             <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
             <div className="boton_baja_contenido">
-              <Link to='/adminProducto'><a className="nav-link link_opciones" href="#">Productos</a></Link>
-              <Link to='/adminComida'><a className="nav-link link_opciones" href="#">Comida</a></Link>
-              <Link to='/adminOferta'><a className="nav-link link_opciones" href="#">Oferta</a></Link>
-              <Link to='/adminBlog'><a className="nav-link link_opciones" href="#">Blog</a></Link>
-              <Link to='/adminEstadisticas'><a className="nav-link link_opciones" href="#">Estadisticas</a></Link>
-              <Link to='/adminCuenta'><a className="nav-link link_opciones" href="#">Cuenta</a></Link>
+              <Link to='/adminProducto' className="nav-link link_opciones"> Productos</Link>
+              <Link to='/adminComida' className="nav-link link_opciones"> Comida</Link>
+              <Link to='/adminOferta' className="nav-link link_opciones"> Oferta</Link>
+              <Link to='/adminBlog' className="nav-link link_opciones"> Blog</Link>
+              <Link to='/adminEstadisticas' className="nav-link link_opciones"> Estadisticas</Link>
+              <Link to='/adminCuenta' className="nav-link link_opciones"> Cuenta</Link>
             </div>
           </div>
 
@@ -99,7 +99,7 @@ export function Encabezado() {
              {usuario && (
             <li className="nav-item">
  
-               <Link to='/' onClick={cerrarSesionHandler}><a className="nav-link" href="/">Salir</a></Link>
+               <Link to='/' onClick={cerrarSesionHandler} className="nav-link">Salir</Link>
               
  
             </li>

@@ -1,15 +1,9 @@
 
 export function validarTarjeta(numeroTarjeta) {
 
- 
-
- 
   const soloDigitos = numeroTarjeta.replace(/\D/g, "");
-
-  
   if (soloDigitos.length !== 16) return false;
 
- 
   let suma = 0;
   let alternar = false;
 

@@ -4,7 +4,7 @@ import { Routes, Route, Router } from 'react-router-dom';
  
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+ 
 import './assets/css/carrito.css'
 import '../src/assets/css/admin.css'
  

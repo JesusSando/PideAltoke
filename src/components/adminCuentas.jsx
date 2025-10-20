@@ -11,7 +11,9 @@ function AdminCuenta() {
     correo: '',
     contraseña:'',
     cargo:'',
-    comuna:''
+    comuna:'',
+       nombre_modificado:'',
+     fecha_modificacion  :'' 
 
   });
 
@@ -27,7 +29,9 @@ function AdminCuenta() {
     correo:producto.correo,
     contraseña:producto.contraseña,
     cargo:producto.cargo,
-    comuna:producto.comuna
+    comuna:producto.comuna,
+    nombre_modificado:producto.nombre_modificado,
+     fecha_modificacion  :producto.fecha_modificacion
     });
     setEditando(true);  
   };
@@ -63,7 +67,9 @@ function AdminCuenta() {
     correo: '',
     contraseña:'',
     cargo:'',
-    comuna:''
+    comuna:'',
+       nombre_modificado:'',
+     fecha_modificacion  :'' 
     });
     setEditando(false); 
   };
@@ -76,7 +82,9 @@ function AdminCuenta() {
     correo: '',
     contraseña:'',
     cargo:'',
-    comuna:''
+    comuna:'',
+       nombre_modificado:'',
+     fecha_modificacion  :'' 
     });
     setEditando(false); 
   };
@@ -157,6 +165,23 @@ function AdminCuenta() {
             placeholder="cargo"
             required
           />
+          <input
+            name="nombre_modificado"
+            type="text"
+            value={productoEditado.nombre_modificado}
+            onChange={handleChange}
+            placeholder="Nombre del del ultimo modificador"
+            required
+          />
+
+          <input
+            name="fecha_modificacion"
+            type="text"
+            value={productoEditado.fecha_modificacion}
+            onChange={handleChange}
+            placeholder="Fecha de modificacion del producto"
+            required
+          /> 
      
         
 
@@ -181,6 +206,8 @@ function AdminCuenta() {
               <p>Correo:{producto.correo}</p>
               <p>Contraseña: {producto.contraseña}</p>
               <p>Cargo: {producto.cargo}</p>
+              <p>Nombre ultimo moficador : {producto.nombre_modificado}</p>
+              <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
                
             </div>
 

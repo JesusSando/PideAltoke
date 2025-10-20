@@ -7,7 +7,9 @@
      "precio_oferta":4000,
      "img":"../src/assets/images/f7.png",
        "img_oferta":"../src/assets/images/carrusel6.jpg",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":2,
      "nombre":"Haburguesa grande",
@@ -16,7 +18,9 @@
      "precio_oferta":5000,
      "img":"../src/assets/images/f2.png",
      "img_oferta":"../src/assets/images/carrusel5.jpg",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":8,
      "nombre":"Hamburguesa pollo rostizado",
@@ -25,7 +29,9 @@
      "precio_oferta":9000,
      "img":"../src/assets/images/f8.png",
      "img_oferta":"../src/assets/images/carrusel5.jpg",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":9,
      "nombre":"Pasta tradicional",
@@ -34,7 +40,9 @@
      "precio_oferta":10000,
      "img":"../src/assets/images/f9.png",
      "img_oferta":"../src/assets/images/carrusel5.jpg",
-     "categoria":"pasta"
+     "categoria":"pasta",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     }
 
 ]

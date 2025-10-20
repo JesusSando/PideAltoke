@@ -5,62 +5,80 @@
      "descripcion":"Pizza clásica con jamón, champiñones, aceitunas y alcachofas en cuatro secciones.",
      "precio":1000,
      "img":"../src/assets/images/f1.png",
-     "categoria":"pizza"
+     "categoria":"pizza",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":2,
      "nombre":"Haburguesa grande",
      "descripcion":"Hamburguesa con queso, lechuga, tomate y ketchup.Uno de los mas pedidos",
      "precio":8000,
      "img":"../src/assets/images/f2.png",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":3,
      "nombre":"Napolitana",
      "descripcion":"La clasica con tomate, aceituna, oregano y alcaparras",
      "precio":5000,
      "img":"../src/assets/images/f3.png",
-     "categoria":"pizza"
+     "categoria":"pizza",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":4,
      "nombre":"Ñoquis",
      "descripcion":"Pasta italiana hecha de papas y harina, servida con salsa a elección",
      "precio":7000,
      "img":"../src/assets/images/f4.png",
-     "categoria":"pasta"
+     "categoria":"pasta",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
-    {"id":5,
-     "nombre":"Macarrones con queso",
-     "descripcion":"Una muy apetecida con macarrones y el queso",
+   {"id":5,
+     "nombre":"Papas",
+     "descripcion":"Simple pero deliciosas las papas mas ricas del mundo esta a tu eleccion",
      "precio":7000,
      "img":"../src/assets/images/f5.png",
-     "categoria":"pasta"
+     "categoria":"papas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":6,
      "nombre":"Pizza vegetariana",
      "descripcion":"Natural y fresco con cebolla, queso, champiñones y pimiento verde",
      "precio":9000,
      "img":"../src/assets/images/f6.png",
-     "categoria":"pizza"
+     "categoria":"pizza",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":7,
      "nombre":"Hamburguesa de pollo",
      "descripcion":"Una alternativa ligera con lechuga, tomate, queso y el clasico pollo",
      "precio":10000,
      "img":"../src/assets/images/f7.png",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":8,
      "nombre":"Hamburguesa pollo rostizado",
      "descripcion":"Una de las mas gutosa con lechuga y tomate. Poco pero mucho",
      "precio":13000,
      "img":"../src/assets/images/f8.png",
-     "categoria":"hamburguesas"
+     "categoria":"hamburguesas",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     },
     {"id":9,
      "nombre":"Pasta tradicional",
      "descripcion":"Pasta tradicional con salsa de tomate del chef",
      "precio":13000,
      "img":"../src/assets/images/f9.png",
-     "categoria":"pasta"
+     "categoria":"pasta",
+     "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
     }
 ]

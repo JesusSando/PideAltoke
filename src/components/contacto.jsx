@@ -15,7 +15,7 @@ function Contacto() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validaciones básicas
+ 
     if (!formData.nombre.trim() || !formData.email.trim() || !formData.mensaje.trim()) {
       alert("Por favor, completa todos los campos antes de enviar.");
       return;
@@ -28,7 +28,7 @@ function Contacto() {
       return;
     }
 
-    alert("✅ Mensaje enviado correctamente. ¡Gracias por contactarnos!");
+    alert("Mensaje enviado correctamente. ¡Gracias por contactarnos!");
 
     // Limpia el formulario
     setFormData({
@@ -95,9 +95,9 @@ function Contacto() {
             </div>
 
             <div className="text-center mt-4 text-muted">
-              <p>📍 Dirección: Antonio Varas 666, Santiago</p>
-              <p>📞 Teléfono: +56 9 1234 5678</p>
-              <p>📧 Email: contacto@pidealtok.cl</p>
+              <p>Dirección: Antonio Varas 666, Santiago</p>
+              <p>Teléfono: +56 9 1234 5678</p>
+              <p>Email: contacto@pidealtok.cl</p>
             </div>
           </div>
         </div>

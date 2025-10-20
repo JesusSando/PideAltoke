@@ -17,7 +17,7 @@ function Carrito() {
   const eliminarProducto = (id) => {
     const producto = productos.find((p) => p.id === id);
     setProductos(productos.filter((p) => p.id !== id));
-    setMensaje(`${producto.nombre} fue eliminado del carrito`);
+    alert("eliminado")
   };
 
   const cambiarCantidad = (id, nuevaCantidad) => {

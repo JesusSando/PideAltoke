@@ -1,17 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { validarCorreo } from '../assets/js/validarcorreo';
 
 export function OlvidadoContrasena() {
   const [correo, setCorreo] = useState("");
   const [mensaje, setMensaje] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!correo) {
+    setMensaje(""); 
+
+    if (!validarCorreo(correo)) {
       setMensaje("Por favor, ingresa tu correo.");
       return;
     }
  
-    setMensaje("Si el correo existe, te enviaremos un enlace para restablecer tu contraseña.");
+    setMensaje("Completado con éxito");   
+    alert("Te enviaremos el código a tu correo");
+
+
+    navigate('/');
   };
 
   return (

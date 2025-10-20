@@ -180,7 +180,7 @@ function AdminBlog() {
             placeholder="Autor Frase"
             required
           />
-
+        <label htmlFor="imagen_autor">imagen fondo</label>
           <input
             name="imagen"
             type="file"
@@ -191,6 +191,17 @@ function AdminBlog() {
             <img src={productoEditado.imagenPreview} alt="Vista previa" style={{width:'150px'}}/>
           )}
 
+
+          <label htmlFor="imagen_autor">imagen autor</label>
+      <input
+            name="imagen_autor"
+            type="file"
+            onChange={handleChange}
+          />
+
+          {productoEditado.imagenPreview && (
+            <img src={productoEditado.imagenPreview} alt="Vista previa" style={{width:'150px'}}/>
+          )}
        
         
 

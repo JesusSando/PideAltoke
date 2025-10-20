@@ -23,7 +23,7 @@ export function IniciarSesion() {
       const usuario = await inicioSesion(correo, contraseña);
       if (usuario) {
         if (usuario.cargo === 'admin' || usuario.cargo === 'empleado') {
-          navigate('/admin');
+          navigate('/');
         } else {
           navigate('/');
         }
@@ -61,7 +61,7 @@ export function IniciarSesion() {
             placeholder="********"
           />
 
-          <button type="submit" className="enviar">Iniciar Sesión</button>
+          <button type="submit" className="enviar"  >Iniciar Sesión</button>
 
           <button
             type="button"

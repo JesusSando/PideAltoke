@@ -4,42 +4,45 @@ import "../assets/css/iniciarSesion-Registro.css";
 import { validarCorreo ,validarContraseñaSegura,validarRut} from "../assets/js/validarcorreo"; 
 
 function Registrarse() {
-  const [nombre, setNombre] = useState("");
+    const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
-    const [rut, setRut] = useState("");
- 
-    const [comuna, setComuna] = useState("");
+  const [rut, setRut] = useState("");
+  const [comuna, setComuna] = useState("");
   const [mensaje, setMensaje] = useState("");
- 
+
+  const navigate = useNavigate();  
 
   const handleRegistro = (e) => {
     e.preventDefault();
     setMensaje("");
-
-    
-    if (!nombre || !correo || !contraseña ||!rut ||!comuna ||!nombre) {
+ 
+    if (!nombre || !correo || !contraseña || !rut || !comuna) {
       setMensaje("Por favor completa todos los campos.");
       return;
     }
-
-    
     if (!validarCorreo(correo)) {
-      setMensaje("Por favor ingresa un correo electrónico valido.");
+      setMensaje("Por favor ingresa un correo electrónico válido.");
       return;
     }
 
-    if(!validarContraseñaSegura(contraseña)){
-       setMensaje("La contraseña debe tener 8 caracteres una miniscula mayuscula un caracter especial y un numero ");
-        return;
-    }
-    if(!validarRut(rut)){
-       setMensaje("El rut no es valido ");
-        return;
+    if (!validarContraseñaSegura(contraseña)) {
+      setMensaje("La contraseña debe tener 8 caracteres, una minúscula, una mayúscula, un carácter especial y un número.");
+      return;
     }
 
-  }
-    
+    if (!validarRut(rut)) {
+      setMensaje("El rut no es válido.");
+      return;
+    }
+
+    setMensaje("Registro exitoso");  
+
+
+    alert("Registro completado");
+
+    navigate('/');
+  };
 
   return (
     <>

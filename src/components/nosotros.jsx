@@ -1,5 +1,5 @@
 import React from 'react'; 
-
+import sobre from '../assets/images/sobre.png'
 function Nosotros() {
     return (
  
@@ -8,7 +8,7 @@ function Nosotros() {
       <div className="row">
         <div className="col-md-6 ">
           <div className="caja-img">
-            <img src="images/f6.png" alt />
+            <img src={sobre} alt />
           </div>
         </div>
         <div className="col-md-6">

@@ -11,7 +11,9 @@ function ComidaAdmin() {
     descripcion: '',       
     categoria: '',         
     imagen: null,          
-    imagenPreview: '',    
+    imagenPreview: '',     
+    nombre_modificado:'',
+     fecha_modificacion  :'' 
   });
 
  
@@ -28,35 +30,34 @@ function ComidaAdmin() {
       categoria: producto.categoria,
       imagen: producto.img || null,
       imagenPreview: producto.img || '',  
+      nombre_modificado:producto.nombre_modificado,
+     fecha_modificacion  :producto.fecha_modificacion
     });
     setEditando(true);  
   };
 
-  // Función que maneja los cambios en los campos del formulario
+
   const handleChange = (e) => {
-    const { name, value, files } = e.target; // Extraemos los valores del evento
+    const { name, value, files } = e.target; 
     if (name === 'imagen' && files.length > 0) {
-      // Si el campo es de tipo 'file', se actualiza la imagen y su vista previa
+    
       setProductoEditado({
         ...productoEditado,
         imagen: files[0],
-        imagenPreview: URL.createObjectURL(files[0]), // Crear una vista previa de la imagen seleccionada
+        imagenPreview: URL.createObjectURL(files[0]), 
       });
     } else {
-      // Si es cualquier otro campo, solo actualizamos el valor
       setProductoEditado({
         ...productoEditado,
         [name]: value,
       });
     }
   };
-
-  // Función para manejar el envío del formulario (agregar o editar el producto)
+ 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Evita que la página se recargue al enviar el formulario
+    e.preventDefault();  
     console.log(editando ? 'Producto editado:' : 'Nuevo producto agregado:', productoEditado);
     
-    // Reseteamos el formulario después de agregar o editar
     setProductoEditado({
       id: null,
       nombre: '',
@@ -65,11 +66,13 @@ function ComidaAdmin() {
       categoria: '',
       imagen: null,
       imagenPreview: '',
+     nombre_modificado:'',
+     fecha_modificacion  :'' 
     });
-    setEditando(false); // Regresamos el formulario a estado "agregar" (no editar)
+    setEditando(false);  
   };
 
-  // Función para cancelar la edición y limpiar el formulario
+ 
   const handleCancel = () => {
     setProductoEditado({
       id: null,
@@ -79,8 +82,10 @@ function ComidaAdmin() {
       categoria: '',
       imagen: null,
       imagenPreview: '',
+     nombre_modificado:'',
+     fecha_modificacion  :'' 
     });
-    setEditando(false); // Cambiar estado a "no editando"
+    setEditando(false);  
   };
 
   return (
@@ -88,11 +93,11 @@ function ComidaAdmin() {
 <> 
       
      <div className="container">
-      {/* Formulario de edición o creación de productos */}
+ 
       <div className="form-container">
         <h2>{editando ? 'Editar Comida' : 'Agregar Comida'}</h2>
         <form onSubmit={handleSubmit}>
-          {/* Campos del formulario */}
+     
           <input
             name="nombre"
             type="text"
@@ -125,43 +130,63 @@ function ComidaAdmin() {
             placeholder="Categoría"
             required
           />
-          {/* Campo de imagen */}
+
+          <input
+            name="nombre_modificado"
+            type="text"
+            value={productoEditado.nombre_modificado}
+            onChange={handleChange}
+            placeholder="Nombre del del ultimo modificador"
+            required
+          />
+
+          <input
+            name="fecha_modificacion"
+            type="text"
+            value={productoEditado.fecha_modificacion}
+            onChange={handleChange}
+            placeholder="Fecha de modificacion del producto"
+            required
+          /> 
+ 
           <input
             name="imagen"
             type="file"
             onChange={handleChange}
           />
-          {/* Si hay una imagen seleccionada, mostrar la vista previa */}
+ 
           {productoEditado.imagenPreview && (
             <img src={productoEditado.imagenPreview} alt="Vista previa" style={{width:'150px'}} />
           )}
-          {/* Botón para enviar el formulario */}
+ 
           <button type="submit">
             {editando ? 'Guardar Cambios' : 'Agregar Producto'}
           </button>
-          {/* Botón para cancelar la edición */}
+ 
           {editando && (
             <button type="button" onClick={handleCancel}>Cancelar</button>
           )}
         </form>
       </div>
 
-      {/* Lista de productos */}
+ 
       <div className="product-list">
         {data.map((producto) => (
           <div key={producto.id} className="product-item">
-            {/* Detalles del producto */}
+ 
             <div className="product-details">
               <p>Nombre: {producto.nombre}</p>
               <p>Precio: {producto.precio}</p>
               <p>Categoria: {producto.categoria}</p>
               <p>Descripcion: {producto.descripcion}</p>
+              <p>Nombre ultimo moficador : {producto.nombre_modificado}</p>
+              <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
             </div>
-            {/* Mostrar la imagen del producto si existe */}
+ 
             {producto.img && <img src={producto.img} alt="Producto" style={{width:'150px', height:'auto'}}/>}
            
 
-            {/* Botones de acción (editar y eliminar) */}
+ 
             <div className="product-actions">
               <button onClick={() => handleEdit(producto)}>Editar</button>
               <button>Eliminar</button>

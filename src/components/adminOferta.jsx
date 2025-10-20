@@ -14,7 +14,9 @@ function AdminOferta() {
     categoria: '',         
     imagen: null,         
     imagen_oferta: null,   
-    imagenPreview: '',   
+    imagenPreview: '',  
+    nombre_modificado:'',
+     fecha_modificacion  :'' 
 
   });
 
@@ -34,6 +36,8 @@ function AdminOferta() {
       imagen: producto.imagen || null,
       imagen_oferta: producto.oferta || null,
       imagenPreview: producto.img || '',
+      nombre_modificado:producto.nombre_modificado,
+     fecha_modificacion  :producto.fecha_modificacion
     });
     setEditando(true);  
   };
@@ -73,6 +77,8 @@ function AdminOferta() {
       imagen: null,
       imagen_oferta: null,
       imagenPreview: '',
+      nombre_modificado:'',
+     fecha_modificacion  :''
     });
     setEditando(false); 
   };
@@ -89,6 +95,8 @@ function AdminOferta() {
       imagen: null,
       imagen_oferta: null,
       imagenPreview: '',
+      nombre_modificado:'',
+     fecha_modificacion  :''
     });
     setEditando(false); 
   };
@@ -161,6 +169,25 @@ function AdminOferta() {
             required
           />
 
+
+          <input
+            name="nombre_modificado"
+            type="text"
+            value={productoEditado.nombre_modificado}
+            onChange={handleChange}
+            placeholder="Nombre del del ultimo modificador"
+            required
+          />
+
+          <input
+            name="fecha_modificacion"
+            type="text"
+            value={productoEditado.fecha_modificacion}
+            onChange={handleChange}
+            placeholder="Fecha de modificacion del producto"
+            required
+          /> 
+
           <input
             name="imagen"
             type="file"
@@ -195,6 +222,8 @@ function AdminOferta() {
               <p>Precio Oferta: {producto.precio_oferta}</p>
               <p>Categoria: {producto.categoria}</p>
               <p>Descripcion: {producto.descripcion}</p>
+              <p>Nombre ultimo moficador : {producto.nombre_modificado}</p>
+              <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
             </div>
 
             {producto.img && <img src={producto.img} alt="Producto" style={{width:'150px', height:'auto'}}/>}

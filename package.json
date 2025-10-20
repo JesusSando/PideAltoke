@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "dev": "vite"
   },
   "dependencies": {
     "bootstrap": "^4.6.2",
+    "font-awesome": "^4.7.0",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",

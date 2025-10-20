@@ -4,7 +4,7 @@
      "nombre":"pan de hamburguesas",
      "stok":33,
      "fecha_vencimiento":"2025-12-31",
-     "img":"../src/assets/images/f7.png",
+     "img":"../src/assets/images/producto1.jpg",
  
      "nombre_modificado":"Jose Perez",
      "fecha_modificacion":"2025-06-10"
@@ -13,8 +13,7 @@
      "nombre":"queso cheddar",
      "stok":20,
      "fecha_vencimiento":"2025-11-30",
-     "img":"../src/assets/images/f2.png",
- 
+     "img":"../src/assets/images/producto2.jpeg",
      "nombre_modificado":"Ana Gomez",
      "fecha_modificacion":"2025-06-11"
 },
@@ -22,7 +21,7 @@
      "nombre":"pechuga de pollo",
      "stok":15,
      "fecha_vencimiento":"2025-12-15",
-     "img":"../src/assets/images/f8.png",
+     "img":"../src/assets/images/producto3.jpg",
  
      "nombre_modificado":"Luis Martinez",
      "fecha_modificacion":"2025-06-12"
@@ -31,7 +30,7 @@
      "nombre":"pasta fettuccine",
      "stok":25,
      "fecha_vencimiento":"2025-01-20",
-     "img":"../src/assets/images/f9.png",
+     "img":"../src/assets/images/producto4.jpeg",
  
      "nombre_modificado":"Maria Lopez",
      "fecha_modificacion":"2024-06-13"

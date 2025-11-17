@@ -85,7 +85,7 @@ export function TodasOfertas() {
  <> 
 <section className="seccion_comida relleno_diseño_inferior">
     <div className="container">
-      <h1>OFERTAS</h1>
+      <h1>Ofertas</h1>
       <div className="contenido_filtro">
         <div className="row grid">
 

@@ -27,7 +27,7 @@ export function Menu() {
    },[]);
 
     return (
-        <section className="seccion_comida relleno_diseño_inferior">
+        <section className="seccion_comida relleno_diseño_inferior" id='menu'>
     <div className="container">
       <h2 className='menuTitulo'>Menú</h2>
       <div className="contenido_filtro">

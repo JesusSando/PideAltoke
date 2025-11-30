@@ -12,30 +12,23 @@ export function Historial() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // 1. Obtener el usuario
+  useEffect(() => { 
     const u = obtenerUsuario(); 
-    
-    // 2. Verificar sesión
-    if (!u || !u.id) { // También verificamos si el id existe
+     
+    if (!u || !u.id) {  
       alert("Debes iniciar sesión para ver tu historial.");
       navigate("/iniciarsesion");
       return;
-    }
-    
-    // 3. Establecer el usuario localmente
+    } 
     setUsuario(u); 
 
-    // 4. Definir y ejecutar la función de carga ASÍNCRONA
+   
     const fetchHistorial = async () => {
-      try {
-        // Asumiendo que BoletaService.getHistorialPorUsuario espera el ID
+      try { 
         const res = await BoletaService.getHistorialPorUsuario(u.id); 
         setBoletas(res.data);
       } catch (err) {
-        console.error("Error al cargar el historial:", err);
-        // Si el backend devuelve 404/204 por no tener compras, el array será vacío.
-        // Si es otro error (500, network), mostramos el mensaje.
+        console.error("Error al cargar el historial:", err); 
         if (err.response && err.response.status !== 404) {
              setError("Error al cargar el historial de compras.");
         }
@@ -44,9 +37,7 @@ export function Historial() {
       }
     };
 
-    fetchHistorial(); // <--- Llamada inmediata.
-    
-    // La dependencia es solo 'navigate', ya que 'u' viene de localStorage/obtenerUsuario
+    fetchHistorial();  
   }, [navigate]);
 
   if (loading) return <div className="container py-5 text-center">Cargando historial...</div>;
@@ -75,12 +66,15 @@ export function Historial() {
                 <ul className="list-group list-group-flush mt-2">
                   {boleta.compras.map((item) => (
                     <li key={item.id} className="list-group-item d-flex justify-content-between">
-                      <span>{item.comida.nombre}</span>
-                      <small>
+                    <span>
+   
+                        {item.comida ? item.comida.nombre : 'Producto no disponible'}
+                    </span> 
+                    <small>
                         {item.cantidad} x ${item.precioUnitario.toLocaleString()} = 
                         <strong> ${(item.cantidad * item.precioUnitario).toLocaleString()}</strong>
-                      </small>
-                    </li>
+                    </small>
+                </li>
                   ))}
                 </ul>
               </details>

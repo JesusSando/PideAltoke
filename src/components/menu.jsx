@@ -19,6 +19,8 @@ export function Menu() {
     cargarComida();
   }, []);
 
+
+  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
 
   return (
@@ -31,7 +33,10 @@ export function Menu() {
               <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
                   
-                    <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
+                    <img 
+                    src={producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault} 
+                    alt={producto.nombre} 
+                  />
 
                   <div className="card-body">
                     <h5 className="card-title">{producto.nombre}</h5>
@@ -112,8 +117,7 @@ export function PedirMenu() {
 
 
 
-
-
+const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
   return (
     <section className="seccion_comida relleno_diseño_inferior">
@@ -136,7 +140,9 @@ export function PedirMenu() {
               <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
 
-                   <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
+                 
+                  <img src={producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault} 
+                      alt={producto.nombre}/>
 
                   <div className="card-body">
                     <h5 className="card-title">{producto.nombre}</h5>

@@ -88,6 +88,8 @@ export function TodasOfertas() {
     }, []);
 
     const imgDefault = "/src/assets/images/f1.png";
+    const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+              
 
    const productosEnOferta = productos.filter(p => p.oferta);
     return (
@@ -102,7 +104,9 @@ export function TodasOfertas() {
           {productosEnOferta.map((producto)=>( 
           <div className="col-sm-7 col-lg-4 all">
             <div className="card" style={{width: '18rem', marginTop: 8}}>
-              <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
+   
+              <img  src={producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault} 
+                  alt={producto.nombre}   />
               <div className="card-body">
                 <h5 className="card-title">{producto.nombre}</h5>
                 <p className="card-text">{producto.descripcion}</p>

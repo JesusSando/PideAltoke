@@ -31,13 +31,15 @@ useEffect(() => {
     return <div>Cargando producto...</div>;
   }
 
-  
+  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+               
     const imgDefault = "/src/assets/images/f1.png";
 
   return (
     <div className="vistaProducto">
-      <div className="ropaPrincipal">
-         <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
+      <div className="ropaPrincipal"> 
+              <img  src={producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault} 
+                  alt={producto.nombre}   />
       </div>
       <div className="textoVistaProducto">
         <h1>{producto.nombre}</h1>

@@ -1,32 +1,61 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import f2 from "../assets/images/f2.png";
-import f8 from "../assets/images/f8.png";
+
 
 function Carrito() {
   const navigate = useNavigate();
+  const [productos, setProductos] = useState(() => {
 
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Hamburguesa grande", precio: 9990, cantidad: 1, img: f2 },
-    { id: 2, nombre: "Hamburguesa pollo rostizado", precio: 7990, cantidad: 1, img: f8 },
-  ]);
+    try {
+      const guardado = localStorage.getItem("carrito");
+      return guardado ? JSON.parse(guardado) : [];
+    } catch (e) {
+      console.error("Error leyendo carrito de localStorage", e);
+      return [];
+
+    }
+
+  });
+
 
   const [mensaje, setMensaje] = useState("");
 
+
+  // Cada vez que cambian los productos, se actualiza localStorage
+
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(productos));
+  }, [productos]);
+
+
+
   const eliminarProducto = (id) => {
-    const producto = productos.find((p) => p.id === id);
-    setProductos(productos.filter((p) => p.id !== id));
-    alert("eliminado")
+    const nuevoCarrito = productos.filter((p) => p.id !== id);
+    setProductos(nuevoCarrito);
+    alert("Producto eliminado");
+
   };
+
+
 
   const cambiarCantidad = (id, nuevaCantidad) => {
     const n = Math.max(1, Math.min(10, parseInt(nuevaCantidad || "1", 10)));
-    setProductos(productos.map((p) => (p.id === id ? { ...p, cantidad: n } : p)));
+    const actualizado = productos.map((p) =>
+      p.id === id ? { ...p, cantidad: n } : p
+    );
+    setProductos(actualizado);
+
   };
 
+
+
   const totalProductos = productos.reduce((acc, p) => acc + p.cantidad, 0);
-  const totalPagar = productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const totalPagar = productos.reduce(
+    (acc, p) => acc + p.precio * p.cantidad,
+    0
+  );
 
   const irAPago = () => {
     if (productos.length === 0) {
@@ -35,7 +64,6 @@ function Carrito() {
     }
     navigate("/pago", { state: { items: productos, total: totalPagar } });
   };
-
   return (
     <>
       <div className="container mt-4">
@@ -44,7 +72,6 @@ function Carrito() {
             {mensaje}
           </div>
         )}
-
         <div className="row">
           <div className="col-md-8">
             <div className="card">
@@ -74,10 +101,16 @@ function Carrito() {
                       productos.map((p) => (
                         <tr key={p.id}>
                           <td data-label="img">
-                            <img src={p.img} alt={p.nombre} style={{ width: 60 }} />
+                            <img
+  src={p?.img ?? "/src/assets/images/f1.png"}
+  alt={p?.nombre ?? "Producto"}
+  style={{ width: 60 }}
+/>
                           </td>
                           <td data-label="producto">{p.nombre}</td>
-                          <td data-label="precio">${p.precio.toLocaleString()}</td>
+                          <td data-label="precio">
+                            ${p.precio.toLocaleString()}
+                          </td>
                           <td data-label="cantidad">
                             <input
                               type="number"
@@ -86,7 +119,9 @@ function Carrito() {
                               min={1}
                               max={10}
                               style={{ width: 80 }}
-                              onChange={(e) => cambiarCantidad(p.id, e.target.value)}
+                              onChange={(e) =>
+                                cambiarCantidad(p.id, e.target.value)
+                              }
                             />
                           </td>
                           <td data-label="total">
@@ -108,7 +143,6 @@ function Carrito() {
               </div>
             </div>
           </div>
-
           <div className="col-md-4">
             <div className="card">
               <div className="card-header">
@@ -119,10 +153,14 @@ function Carrito() {
                   <strong>Total productos</strong>: {totalProductos}
                 </p>
                 <p>
-                  <strong>Total a pagar</strong>: ${totalPagar.toLocaleString()}
+                  <strong>Total a pagar</strong>: $
+                  {totalPagar.toLocaleString()}
                 </p>
-
-                <button type="button" className="btn btn-primary w-100" onClick={irAPago}>
+                <button
+                  type="button"
+                  className="btn btn-primary w-100"
+                  onClick={irAPago}
+                >
                   Proceder a pagar
                 </button>
               </div>

@@ -19,6 +19,8 @@ export function Menu() {
     cargarComida();
   }, []);
 
+  const imgDefault = "/src/assets/images/f1.png";
+
   return (
     <section className="seccion_comida relleno_diseño_inferior" id='menu'>
       <div className="container">
@@ -29,23 +31,17 @@ export function Menu() {
               <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
                   
-                  <img 
-                    src="/img/default.jpg"
-                    className="img_carta"
-                    alt={producto.nombre}
-                  />
+                    <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
 
                   <div className="card-body">
                     <h5 className="card-title">{producto.nombre}</h5>
                     <p className="card-text">{producto.descripcion}</p>
 
-                    {/* Mostrar precio normal u oferta */}
-                    <p className="card-text">
-                      {producto.oferta ? 
-                        <> <span className="text-danger">${producto.precioOferta}</span> <s>${producto.precio}</s> </> :
-                        <>${producto.precio}</>
-                      }
-                    </p>
+            
+                    {producto.oferta ? 
+                        <> <span className="text-danger">Ahora:${producto.precioOferta}</span> <br /><s>Antes:${producto.precio}</s> </> :
+                        <><span className="text-danger">Precio:${producto.precio}</span></>
+                      } <br />
 
                     <Link to={`/producto/${producto.id}`} className="btn btn-danger mr-3">
                       Ver producto
@@ -75,6 +71,28 @@ export function Menu() {
 
 export function PedirMenu() {
 
+
+  function agregarAlCarrito(producto) {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  const existe = carrito.find(p => p.id === producto.id);
+
+  if (existe) {
+    existe.cantidad += 1;
+  } else {
+    carrito.push({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.oferta ? producto.precioOferta : producto.precio,
+      img: producto.img_oferta || producto.img || "/src/assets/images/f1.png",   
+      cantidad: 1
+    });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert("Producto agregado al carrito");
+}
+
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -92,6 +110,11 @@ export function PedirMenu() {
     cargarComida();
   }, []);
 
+
+
+
+
+  const imgDefault = "/src/assets/images/f1.png";
   return (
     <section className="seccion_comida relleno_diseño_inferior">
       <div className="container">
@@ -113,25 +136,29 @@ export function PedirMenu() {
               <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
 
-                  <img 
-                    src="/img/default.jpg"
-                    className="img_carta"
-                    alt={producto.nombre}
-                  />
+                   <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
 
                   <div className="card-body">
                     <h5 className="card-title">{producto.nombre}</h5>
                     <p className="card-text">{producto.descripcion}</p>
 
                     <p className="card-text">
-                      {producto.oferta ? 
-                        <> <span className="text-danger">${producto.precioOferta}</span> <s>${producto.precio}</s> </> :
-                        <>${producto.precio}</>
-                      }
+                          {producto.oferta ? 
+                        <> <span className="text-danger">Ahora:${producto.precioOferta}</span> <br /><s>Antes:${producto.precio}</s> </> :
+                        <><span className="text-danger">Precio:${producto.precio}</span></>
+                      } <br />
                     </p>
 
                     <Link to={`/producto/${producto.id}`} className="btn btn-danger mr-3">Ver producto</Link>
-                    <button onClick={() => alert("pedido")} className="btn btn-danger">Pedir</button>
+                    <button
+                      onClick={() => agregarAlCarrito({
+                        ...producto,
+                        precio: producto.oferta ? producto.precioOferta : producto.precio,
+                        img: producto.img_oferta || producto.img
+                      })}
+                      className="btn btn-danger">
+                      Pedir
+                    </button>
                   </div>
 
                 </div>

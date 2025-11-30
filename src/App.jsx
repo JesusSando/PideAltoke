@@ -28,6 +28,8 @@ import Boleta from './components/boleta';
 import Contacto    from './components/contacto';
 import AdminCuenta from './components/adminCuentas';
 
+import  Historial  from './components/Historial';
+
 
 
 function App() {
@@ -59,6 +61,8 @@ function App() {
       <Route path='blog'      element={<><Blog/> </>}/>
       <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
       <Route path='/producto/:id' element={<Producto/>}/>
+
+      <Route path="/historial" element={<Historial />} />
 
 
       <Route path='adminProducto' element={<><AdminProducto/> </>}/>

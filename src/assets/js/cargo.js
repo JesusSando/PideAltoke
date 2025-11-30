@@ -19,18 +19,35 @@ export async function inicioSesion(correo,contraseña){
     }
     return null;
 }
-export function cerrarSesion(){
-    CargoUsuario=null;
-    sessionStorage.removeItem('usuario');
-}
 
-export function obtenerUsuario(){
-    if(CargoUsuario)
-        return CargoUsuario;
-    const usuario=sessionStorage.getItem('usuario');
-    if(usuario){
-        CargoUsuario=JSON.parse(usuario);
-        return CargoUsuario;
+export const notificarCambioUsuario = () => {
+  window.dispatchEvent(new Event('usuarioCargado')); 
+};
+ 
+/**
+ * 
+ * @returns {object | null}  
+ */
+export const obtenerUsuario = () => {
+  const usuarioStr = localStorage.getItem("usuario");
+  if (usuarioStr) {
+    try {
+      const usuario = JSON.parse(usuarioStr);
+       
+      return usuario;
+    } catch (e) {
+      console.error("Error al parsear el usuario de localStorage:", e);
+      return null;
     }
-    return null;
-}
+  }
+  return null;
+};
+
+ 
+export const cerrarSesion = () => {
+  localStorage.removeItem("usuario");
+ 
+  window.dispatchEvent(new Event('usuarioCargado')); 
+};
+ 
+ 

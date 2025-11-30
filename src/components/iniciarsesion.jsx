@@ -1,98 +1,54 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { inicioSesion } from '../assets/js/cargo';
+import { useNavigate } from 'react-router-dom'; 
+import UsuarioService from "../service/UsuarioService";
 import { validarCorreo } from '../assets/js/validarcorreo';
+import { notificarCambioUsuario } from '../assets/js/cargo';
 
 export function IniciarSesion() {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
+  const [correo, setCorreo] = useState("");
+  const [contraseña, setContraseña] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    
     if (!validarCorreo(correo)) {
-      setError('Por favor ingresa un correo válido.');
+      setError("Correo inválido");
       return;
     }
 
     try {
-      const usuario = await inicioSesion(correo, contraseña);
-      if (usuario) {
-        if (usuario.cargo === 'admin' || usuario.cargo === 'empleado') {
-          navigate('/');
-        } else {
-          navigate('/');
-        }
+      const res = await UsuarioService.login(correo, contraseña);
+      const usuario = res.data;
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+      notificarCambioUsuario();
+
+      if (usuario.rol.nombre === "ADMIN" || usuario.rol.nombre === "EMPLEADO") {
+        navigate("/adminProducto");
       } else {
-        setError('Correo o contraseña incorrectos');
+        navigate("/");
       }
     } catch (err) {
       console.error(err);
-      setError('No se pudo iniciar sesión. Revisa la consola.');
+      if (err.response?.status === 401) setError("Correo o contraseña incorrectos");
+      else setError("Error al iniciar sesión");
     }
   };
 
   return (
     <div className="contenedor">
       <div className="formulario" id="inicio-sesion">
-        <h2 className="titulo">Inicio de sesión</h2>
+        <h2>Inicio de sesión</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Correo</label>
-          <input
-            type="email"
-            id="email"
-            required
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            placeholder="ejemplo@correo.com"
-          />
-
-          <label htmlFor="contraseña">Contraseña</label>
-          <input
-            type="password"
-            id="contraseña"
-            required
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            placeholder="********"
-          />
-
-          <button type="submit" className="enviar"  >Iniciar Sesión</button>
-
-          <button
-            type="button"
-            className="enviar"
-            onClick={() => navigate("/registrarse")}
-          >
-            Registrarse
-          </button>
-
-          <button
-            type="button"
-            className="enviar"
-            onClick={() => window.location.href = "https://accounts.google.com/"}
-          >
-            Iniciar sesión con Google
-          </button>
+          <label>Correo</label>
+          <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
+          <label>Contraseña</label>
+          <input type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)} required />
+          <button type="submit">Iniciar Sesión</button>
         </form>
-
-        <p style={{ marginTop: "10px" }}>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/olvidadocontrasena");
-            }}
-          >
-            ¿Olvidaste tu contraseña?
-          </a>
-        </p>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );

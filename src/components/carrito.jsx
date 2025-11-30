@@ -1,8 +1,10 @@
 
-import React, { useState, useEffect } from "react";
+ 
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'; 
+import { Link, Navigate } from 'react-router-dom';
 
-
+import   historial    from '../components/Historial';
 
 function Carrito() {
   const navigate = useNavigate();
@@ -22,8 +24,7 @@ function Carrito() {
 
   const [mensaje, setMensaje] = useState("");
 
-
-  // Cada vez que cambian los productos, se actualiza localStorage
+ 
 
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(productos));
@@ -102,10 +103,10 @@ function Carrito() {
                         <tr key={p.id}>
                           <td data-label="img">
                             <img
-  src={p?.img ?? "/src/assets/images/f1.png"}
-  alt={p?.nombre ?? "Producto"}
-  style={{ width: 60 }}
-/>
+                                src={p?.img ?? "/src/assets/images/f1.png"}
+                                alt={p?.nombre || "Imagen de producto"} // Usar || en vez de ?? para manejar valores falsy como "" o null
+                                style={{ width: 60 }}
+                              />
                           </td>
                           <td data-label="producto">{p.nombre}</td>
                           <td data-label="precio">
@@ -167,6 +168,18 @@ function Carrito() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-md-8">
+            <div className="card">
+              <div className="card-header">
+        <Link to='/historial' className="nav-link">Historial de compras</Link>
+     </div>
+     </div>
+     </div>
+     </div>
       </div>
     </>
   );

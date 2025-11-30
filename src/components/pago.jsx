@@ -1,30 +1,71 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { validarTarjeta } from "../assets/js/validarTarjeta";
+import BoletaService from "../service/BoletaService";
+
 
 const IVA = 0.19;
 
 function Pago() {
-  const navigate = useNavigate();
+
+    const navigate = useNavigate();
   const { state } = useLocation();
 
+  const [loading, setLoading] = useState(true);
+  const [usuario, setUsuario] = useState(null);
  
   const productos = Array.isArray(state?.items) ? state.items : [];
   const total = state?.total || 0;
+ 
+  const neto = useMemo(() => Math.round(total / (1 + IVA)), [total]);  
+  const iva = useMemo(() => total - neto, [total]);  
 
-  const neto = useMemo(() => Math.round(total / (1 + IVA)), [total]);
-  const iva = useMemo(() => total - neto, [total]);
-
-  const [form, setForm] = useState({
+  const [form, setForm] = useState({  
     nombre: "",
     numeroTarjeta: "",
     vencimiento: "",
     cvv: "",
   });
 
+  useEffect(() => {
+ 
+    const u = JSON.parse(localStorage.getItem("usuario"));
+    
+    if (!u) {
+      alert("Debes iniciar sesión para realizar la compra.");
+      navigate("/iniciarsesion");
+    } else {
+      setUsuario(u);
+    }
+    setLoading(false);  
+  }, [navigate]);
+
+  
+  if (loading) { 
+    return (
+      <div className="container py-5 text-center">
+        <h4>Cargando...</h4> 
+      </div>
+    );
+  } 
+  if (!usuario) {
+      return (
+          <div className="container py-5 text-center alert alert-warning">
+              Redirigiendo al inicio de sesión...
+          </div>
+      );
+  }
+
+  
+  const usuarioId = usuario.id;
+
+  
+ 
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+ 
     if (name === "numeroTarjeta") {
       const soloDigitos = value.replace(/\D/g, "").slice(0, 16);
       const conEspacios = soloDigitos.replace(/(.{4})/g, "$1 ").trim();
@@ -44,7 +85,6 @@ function Pago() {
 
     if (!nombre.trim()) return "Ingresa el nombre del titular.";
 
- 
     if (!validarTarjeta(numeroTarjeta)) {
       return "El número de tarjeta no es válido.";
     }
@@ -65,7 +105,7 @@ function Pago() {
     return null;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const error = validarFormulario();
     if (error) {
@@ -73,15 +113,42 @@ function Pago() {
       return;
     }
 
-    const Ultimos4 = form.numeroTarjeta.replace(/\D/g, "").slice(-4);
-    navigate("/boleta", {
-      state: {
-        productos,
-        totales: { neto, iva, total },
-        comprador: { nombre: form.nombre, Ultimos4 },
-        metodoPago: "Tarjeta de Débito",
-      },
-    });
+    const items = productos.map((p) => ({
+      comida: { id: p.id },
+      cantidad: p.cantidad,
+      precioUnitario: p.precio
+    }));
+
+    const data = {
+      usuarioId,
+      items,
+      total
+    };
+
+    try {
+      const res = await BoletaService.crearBoleta(data);
+
+      const boletaGuardada = res.data;
+
+      navigate("/boleta", {
+        state: {
+          productos,
+          totales: { neto, iva, total },
+          comprador: {
+            nombre: form.nombre,
+            Ultimos4: form.numeroTarjeta.replace(/\D/g, "").slice(-4)
+          },
+          metodoPago: "Tarjeta de Débito",
+          boletaId: boletaGuardada.id
+        }
+      });
+
+      localStorage.removeItem("carrito");
+
+    } catch (err) {
+      console.error("Error al guardar la boleta:", err);
+      alert("Hubo un problema realizando la compra.");
+    }
   };
 
   return (

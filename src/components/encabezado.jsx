@@ -32,10 +32,15 @@ export function Encabezado() {
   }, []);
 
   const cerrarSesionHandler = () => {
-    cerrarSesion();
-    setUsuario(null);
-    navigate('/');
-  }
+        cerrarSesion();
+        setUsuario(null);
+        navigate('/');
+    }
+ 
+    const esAdminOEmpleado = usuario && 
+                             (usuario.rol?.nombre === 'ADMIN' || usuario.rol?.nombre === 'EMPLEADO');
+
+  
 
 
   return (
@@ -70,12 +75,13 @@ export function Encabezado() {
               <li className="nav-item">
                 <Link to='/contacto' className="nav-link">Contacto</Link>
               </li>
+              
               {!usuario && (
                 <li className="nav-item">
                   <Link to='/iniciarsesion' className="nav-link">Cuenta</Link>
                 </li>
               )}
-              {usuario && (usuario.cargo === 'admin' || usuario.cargo === 'empleado') && (
+              {esAdminOEmpleado && (
 
 
                 <div className="boton_baja">
@@ -96,18 +102,12 @@ export function Encabezado() {
                 <li className="nav-item">
 
                   <Link to='/' onClick={cerrarSesionHandler} className="nav-link">Salir</Link>
-
-
                 </li>
               )}
             </ul>
-
           </div>
         </div>
       </nav>
-
-
-
     </>
   );
 }

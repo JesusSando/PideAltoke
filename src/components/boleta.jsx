@@ -48,7 +48,7 @@ function Boleta() {
 
           <div><strong>Método de pago:</strong> {metodoPago} • **** {comprador.Ultimos4}</div>
 
-          <div><strong>Número de orden:</strong> 123412341234</div>
+          <div><strong>Número de orden:</strong> {state?.boletaId ?? "N/A"} </div>
         </div>
 
         <div className="card mb-3">

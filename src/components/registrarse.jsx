@@ -4,119 +4,74 @@ import "../assets/css/iniciarSesion-Registro.css";
 import { validarCorreo ,validarContraseñaSegura,validarRut} from "../assets/js/validarcorreo"; 
 
 function Registrarse() {
-    const [nombre, setNombre] = useState("");
+   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [rut, setRut] = useState("");
   const [comuna, setComuna] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-  const handleRegistro = (e) => {
+  const handleRegistro = async (e) => {
     e.preventDefault();
     setMensaje("");
- 
+
     if (!nombre || !correo || !contraseña || !rut || !comuna) {
       setMensaje("Por favor completa todos los campos.");
       return;
     }
+
     if (!validarCorreo(correo)) {
-      setMensaje("Por favor ingresa un correo electrónico válido.");
+      setMensaje("Correo inválido.");
       return;
     }
 
     if (!validarContraseñaSegura(contraseña)) {
-      setMensaje("La contraseña debe tener 8 caracteres, una minúscula, una mayúscula, un carácter especial y un número.");
+      setMensaje("Contraseña insegura.");
       return;
     }
 
     if (!validarRut(rut)) {
-      setMensaje("El rut no es válido.");
+      setMensaje("Rut no válido.");
       return;
     }
 
-    setMensaje("Registro exitoso");  
+    const data = { nombre, correo, contrasena: contraseña, rut, comuna };
 
-
-    alert("Registro completado");
-
-    navigate('/');
+    try {
+      await UsuarioService.registrar(data);
+      alert("Registro completado");
+      navigate("/iniciarsesion");
+    } catch (err) {
+      console.error(err);
+      setMensaje(err.response?.data?.message || "Error al registrar usuario");
+    }
   };
 
   return (
     <>
     <div className="contenedor">
       <div className="formulario" id="registro">
-        <h2 className="titulo">Registro de usuario</h2>
-        {mensaje && (
-          <p
-            style={{
-              color: mensaje.includes("exitoso") ? "green" : "red",
-              fontWeight: "bold",
-            }}
-          >
-            {mensaje}
-          </p>
-        )}
-
+        <h2>Registro de usuario</h2>
+        {mensaje && <p style={{ color: "red", fontWeight: "bold" }}>{mensaje}</p>}
         <form onSubmit={handleRegistro}>
-          <label htmlFor="nombre">Nombre completo</label>
-          <input
-            type="text"
-            id="nombre"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            required
-          />
+          <label>Nombre completo</label>
+          <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
 
-          <label htmlFor="text">Rut</label>
-          <input
-            type="text"
-            id="rut"
-            value={rut}
-            onChange={(e) => setRut(e.target.value)}
-            required
-            placeholder="2195366-6"
-          />
+          <label>Rut</label>
+          <input type="text" value={rut} onChange={(e) => setRut(e.target.value)} required />
 
-          
+          <label>Correo</label>
+          <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
 
-          <label htmlFor="email">Correo electrónico</label>
-          <input
-            type="email"
-            id="email"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            required
-            placeholder="ejemplo@correo.com"
-          />
+          <label>Contraseña</label>
+          <input type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)} required />
 
+          <label>Comuna</label>
+          <input type="text" value={comuna} onChange={(e) => setComuna(e.target.value)} required />
 
-
-          <label htmlFor="contraseña">Contraseña</label>
-          <input
-            type="password"
-            id="contraseña"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-            required
-            placeholder="********"
-          />
-
-
-
-          <label htmlFor="contraseña">Comuna</label>
-          <input
-            type="text"
-            id="comuna"
-            value={comuna}
-            onChange={(e) => setComuna(e.target.value)}
-            required
-            placeholder="Santiago"
-          />
-
-          <button type="submit" className="enviar">Registrarse</button>
+          <button type="submit">Registrarse</button>
         </form>
       </div>
     </div>

@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom';
 import UsuarioService from "../service/UsuarioService";
 import { validarCorreo } from '../assets/js/validarcorreo';
 import { notificarCambioUsuario } from '../assets/js/cargo';
+
+
+ 
+ 
 
 export function IniciarSesion() {
   const [correo, setCorreo] = useState("");
@@ -40,7 +44,7 @@ export function IniciarSesion() {
   return (
     <div className="contenedor">
       <div className="formulario" id="inicio-sesion">
-        <h2>Inicio de sesión</h2>
+        <h2 class="text-danger">Inicio de sesión</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <form onSubmit={handleSubmit}>
           <label>Correo</label>
@@ -49,7 +53,12 @@ export function IniciarSesion() {
           <input type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)} required />
           <button type="submit">Iniciar Sesión</button>
         </form>
+           
       </div>
+      <br />
+      <Link to="/registrarse" class="text-danger" >
+        Regístrate aquí
+      </Link>
     </div>
   );
 }

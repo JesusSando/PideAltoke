@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ComidaService from "../service/ComidaService";
 import { Link } from "react-router-dom";
 import PasarSeccionComida from '../assets/js/pasarSeccionComida';
+import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
 
 export function Menu() {
   const limite = 4;
@@ -52,8 +53,8 @@ export function Menu() {
                       Ver producto
                     </Link>
 
-                    <button onClick={() => alert("pedido")} className="btn btn-danger">
-                      Pedir
+                    <button onClick={() => agregarAlCarrito(producto)}  className="btn btn-danger">
+                        Pedir
                     </button>
                   </div>
 
@@ -77,28 +78,10 @@ export function Menu() {
 export function PedirMenu() {
 
 
-  function agregarAlCarrito(producto) {
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  const existe = carrito.find(p => p.id === producto.id);
-
-  if (existe) {
-    existe.cantidad += 1;
-  } else {
-    carrito.push({
-      id: producto.id,
-      nombre: producto.nombre,
-      precio: producto.oferta ? producto.precioOferta : producto.precio,
-      img: producto.img_oferta || producto.img || "/src/assets/images/f1.png",   
-      cantidad: 1
-    });
-  }
-
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  alert("Producto agregado al carrito");
-}
+  
 
   const [productos, setProductos] = useState([]);
+  const [filtroActivo, setFiltroActivo] = useState('*');
 
   useEffect(() => {
     PasarSeccionComida();
@@ -115,10 +98,31 @@ export function PedirMenu() {
     cargarComida();
   }, []);
 
+ 
+    const manejarFiltro = (filtro) => { 
+        setFiltroActivo(filtro);
+ 
+        const listaItems = document.querySelectorAll('.filtro_menu li');
+        listaItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-filter') === filtro) {
+                item.classList.add('active');
+            }
+        });
+    }; 
+    const productosFiltrados = productos.filter(producto => { 
+        if (filtroActivo === '*') {
+            return true;
+        } 
+        const tipoEsperado = filtroActivo.substring(1);  
+        return producto.tipoComida && producto.tipoComida.toLowerCase() === tipoEsperado;
+    });
 
 
 const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
+
+
   return (
     <section className="seccion_comida relleno_diseño_inferior">
       <div className="container">
@@ -126,10 +130,10 @@ const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
         <h2 className='menuTitulo'>Menú</h2>
 
         <ul className="filtro_menu">
-          <li className="active" data-filter="*">Todo</li>
-          <li data-filter=".hamburguesa">Hamburguesas</li>
-          <li data-filter=".pizza">Pizzas</li>
-          <li data-filter=".bebida">Bebidas</li>
+          <li className={filtroActivo === '*' ? 'active' : ''} data-filter="*" onClick={() => manejarFiltro('*')}>Todo</li>
+                    <li className={filtroActivo === '.hamburguesa' ? 'active' : ''} data-filter=".hamburguesa" onClick={() => manejarFiltro('.hamburguesa')}>Hamburguesas</li>
+                    <li className={filtroActivo === '.pizza' ? 'active' : ''} data-filter=".pizza" onClick={() => manejarFiltro('.pizza')}>Pizzas</li>
+                    <li className={filtroActivo === '.bebida' ? 'active' : ''} data-filter=".bebida" onClick={() => manejarFiltro('.bebida')}>Bebidas</li>
 
         </ul>
 
@@ -156,14 +160,8 @@ const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
                     </p>
 
                     <Link to={`/producto/${producto.id}`} className="btn btn-danger mr-3">Ver producto</Link>
-                    <button
-                      onClick={() => agregarAlCarrito({
-                        ...producto,
-                        precio: producto.oferta ? producto.precioOferta : producto.precio,
-                        img: producto.img_oferta || producto.img
-                      })}
-                      className="btn btn-danger">
-                      Pedir
+                    <button onClick={() => agregarAlCarrito(producto)}  className="btn btn-danger">
+                        Pedir
                     </button>
                   </div>
 
@@ -172,6 +170,12 @@ const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
             ))}
 
           </div>
+
+               {productosFiltrados.length === 0 && (
+                        <div className="alert   text-center mt-4">
+                            No hay productos en la categoría seleccionada.
+                        </div> 
+                )}
         </div>
 
       </div>

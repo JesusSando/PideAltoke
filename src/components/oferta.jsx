@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from 'react'; 
 import carrusel2 from '../assets/images/carrusel2.jpg'
+import carrusel1 from '../assets/images/oferta2.webp'
 import { Link } from "react-router-dom";
+import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
 
 
 import ComidaService from "../service/ComidaService";
@@ -23,18 +25,38 @@ export function Oferta() {
       cargarComida();
     }, []);
 
-    const imgDefault = "/src/assets/images/carrusel5.jpg";
+    const defaultImages = [
+        carrusel2,
+        carrusel1
+    ];
+
+    const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
    
+const ofertasAMostrar = productos.slice(0, 2); 
+
+
+    const obtenerImagenURL = (producto, index) => {  
+        if (producto.img_oferta && producto.img_oferta.length > 0) {
+           return defaultImages[index % defaultImages.length]; 
+        } 
+        if (producto.imagen && producto.imagen.length > 0) {
+           return defaultImages[index % defaultImages.length]; 
+        }  
+        return defaultImages[index % defaultImages.length]; 
+    };
     return (
  <> 
 <div className="area_producto_oferta">
   <div className="contenido_producto_oferta">
-     {productos.slice(0,2).map((producto)=>( 
+     {ofertasAMostrar.map((producto,index)=>( 
     <div className="producto_producto_oferta">
  
       <div className="imagen_producto_oferta">
         
-         <img src={producto.img_oferta || imgDefault} alt={producto.nombre} />
+        <img  
+                            src={obtenerImagenURL(producto, index)} 
+                            alt={producto.nombre} 
+                        />
         <div className="descripcion_producto_oferta">
           <div className="texto_producto_oferta">
              
@@ -116,7 +138,9 @@ export function TodasOfertas() {
                       } <br />
 
                 <Link to={`/producto/${producto.id}`}className="btn btn-danger mr-3">ver producto</Link>
-                                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
+                 <button onClick={() => agregarAlCarrito(producto)}  className="btn btn-danger">
+                   Pedir
+                  </button>
               </div>
             </div>
           </div>

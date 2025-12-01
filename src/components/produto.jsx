@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import ComidaService from "../service/ComidaService";
+import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
 
 
 function Producto() {
@@ -49,7 +50,12 @@ useEffect(() => {
         </div>
         <div className="botonVista">
          
-                <button  onClick={()=>alert("pedido")}  className="btn btn-danger">Pedir</button>
+        <button  
+        onClick={() => agregarAlCarrito(producto)} 
+        className="btn btn-danger" 
+    > 
+        Pedir
+    </button>
         </div>
       </div>
     </div>

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
 import "../assets/css/iniciarSesion-Registro.css";
 import { validarCorreo ,validarContraseñaSegura,validarRut} from "../assets/js/validarcorreo"; 
+import UsuarioService from "../service/UsuarioService";
 
 function Registrarse() {
    const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
+     const [contraseña, setContraseña] = useState("");
   const [rut, setRut] = useState("");
   const [comuna, setComuna] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -30,8 +31,7 @@ function Registrarse() {
     if (!validarContraseñaSegura(contraseña)) {
       setMensaje("Contraseña insegura.");
       return;
-    }
-
+    } 
     if (!validarRut(rut)) {
       setMensaje("Rut no válido.");
       return;
@@ -53,7 +53,7 @@ function Registrarse() {
     <>
     <div className="contenedor">
       <div className="formulario" id="registro">
-        <h2>Registro de usuario</h2>
+        <h2 class="text-danger">Registro de usuario</h2>
         {mensaje && <p style={{ color: "red", fontWeight: "bold" }}>{mensaje}</p>}
         <form onSubmit={handleRegistro}>
           <label>Nombre completo</label>
@@ -74,6 +74,10 @@ function Registrarse() {
           <button type="submit">Registrarse</button>
         </form>
       </div>
+      <br />
+      <Link to="/iniciarsesion" class="text-danger">
+        iniciar sesion
+      </Link>
     </div>
     </>
   );

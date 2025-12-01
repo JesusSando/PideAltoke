@@ -266,9 +266,7 @@ function ComidaAdmin() {
                                 <p>Categoria: {producto.tipoComida}</p>
                                 <p>Oferta: {producto.oferta ? 'Sí' : 'No'}</p>
                                 {producto.oferta && <p>Precio Oferta: {producto.precioOferta}</p>}
-                                <p>Descripcion: {producto.descripcion}</p>
-                                <p>Nombre ultimo moficador : {producto.nombre_modificado}</p>
-                                <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
+                                <p>Descripcion: {producto.descripcion}</p> 
                             </div>
 
                             {producto.imagen && <img src={`http://localhost:8080/uploads/${producto.imagen}`} alt="Producto" style={{ width: '150px', height: 'auto' }} />}

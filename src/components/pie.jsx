@@ -14,20 +14,17 @@ function Pie() {
               Contacto
             </h4>
             <div className="contact_link_box">
-              <a href>
-                <i className="fa fa-map-marker" aria-hidden="true" />
+              <a href> 
                 <span>
                   Ubicación Antonio Varas 666
                 </span>
               </a>
-              <a href>
-                <i className="fa fa-phone" aria-hidden="true" />
+              <a href> 
                 <span>
                   Llamar +569 123456789
                 </span>
               </a>
-              <a href>
-                <i className="fa fa-envelope" aria-hidden="true" />
+              <a href> 
                 <span>
                   duoc@duocuc.cl
                 </span>
@@ -37,23 +34,7 @@ function Pie() {
         </div>
         <div className="col-md-4 pie_colum">
           <div className="detalle_pie">
-            <div className="redes_pie">
-              <a href>
-                <i className="fa fa-facebook" aria-hidden="true" />
-              </a>
-              <a href>
-                <i className="fa fa-twitter" aria-hidden="true" />
-              </a>
-              <a href>
-                <i className="fa fa-linkedin" aria-hidden="true" />
-              </a>
-              <a href>
-                <i className="fa fa-instagram" aria-hidden="true" />
-              </a>
-              <a href>
-                <i className="fa fa-pinterest" aria-hidden="true" />
-              </a>
-            </div>
+             
           </div>
         </div>
         <div className="col-md-4 pie_colum">

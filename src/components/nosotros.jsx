@@ -23,7 +23,7 @@ function Nosotros() {
             </p>
             <p>
               Nos enorgullece ofrecer productos de alta calidad y un servicio al cliente excepcional. Nuestro objetivo es
-              satisfacer las necesidades de nuestros clientes y superar sus expectativas en cada visita.
+              satisfacer las necesidades de nuestros clientes y superar sus expectativas en cada visita, demostrar que existen sabores únicos para poder quedar en la memoria de nuestros clientes.
             </p>
             <p>
               En nuestra tienda, encontrarás una amplia variedad de opciones de comida rápida, desde hamburguesas jugosas

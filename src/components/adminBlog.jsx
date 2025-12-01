@@ -1,23 +1,23 @@
 import React, { useEffect ,useState} from 'react';
-import BlogService from "../service/BlogService"; // Importar el nuevo servicio
+import BlogService from "../service/BlogService";  
 
 function AdminBlog() {
  
     const [blogEditado, setBlogEditado] = useState({
         id: 0,
-        fecha: new Date().toISOString().substring(0, 10), // Fecha actual por defecto
+        fecha: new Date().toISOString().substring(0, 10),  
         titulo: '',
         descripcion_breve: '',
         descripcion: '',
         descripcion_destacada: '',
-        imagen: null, // Nombre del archivo guardado
-        imagenFile: null, // Archivo para subir
-        imagenPreview: null, // Vista previa
+        imagen: null,  
+        imagenFile: null, 
+        imagenPreview: null,  
         autor: '',
-        img_autor: null, // Nombre del archivo guardado
-        img_autorFile: null, // Archivo para subir
-        img_autorPreview: null, // Vista previa
-        frase: '' // Corregido a 'frase'
+        img_autor: null, 
+        img_autorFile: null,  
+        img_autorPreview: null,  
+        frase: ''  
     });
 
     const [editando, setEditando] = useState(false);
@@ -26,8 +26,7 @@ function AdminBlog() {
 
     const UPLOAD_BASE_URL = "http://localhost:8080/uploads/"; 
 
-    // --- LÓGICA DE CARGA ---
-
+ 
     const cargarBlogs = async () => { 
         setLoading(true);
         try { 
@@ -42,9 +41,7 @@ function AdminBlog() {
 
     useEffect(() => {
         cargarBlogs();
-    }, []);
- 
-    // Cargar datos al formulario para edición
+    }, []); 
     const handleEdit = (blog) => {
         setBlogEditado({
             id: blog.id,
@@ -60,12 +57,11 @@ function AdminBlog() {
             img_autor: blog.img_autor || null,
             img_autorFile: null, 
             img_autorPreview: blog.img_autor ? UPLOAD_BASE_URL + blog.img_autor : null, 
-            frase: blog.frese // Usar 'frase' si el backend usa 'frese'
+            frase: blog.frese  
         });
         setEditando(true);  
     };
-
-    // Manejar cambios en campos de texto y archivos
+ 
     const handleChange = (e) => {
         const { name, value, files } = e.target;  
 
@@ -86,22 +82,17 @@ function AdminBlog() {
                     img_autorPreview: tempUrl,
                 }));
             }
-        } else {
-            // Manejo de campos de texto
+        } else { 
             setBlogEditado(prev => ({
                 ...prev,
                 [name]: value,
             }));
         }
-    };
-    
-    // Guardar o Actualizar
+    }; 
     const handleSubmit = async (e) => {
         e.preventDefault();  
         
-        const formData = new FormData();
-        
-        // 1. Crear el objeto Blog (JSON)
+        const formData = new FormData(); 
         const blogData = {
             id: blogEditado.id, 
             fecha: blogEditado.fecha,
@@ -110,18 +101,13 @@ function AdminBlog() {
             descripcion: blogEditado.descripcion,
             descripcion_destacada: blogEditado.descripcion_destacada,
             autor: blogEditado.autor,
-            frese: blogEditado.frase,
-            // Importante: Si no se sube un archivo nuevo, enviamos el nombre antiguo
+            frese: blogEditado.frase, 
             imagen: blogEditado.imagen,
             img_autor: blogEditado.img_autor,
-        };
-
-        // Adjuntar el JSON como 'blog' al FormData
+        }; 
         formData.append('blog', new Blob([JSON.stringify(blogData)], {
             type: "application/json"
-        }));
-
-        // 2. Adjuntar Archivos (si existen)
+        })); 
         if (blogEditado.imagenFile) {
             formData.append('imagen', blogEditado.imagenFile);
         }
@@ -137,9 +123,7 @@ function AdminBlog() {
             } else {
                 await BlogService.add(formData);
                 alert(`Blog ${blogEditado.titulo} agregado.`);
-            }
-
-            // Recargar la lista y limpiar
+            } 
             cargarBlogs();
             handleCancel(); 
 
@@ -147,9 +131,7 @@ function AdminBlog() {
             console.error("Error al guardar blog:", error.response || error);
             alert("Error al guardar blog. Revisa la consola y el backend.");
         }
-    };
-
-    // Limpiar formulario y estado
+    }; 
     const handleCancel = () => {
         setBlogEditado({
             id: 0,
@@ -168,9 +150,7 @@ function AdminBlog() {
             frase: ''
         });
         setEditando(false); 
-    };
-
-    // Eliminar blog
+    }; 
     const handleDelete = async (id, titulo) => {
         if (window.confirm(`¿Estás seguro de eliminar el blog ${titulo}?`)) {
             try {
@@ -192,9 +172,7 @@ function AdminBlog() {
             
             <div className="form-container">
                 <h2>{editando ? 'Editar Blog' : 'Agregar Nuevo Blog'}</h2>
-                <form onSubmit={handleSubmit}>
-                    
-                    {/* Campos de texto */}
+                <form onSubmit={handleSubmit}> 
                     <input name="fecha" type="date" value={blogEditado.fecha} onChange={handleChange} placeholder="Fecha (AAAA-MM-DD)" required/>
                     <input name="titulo" type="text" value={blogEditado.titulo} onChange={handleChange} placeholder="Título" required/>
                     <input name="descripcion_breve" type="text" value={blogEditado.descripcion_breve} onChange={handleChange} placeholder="Descripción Breve" required/>
@@ -203,7 +181,7 @@ function AdminBlog() {
                     <input name="autor" type="text" value={blogEditado.autor} onChange={handleChange} placeholder="Nombre del Autor" required/>
                     <input name="frase" type="text" value={blogEditado.frase} onChange={handleChange} placeholder="Frase del Autor" required/>
 
-                    {/* IMAGEN DEL BLOG */}
+ 
                     <label htmlFor="imagen">Imagen Principal del Blog:</label>
                     <input
                         id="imagen"
@@ -222,9 +200,7 @@ function AdminBlog() {
                                 style={{width:'150px', height:'100px', objectFit: 'cover'}}
                             />
                         </div>
-                    )}
-
-                    {/* IMAGEN DEL AUTOR */}
+                    )} 
                     <label htmlFor="img_autor">Imagen del Autor:</label>
                     <input
                         id="img_autor"
@@ -244,8 +220,7 @@ function AdminBlog() {
                             />
                         </div>
                     )}
-                
-                    {/* Botones */}
+                 
                     <button type="submit">
                         {editando ? 'Guardar Cambios' : 'Agregar Blog'}
                     </button>
@@ -257,8 +232,7 @@ function AdminBlog() {
             </div>
 
             <hr/>
-            
-            {/* Lista de Blogs */}
+             
             <div className="product-list">
                 <h3>Lista de Artículos del Blog</h3>
                 {blogs.map((blog) => (

@@ -6,6 +6,10 @@ import './assets/css/carrito.css'
 import '../src/assets/css/admin.css'
 import '../src/assets/js/estadisticas'
 
+
+
+import HistorialConsultas from './components/HistorialConsultas';
+import HistorialHistorias from './components/HistorialHistorias';
 import {Encabezado,Carrusel} from './components/encabezado';
 import {Menu,PedirMenu} from './components/menu';
 import {Oferta,TodasOfertas} from './components/oferta';
@@ -71,6 +75,10 @@ function App() {
       <Route path='adminBlog'     element={<><AdminBlog/> </>}/>
       <Route path='adminCuenta'   element={<><AdminCuenta/> </>}/>
       <Route path='adminEstadisticas' element={<><AdminEstadisticas/> </>}/>
+
+      <Route path='HistorialConsultas' element={<><HistorialConsultas/> </>}/>
+      <Route path='HistorialHistorias' element={<><HistorialHistorias/> </>}/>
+
       </Routes>
       
       <Pie/>

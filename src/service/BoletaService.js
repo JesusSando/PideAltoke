@@ -15,6 +15,10 @@ class BoletaService {
   getHistorialPorUsuario(usuarioId) {
     return axios.get(`${API_URL}/usuario/${usuarioId}`);
   }
+
+  getAll() {
+        return axios.get(API_URL); 
+    }
 }
 
 export default new BoletaService();

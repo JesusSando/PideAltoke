@@ -1,44 +1,48 @@
 import React, { useState } from "react";
+import ContactoService from "../service/ContactoService"; 
 
 function Contacto() {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    email: "",
-    mensaje: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
- 
-    if (!formData.nombre.trim() || !formData.email.trim() || !formData.mensaje.trim()) {
-      alert("Por favor, completa todos los campos antes de enviar.");
-      return;
-    }
-
-    // Validación simple de email
-    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailValido.test(formData.email)) {
-      alert("Por favor, ingresa un correo electrónico válido.");
-      return;
-    }
-
-    alert("Mensaje enviado correctamente. ¡Gracias por contactarnos!");
-
-    // Limpia el formulario
-    setFormData({
-      nombre: "",
-      email: "",
-      mensaje: "",
+    const [formData, setFormData] = useState({
+        nombre: "",
+        email: "",
+        mensaje: "",
     });
-  };
-  
-  return (
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {  
+        e.preventDefault();
+
+        if (!formData.nombre.trim() || !formData.email.trim() || !formData.mensaje.trim()) {
+            alert("Por favor, completa todos los campos antes de enviar.");
+            return;
+        }
+
+        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailValido.test(formData.email)) {
+            alert("Por favor, ingresa un correo electrónico válido.");
+            return;
+        }
+
+        try { 
+            await ContactoService.add(formData); 
+            alert("Mensaje enviado correctamente. ¡Gracias por contactarnos!");
+
+            setFormData({
+                nombre: "",
+                email: "",
+                mensaje: "",
+            });
+        } catch (error) {
+            console.error("Error al enviar el mensaje:", error.response || error);
+            alert("Error al enviar el mensaje. Inténtalo de nuevo más tarde.");
+        }
+    };
+     
+    return (
     <section className="seccion_contacto relleno_diseño_inferior">
       <div className="container">
         <h2 className="text-center mb-4">Contáctanos</h2>

@@ -93,6 +93,10 @@ export function Encabezado() {
                     <Link to='/adminBlog' className="nav-link link_opciones"> Blog</Link>
                     <Link to='/adminEstadisticas' className="nav-link link_opciones"> Estadisticas</Link>
                     <Link to='/adminCuenta' className="nav-link link_opciones"> Cuenta</Link>
+                    <Link to='/HistorialConsultas' className="nav-link link_opciones">Consultas</Link>
+                    <Link to='/HistorialHistorias' className="nav-link link_opciones"> Historias</Link>
+
+ 
                   </div>
                 </div>
               )}

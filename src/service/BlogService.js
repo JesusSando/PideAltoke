@@ -21,6 +21,11 @@ class BlogService {
   delete(id) {
    return axios.delete(`${API_URL}/${id}`); 
    }
+
+
+   getById(id) {
+        return axios.get(`${API_URL}/${id}`); 
+    }
 }
 
 export default new BlogService();

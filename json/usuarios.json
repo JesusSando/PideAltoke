@@ -1,0 +1,32 @@
+[
+{
+    "rut":"9212333-k",
+    "nombre":"Danuel perez",
+    "correo": "admin@admin.com",
+    "contraseña":"admin",
+    "cargo":"admin",
+    "comuna":"santiago",
+    "nombre_modificado":"Miguel Torres",
+     "fecha_modificacion":"2025-06-11"
+},
+{
+    "rut":"21096418-2",
+    "nombre":"Nicole cardona",
+    "correo": "empleado@empledo.com",
+    "contraseña":"empleado",
+    "cargo":"empleado",
+    "comuna":"santiago",
+    "nombre_modificado":"Ana Gomez",
+     "fecha_modificacion":"2025-06-11"
+},
+{
+    "rut":"19876111-2",
+    "nombre":"Felipe gomez",
+    "correo": "usuario@usuario.com",
+    "contraseña":"usuario",
+    "cargo":"usuario",
+    "comuna":"santiago",
+    "nombre_modificado":"",
+     "fecha_modificacion":""
+}
+]

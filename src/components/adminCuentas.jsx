@@ -1,234 +1,226 @@
- 
-
-import React, { useEffect ,useState} from 'react';
- 
+import React, { useEffect, useState } from 'react';
+import UsuarioService from "../service/UsuarioService"; 
 
 function AdminCuenta() {
  
-  const [productoEditado, setProductoEditado] = useState({
-    rut:'',
-    nombre:'',
-    correo: '',
-    contraseña:'',
-    cargo:'',
-    comuna:'',
-       nombre_modificado:'',
-     fecha_modificacion  :'' 
+    const [usuarioEditado, setUsuarioEditado] = useState({ 
+        id: 0, 
+        nombre: '',
+        correo: '',
+        rut: '',  
+        contrasena: '', 
+        comuna: '',
+        rol: { id: 0, nombre: '' }, 
+        logoUri: '', 
+    }); 
+    const [rolIdInput, setRolIdInput] = useState('2');  
 
-  });
-
- 
-  const [editando, setEditando] = useState(false);
-
- 
-  const handleEdit = (producto) => {
- 
-    setProductoEditado({
-      rut:producto.rut,
-      nombre:producto.nombre,
-    correo:producto.correo,
-    contraseña:producto.contraseña,
-    cargo:producto.cargo,
-    comuna:producto.comuna,
-    nombre_modificado:producto.nombre_modificado,
-     fecha_modificacion  :producto.fecha_modificacion
-    });
-    setEditando(true);  
-  };
-
- 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;  
-    if (name === 'imagen' && files.length > 0) {
- 
-      setProductoEditado({
-        ...productoEditado,
-        imagen: files[0],
-        imagenPreview: URL.createObjectURL(files[0]),  
-      });
-    } else {
- 
-      setProductoEditado({
-        ...productoEditado,
-        [name]: value,
-      });
-    }
-  };
-
- 
-  const handleSubmit = (e) => {
-    e.preventDefault();  
-    console.log(editando ? 'Producto editado:' : 'Nuevo producto agregado:', productoEditado);
-    
- 
-    setProductoEditado({
-      rut:'',
-      nombre:'',
-    correo: '',
-    contraseña:'',
-    cargo:'',
-    comuna:'',
-       nombre_modificado:'',
-     fecha_modificacion  :'' 
-    });
-    setEditando(false); 
-  };
-
- 
-  const handleCancel = () => {
-    setProductoEditado({
-     rut:'',
-     nombre:'',
-    correo: '',
-    contraseña:'',
-    cargo:'',
-    comuna:'',
-       nombre_modificado:'',
-     fecha_modificacion  :'' 
-    });
-    setEditando(false); 
-  };
-
-
-
-
-  const [productos, setProductos] = useState([]);
-  
-     useEffect(()=>{
-      const cargarComida=async()=>{
-        const res=await fetch('/json/usuarios.json');
-      if(!res.ok){
-          throw new Error ('Error al cargar los usuarios');
-      }
-      const data = await res.json();
-      setProductos(data);
-  };
-    cargarComida();
-     },[]);
-
-  return (
-
-<> 
-      
-     <div className="container">
-
-      <div className="form-container">
-        <h2>{editando ? 'Editar usuario' : 'Agregar usuario'}</h2>
-        <form onSubmit={handleSubmit}>
- 
-          <input
-            name="rut"
-            type="text"
-            value={productoEditado.rut}
-            onChange={handleChange}
-            placeholder="rut"
-            required
-          />
-          <input
-            name="nombre"
-            type="text"
-            value={productoEditado.nombre}
-            onChange={handleChange}
-            placeholder="nombre"
-            required
-          />
-          <input
-            name="correo"
-            type="text"
-            value={productoEditado.correo}
-            onChange={handleChange}
-            placeholder="correo"
-            required
-          />
-          <input
-            name="contraseña"
-            type="text"
-            value={productoEditado.contraseña}
-            onChange={handleChange}
-            placeholder="contraseña"
-            required
-          />
-          <input
-            name="comuna"
-            type="text"
-            value={productoEditado.comuna}
-            onChange={handleChange}
-            placeholder="comuna"
-            required
-          />
-
-            <input
-            name="cargo"
-            type="text"
-            value={productoEditado.cargo}
-            onChange={handleChange}
-            placeholder="cargo"
-            required
-          />
-          <input
-            name="nombre_modificado"
-            type="text"
-            value={productoEditado.nombre_modificado}
-            onChange={handleChange}
-            placeholder="Nombre del del ultimo modificador"
-            required
-          />
-
-          <input
-            name="fecha_modificacion"
-            type="text"
-            value={productoEditado.fecha_modificacion}
-            onChange={handleChange}
-            placeholder="Fecha de modificacion del producto"
-            required
-          /> 
-     
+    const [editando, setEditando] = useState(false);
+    const [usuarios, setUsuarios] = useState([]); 
+    const [loading, setLoading] = useState(true); 
+    useEffect(() => {
+        const cargarUsuarios = async () => { 
+            try { 
+                const res = await UsuarioService.getAll(); 
+                setUsuarios(res.data);
+            } catch (error) {
+                console.error('Error al cargar los usuarios:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        cargarUsuarios();
+    }, []);  
+    const handleEdit = (usuario) => {
+        setUsuarioEditado({
+            id: usuario.id,
+            nombre: usuario.nombre,
+            correo: usuario.correo,
+            rut: usuario.rut || '',  
+            contrasena: usuario.contrasena,  
+            comuna: usuario.comuna,
+            rol: usuario.rol || { id: 0, nombre: '' },
+            logoUri: usuario.logoUri || '',
+        }); 
+        setRolIdInput(usuario.rol ? String(usuario.rol.id) : '2'); 
+        setEditando(true);
+    };
+ 
+    const handleChange = (e) => {
+        const { name, value } = e.target; 
+        setUsuarioEditado({
+            ...usuarioEditado,
+            [name]: value,
+        });
+    };  
+    const handleSubmit = async (e) => {
+        e.preventDefault();  
+        const rolParaPayload = { id: parseInt(rolIdInput) }; 
+        const usuarioPayload = { 
+            ...usuarioEditado, 
+            rol: rolParaPayload,
+        };
         
+        try {
+            if (editando) { 
+                await UsuarioService.update(usuarioPayload.id, usuarioPayload);
+                alert(`Usuario ${usuarioPayload.nombre} actualizado correctamente.`);
+            } else {  
+                await UsuarioService.registrar(usuarioPayload);  
+                alert(`Usuario ${usuarioPayload.nombre} agregado correctamente.`);
+            }  
+            const resLista = await UsuarioService.getAll();
+            setUsuarios(resLista.data); 
+            handleCancel(); 
 
-          <button type="submit">
-            {editando ? 'Guardar Cambios' : 'Agregar Producto'}
-          </button>
-
-          {editando && (
-            <button type="button" onClick={handleCancel}>Cancelar</button>
-          )}
-        </form>
-      </div>
-
-
-      <div className="product-list">
-        {productos.map((producto) => (
-          <div key={producto.id} className="product-item">
-
-            <div className="product-details">
-              <p>Rut: {producto.rut}</p>
-              <p>Nombre: {producto.nombre}</p>
-              <p>Correo:{producto.correo}</p>
-              <p>Contraseña: {producto.contraseña}</p>
-              <p>Cargo: {producto.cargo}</p>
-              <p>Nombre ultimo moficador : {producto.nombre_modificado}</p>
-              <p>Fecha de modificacion: {producto.fecha_modificacion}</p>
-               
-            </div>
-
-            {producto.img && <img src={producto.img} alt="Producto" style={{width:'150px', height:'auto'}}/>}
-           
-
-
-            <div className="product-actions">
-              <button onClick={() => handleEdit(producto)}>Editar</button>
-              <button>Eliminar</button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
- 
-
-
+        } catch (error) {
+            console.error("Error al guardar usuario:", error); 
+            alert("Error al guardar usuario. Revisa la consola y la implementación del Rol en el backend.");
+        }
+    }; 
     
-    </>
-  );
+    const handleDelete = async (id, nombre) => {
+        if (window.confirm(`¿Estás seguro de eliminar al usuario ${nombre}?`)) {
+            try {
+                await UsuarioService.delete(id);
+                alert(`Usuario ${nombre} eliminado.`); 
+                const resLista = await UsuarioService.getAll();
+                setUsuarios(resLista.data);
+            } catch (error) {
+                console.error("Error al eliminar usuario:", error);
+                alert("Error al eliminar usuario.");
+            }
+        }
+    }; 
+    
+    const handleCancel = () => {
+        setUsuarioEditado({
+            id: 0, 
+            nombre: '',
+            correo: '',
+            rut: '',
+            contrasena: '',
+            comuna: '',
+            rol: { id: 0, nombre: '' },
+            logoUri: '',
+        });
+     
+        setRolIdInput('2');
+        setEditando(false);
+    };
+
+
+    if (loading) return <div className="container py-5 text-center">Cargando usuarios...</div>; 
+    return (
+        <div className="container py-4"> 
+            <div className="form-container mb-5 p-4 border rounded shadow-sm">
+                <h2 className="mb-4">{editando ? `Editar: ${usuarioEditado.nombre}` : 'Agregar Nuevo Usuario'}</h2>
+                <form onSubmit={handleSubmit} className="row g-3">
+       
+                    <div className="col-md-6">
+                        <input
+                            name="rut"
+                            type="text"
+                            className="form-control"
+                            value={usuarioEditado.rut}
+                            onChange={handleChange}
+                            placeholder="RUT"
+                            required
+                        />
+                    </div>  
+                    <div className="col-md-6">
+                        <input
+                            name="nombre"
+                            type="text"
+                            className="form-control"
+                            value={usuarioEditado.nombre}
+                            onChange={handleChange}
+                            placeholder="Nombre"
+                            required
+                        />
+                    </div>  
+                    <div className="col-md-6">
+                        <input
+                            name="correo"
+                            type="email"
+                            className="form-control"
+                            value={usuarioEditado.correo}
+                            onChange={handleChange}
+                            placeholder="Correo"
+                            required
+                        />
+                    </div>  
+                    <div className="col-md-6">
+                        <input
+                            name="contrasena"
+                            type="text"  
+                            className="form-control"
+                            value={usuarioEditado.contrasena}
+                            onChange={handleChange}
+                            placeholder="Contraseña"
+                            required
+                        />
+                    </div>  
+                    <div className="col-md-6">
+                        <input
+                            name="comuna"
+                            type="text"
+                            className="form-control"
+                            value={usuarioEditado.comuna}
+                            onChange={handleChange}
+                            placeholder="Comuna"
+                            required
+                        />
+                    </div>  
+                    <div className="col-md-6">
+                        <label htmlFor="rolSelect" className="form-label">Rol del Usuario</label>
+                        <select
+                            id="rolSelect"
+                            className="form-control"
+                            value={rolIdInput}
+                            onChange={(e) => setRolIdInput(e.target.value)}
+                            required
+                        >
+                            <option value="1">1 - ADMIN</option>
+                            <option value="2">2 - CLIENTE</option> 
+                        </select>
+                    </div>
+ 
+                    <div className="col-12 mt-4">
+                        <button type="submit" className={`btn btn-${editando ? 'success' : 'primary'} me-2`}>
+                            {editando ? 'Guardar Cambios' : 'Agregar Usuario'}
+                        </button>
+
+                        {editando && (
+                            <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+                                Cancelar Edición
+                            </button>
+                        )}
+                    </div>
+                </form>
+            </div>
+
+            <hr/>
+ 
+            <h3 className="mb-3">Lista de Usuarios ({usuarios.length})</h3>
+            <div className="list-group">
+                {usuarios.map((usuario) => ( 
+                    <div key={usuario.id} className="list-group-item list-group-item-action d-flex justify-content-between align-items-center mb-2">
+                        <div className="product-details">
+                            <p className="mb-1"><strong>{usuario.nombre}</strong> (ID: {usuario.id})</p>
+                            <small className="d-block">Rut: {usuario.rut} | Correo: {usuario.correo}</small>
+                            <small className="d-block">Comuna: {usuario.comuna} | Rol: **{usuario.rol ? usuario.rol.nombre : 'Sin Rol'}**</small>
+                        </div>
+                        
+                        <div className="product-actions">
+                            <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(usuario)}>Editar</button>
+                            <button className="btn btn-sm btn-danger" onClick={() => handleDelete(usuario.id, usuario.nombre)}>Eliminar</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default AdminCuenta;

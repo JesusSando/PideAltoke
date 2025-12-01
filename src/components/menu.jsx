@@ -30,7 +30,7 @@ export function Menu() {
         <div className="contenido_filtro">
           <div className="row grid">
             {productos.slice(0, limite).map(producto => (
-              <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
+              <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida ? producto.tipoComida.toLowerCase() : ''}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
                   
                     <img 
@@ -137,7 +137,7 @@ const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
           <div className="row grid">
 
             {productos.map(producto => (
-              <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida.toLowerCase()}`} key={producto.id}>
+              <div className={`col-sm-7 col-lg-4 all ${producto.tipoComida ? producto.tipoComida.toLowerCase() : ''}`} key={producto.id}>
                 <div className="card" style={{ width: '18rem', marginTop: 8 }}>
 
                  

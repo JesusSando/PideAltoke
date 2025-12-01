@@ -89,8 +89,7 @@ export function Encabezado() {
                   <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
                   <div className="boton_baja_contenido">
                     <Link to='/adminProducto' className="nav-link link_opciones"> Productos</Link>
-                    <Link to='/adminComida' className="nav-link link_opciones"> Comida</Link>
-                    <Link to='/adminOferta' className="nav-link link_opciones"> Oferta</Link>
+                    <Link to='/adminComida' className="nav-link link_opciones"> Comida</Link> 
                     <Link to='/adminBlog' className="nav-link link_opciones"> Blog</Link>
                     <Link to='/adminEstadisticas' className="nav-link link_opciones"> Estadisticas</Link>
                     <Link to='/adminCuenta' className="nav-link link_opciones"> Cuenta</Link>

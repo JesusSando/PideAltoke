@@ -1,0 +1,15 @@
+{
+  "masas": ["Tradicional", "Delgada"],
+  "extras": [
+    { "nombre": "Extra Queso", "precio": 1500 },
+    { "nombre": "Champiñones", "precio": 1000 },
+    { "nombre": "Aceitunas negras", "precio": 900 },
+    { "nombre": "Tocino", "precio": 1200 }
+  ],
+  "bordes": ["Normal", "Borde de Queso"],
+  "condimentos": ["Orégano", "Merkén"],
+  "bebidas": [
+    { "nombre": "Coca Cola", "precio": 0 },
+    { "nombre": "Coca Cola Light", "precio": 0 }
+  ]
+}

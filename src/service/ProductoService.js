@@ -1,13 +1,13 @@
 import axios from "axios";
 
-// Ajusta el puerto si es necesario
+ 
 const API_URL = "http://localhost:8080/api/v1/producto"; 
 
 class ProductoService {
  
     // crear  
-  registrar(producto) {
-  return axios.post(API_URL, producto);
+  registrar(formData) {
+  return axios.post(API_URL, formData);
   }
  
  
@@ -16,13 +16,13 @@ class ProductoService {
   }
 
   
-    update(id, producto) {
-     return axios.put(`${API_URL}/${id}`, producto); 
+    update(id, formData) {
+     return axios.put(`${API_URL}/${id}`, formData); 
    }
   
    
-   delete(id) {
-   return axios.delete(`${API_URL}/${id}`); 
+   delete(id,rutUsuario) {
+  return axios.delete(`${API_URL}/${id}?rutUsuario=${rutUsuario}`);
   }
 }
 

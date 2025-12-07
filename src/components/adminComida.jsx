@@ -21,6 +21,9 @@ function ComidaAdmin() {
 
     const [editando, setEditando] = useState(false);
 
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const rutUsuario = usuario?.rut || "";
+
     const loadComidas = async () => {
         try {
             const response = await ComidaService.getAll();
@@ -88,18 +91,15 @@ function ComidaAdmin() {
 
         formData.append('nombre', productoEditado.nombre);
         formData.append('descripcion', productoEditado.descripcion);
-        formData.append('precio', parseFloat(productoEditado.precio));
-        formData.append('tipoComida', productoEditado.categoria);
-
+        formData.append('precio', productoEditado.precio);
+        formData.append('tipoComida', productoEditado.categoria || '');  
         formData.append('oferta', productoEditado.oferta);
-        formData.append('precioOferta', parseFloat(productoEditado.precioOferta));
-
+        formData.append('precioOferta', productoEditado.precioOferta || 0);
         if (productoEditado.imagen && typeof productoEditado.imagen !== 'string') {
             formData.append('imagen', productoEditado.imagen);
         }
         
-        formData.append('nombre_modificado', productoEditado.nombre_modificado);
-        formData.append('fecha_modificacion', productoEditado.fecha_modificacion);
+         formData.append('rutUsuario', rutUsuario);
 
         try {
             let res;
@@ -143,7 +143,7 @@ function ComidaAdmin() {
     const handleDelete = async (id, nombre) => {
         if (window.confirm(`¿Estás seguro de que quieres eliminar la comida "${nombre}"?`)) {
             try {
-                await ComidaService.delete(id);
+                await ComidaService.delete(id, rutUsuario);
                 alert(`Comida "${nombre}" eliminada con éxito.`);
                 loadComidas();
             } catch (error) {
@@ -173,11 +173,13 @@ function ComidaAdmin() {
                         />
                         <input
                             name="precio"
-                            type="text"
+                            type="number"
                             value={productoEditado.precio}
                             onChange={handleChange}
                             placeholder="Precio del producto"
                             required
+                            min={1}          
+                            max={500000}     
                         />
                         <input
                             name="descripcion"
@@ -187,14 +189,20 @@ function ComidaAdmin() {
                             placeholder="Descripción"
                             required
                         />
-                        <input
-                            name="categoria"
-                            type="text"
-                            value={productoEditado.categoria}
-                            onChange={handleChange}
-                            placeholder="Categoría"
-                            required
-                        />
+                        <label>Tipo de Comida:</label>
+                            <select
+                                name="categoria"
+                                value={productoEditado.categoria}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Selecciona una categoría</option>
+                                <option value="pizza">Pizza</option>
+                                <option value="hamburguesa">Hamburguesa</option>
+                                <option value="acompañante">Acompañante</option>
+                                <option value="bebida">Bebida</option>
+                                <option value="postre">Postre</option>
+                            </select>
 
    
                         <label>
@@ -204,6 +212,7 @@ function ComidaAdmin() {
                                 type="checkbox"
                                 checked={productoEditado.oferta}
                                 onChange={handleChange}
+                                
                             />
                         </label>
 
@@ -217,24 +226,11 @@ function ComidaAdmin() {
                             onChange={handleChange}
                             placeholder="Precio de Oferta"
                             required={productoEditado.oferta}
+                            min={1}          
+                            max={500000} 
                         />
 
-                        <input
-                            name="nombre_modificado"
-                            type="text"
-                            value={productoEditado.nombre_modificado}
-                            onChange={handleChange}
-                            placeholder="Nombre del ultimo modificador"
-                            required
-                        />
-                        <input
-                            name="fecha_modificacion"
-                            type="text"
-                            value={productoEditado.fecha_modificacion}
-                            onChange={handleChange}
-                            placeholder="Fecha de modificacion del producto"
-                            required
-                        />
+                         
 
                         <input
                             name="imagen"

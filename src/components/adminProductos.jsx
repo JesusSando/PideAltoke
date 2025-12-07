@@ -1,23 +1,27 @@
 import React, { useEffect ,useState} from 'react';
 import ProductoService from "../service/ProductoService"; 
+import axios from 'axios';
 
 function AdminProducto() {
     const [productoEditado, setProductoEditado] = useState({
-        id: 0,
+        id: null,
         nombre: '',
         stok: '',
         fecha_vencimiento: '',
-        img: '',  
+        img: '',
         imgFile: null, 
-        imgPreview: null,  
-        nombre_modificado: '',
-        fecha_modificacion: ''
+        imgPreview: '',
     });
 
     const [editando, setEditando] = useState(false);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true); 
      
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const rutUsuario = usuario?.rut || "Anonimo";
+
+
     const cargarProductos = async () => { 
         setLoading(true);
         try { 
@@ -42,70 +46,57 @@ function AdminProducto() {
             fecha_vencimiento: producto.fecha_vencimiento,
             img: producto.img || '',  
             imgFile: null, 
-            imgPreview: producto.img || null,  
-            nombre_modificado: producto.nombre_modificado,
-            fecha_modificacion: producto.fecha_modificacion
+            imgPreview: producto.img ? `http://localhost:8080/uploads/${producto.img}` : ''
+           
         });
-        setEditando(true);  
+        setEditando(true); 
     }; 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;  
+        const { name, value, files } = e.target;
 
-        if (name === 'imgFile' && files.length > 0) { 
-            const file = files[0];
-            const tempUrl = URL.createObjectURL(file);
-            
-            setProductoEditado(prev => ({
-                ...prev,
-                imgFile: file,
-                imgPreview: tempUrl,
-            }));
-
+       if (name === 'img' && files.length > 0) {
+            setProductoEditado({
+                ...productoEditado,
+                img: files[0],  
+                imgPreview: URL.createObjectURL(files[0])  
+            });
         } else { 
-            setProductoEditado(prev => ({
-                ...prev,
+            setProductoEditado({
+                ...productoEditado,
                 [name]: value,
-            }));
+            });
         }
     }; 
     const handleSubmit = async (e) => {
-        e.preventDefault();  
-        
-        let imgFinalUrl = productoEditado.img;  
+        e.preventDefault();
  
-        if (productoEditado.imgFile) { 
-            
-            imgFinalUrl = 'img/uploads/' + productoEditado.imgFile.name; 
-            console.log("Ruta de imagen a guardar:", imgFinalUrl);
-        } 
-        
-        const productoPayload = {  
-            id: productoEditado.id, 
-            nombre: productoEditado.nombre,
-            stok: parseInt(productoEditado.stok),  
-            fecha_vencimiento: productoEditado.fecha_vencimiento, 
-            img: imgFinalUrl || '../src/assets/images/default.jpg', 
-            nombre_modificado: productoEditado.nombre_modificado,
-            fecha_modificacion: productoEditado.fecha_modificacion, 
-        }; 
+        const formData = new FormData();
+        formData.append('nombre', productoEditado.nombre);
+        formData.append('stok', productoEditado.stok);
+        formData.append('fecha_vencimiento', productoEditado.fecha_vencimiento);
+        formData.append('rutUsuario', rutUsuario); 
+        if (productoEditado.img instanceof File) {
+            formData.append('imagen', productoEditado.img);
+        }
 
         try {
-            if (editando) {
-                await ProductoService.update(productoPayload.id, productoPayload);
-                alert(`Producto ${productoPayload.nombre} actualizado.`);
-            } else {
-                await ProductoService.registrar(productoPayload);
-                alert(`Producto ${productoPayload.nombre} agregado.`);
-            } 
-            
-            cargarProductos(); 
-            handleCancel(); 
-
+            if (editando) {  
+                await ProductoService.update(productoEditado.id, formData);
+                alert('Producto actualizado con éxito');
+            } else { 
+                await ProductoService.registrar(formData);
+                alert('Producto creado con éxito');
+            }
+            cargarProductos();
+            handleCancel();
         } catch (error) {
-            console.error("Error al guardar producto:", error);
-            alert("Error al guardar producto. Revisa la consola y el backend.");
+            console.error("Error al guardar:", error);
+            alert("Error al guardar producto. Revisa la consola.");
         }
-    }; 
+    };
+
+
+
     const handleCancel = () => {
         setProductoEditado({
             id: 0,
@@ -114,22 +105,20 @@ function AdminProducto() {
             fecha_vencimiento: '',
             img: '',
             imgFile: null,
-            imgPreview: null,
-            nombre_modificado: '',
-            fecha_modificacion: ''
+            imgPreview: ''
         });
         setEditando(false); 
     };
 
     const handleDelete = async (id, nombre) => {
-        if (window.confirm(`¿Estás seguro de eliminar el producto ${nombre}?`)) {
-            try {
-                await ProductoService.delete(id);
-                alert(`Producto ${nombre} eliminado.`);
+        if (window.confirm(`¿Estás seguro de eliminar ${nombre}?`)) {
+            try { 
+                await ProductoService.delete(id, rutUsuario); 
+                alert('Producto eliminado.');
                 cargarProductos();
             } catch (error) {
-                console.error("Error al eliminar producto:", error);
-                alert("Error al eliminar producto.");
+                console.error("Error al eliminar:", error);
+                alert("Error al eliminar.");
             }
         }
     };
@@ -160,6 +149,8 @@ function AdminProducto() {
                         onChange={handleChange}
                         placeholder="Cantidad (Stock)"
                         required
+                        min={editando ? 0 : 1}   
+                        max={200}  
                     /> 
                     <p>Fecha vencimiento</p>
                     <input
@@ -169,36 +160,31 @@ function AdminProducto() {
                         onChange={handleChange}
                         placeholder="Fecha de vencimiento"
                         required
+                        min={new Date().toISOString().split("T")[0]}
                     />
 
-                    <p>Nombre modificador</p>
-                    <input
-                        name="nombre_modificado"
-                        type="text"
-                        value={productoEditado.nombre_modificado}
-                        onChange={handleChange}
-                        placeholder="Nombre de quien modifica"
-                        required
-                    />
-            
-                    <label htmlFor="imgFile">Imagen del producto:</label>
+                   
+
+                    <label htmlFor="imgFile">Imagen del producto:</label> 
                     <input
                         id="imgFile"
-                        name="imgFile"
+                        name="img" 
                         type="file"
                         onChange={handleChange}
                         accept="image/*"
-                    /> 
-                    {(productoEditado.imgPreview || productoEditado.img) && (
-                        <div>
+                    />
+
+
+                    {(productoEditado.imgPreview) && (
+                        <div style={{marginTop: '10px'}}>
                             <p>Vista Previa:</p>
                             <img  
-                                src={productoEditado.imgPreview || productoEditado.img} 
-                                alt="Vista previa/guardada" 
-                                style={{width:'150px', height:'auto', objectFit: 'cover'}}
+                                src={productoEditado.imgPreview} 
+                                alt="Vista previa" 
+                                style={{width:'150px', height:'auto', objectFit: 'cover', border: '2px solid #ddd'}}
                             />
                         </div>
-                    )} 
+                    )}
                     <button type="submit">
                         {editando ? 'Guardar Cambios' : 'Agregar Producto'}
                     </button>
@@ -216,11 +202,10 @@ function AdminProducto() {
                     <div key={producto.id} className="product-item">
 
                         <div className="product-details">
-                            <p><strong>{producto.nombre}</strong> (ID: {producto.id})</p>
-                            <small>Stock: {producto.stok} | Vence: {producto.fecha_vencimiento}</small>
-                            <small>Modificado por: {producto.nombre_modificado} el {producto.fecha_modificacion}</small>
+                            <p><strong>{producto.nombre}</strong> ID: {producto.id}</p>
+                            <small>Stock: {producto.stok}<br/> Vence: {producto.fecha_vencimiento}</small>
                         </div>
-                        {producto.img && <img src={producto.img} alt="Producto" style={{width:'100px', height:'100px', objectFit: 'cover'}}/>}
+                        {producto.img && <img src={`http://localhost:8080/uploads/${producto.img}`} alt="prod" style={{ width: '80px' }} />}
                         
                         <div className="product-actions">
                             <button onClick={() => handleEdit(producto)}>Editar</button>

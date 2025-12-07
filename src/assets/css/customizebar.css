@@ -1,0 +1,131 @@
+/* ---------- OVERLAY Y SIDEBAR ---------- */
+.customize-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end; /* sidebar a la derecha */
+  z-index: 9999;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  width: 70%; /* parte oscura que cubre el resto */
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+/* ---------- SIDEBAR ---------- */
+.customize-sidebar {
+  width: 30%;
+  height: 100%;
+  background: white;
+  padding: 20px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: -4px 0 8px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column; /* todo en vertical */
+}
+
+/* ---------- CERRAR ---------- */
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ---------- TÍTULOS Y CATEGORÍAS ---------- */
+.customize-sidebar h2,
+.customize-sidebar h3,
+.customize-sidebar h4 {
+  margin-bottom: 10px;
+}
+
+.cs-category {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column; /* vertical */
+}
+
+.cs-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.cs-item label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cs-item input[type="radio"],
+.cs-item input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* precio extra */
+.cs-extra {
+  color: #d70000;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+/* ---------- CANTIDAD ---------- */
+.cantidad-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.cantidad-box button {
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ---------- BOTÓN CONFIRMAR ---------- */
+.confirm-btn {
+  width: 100%;
+  padding: 12px;
+  background: #d70000;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: auto; /* siempre abajo */
+}
+
+.confirm-btn:hover {
+  background: #a50000;
+}
+
+/* ---------- SCROLLBAR ---------- */
+.customize-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.customize-sidebar::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 8px;
+}
+
+.customize-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}

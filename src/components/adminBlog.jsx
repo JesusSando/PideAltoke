@@ -1,28 +1,29 @@
 import React, { useEffect ,useState} from 'react';
 import BlogService from "../service/BlogService";  
 
+ 
+
 function AdminBlog() {
- 
     const [blogEditado, setBlogEditado] = useState({
-        id: 0,
+        id: null,
         fecha: new Date().toISOString().substring(0, 10),  
         titulo: '',
         descripcion_breve: '',
         descripcion: '',
         descripcion_destacada: '',
-        imagen: null,  
-        imagenFile: null, 
-        imagenPreview: null,  
+        imagen: '',   
+        imagenPreview: '',  
         autor: '',
-        img_autor: null, 
-        img_autorFile: null,  
-        img_autorPreview: null,  
+        img_autor: '',  
+        img_autorPreview: '',  
         frase: ''  
     });
 
     const [editando, setEditando] = useState(false);
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    const rutUsuario = usuario?.rut || "Anonimo";
 
     const UPLOAD_BASE_URL = "http://localhost:8080/uploads/"; 
 
@@ -50,71 +51,64 @@ function AdminBlog() {
             descripcion_breve: blog.descripcion_breve,
             descripcion: blog.descripcion,
             descripcion_destacada: blog.descripcion_destacada,
-            imagen: blog.imagen || null, 
+            imagen:  null, 
             imagenFile: null, 
-            imagenPreview: blog.imagen ? UPLOAD_BASE_URL + blog.imagen : null, 
+            imagenPreview: blog.imagen ? UPLOAD_BASE_URL + blog.imagen : '', 
             autor: blog.autor,
-            img_autor: blog.img_autor || null,
-            img_autorFile: null, 
-            img_autorPreview: blog.img_autor ? UPLOAD_BASE_URL + blog.img_autor : null, 
+            img_autor: null, 
+            img_autorPreview: blog.img_autor ? UPLOAD_BASE_URL + blog.img_autor : '', 
             frase: blog.frese  
         });
-        setEditando(true);  
+        setEditando(true); 
     };
  
     const handleChange = (e) => {
-        const { name, value, files } = e.target;  
-
-        if (files && files.length > 0) {
-            const file = files[0];
-            const tempUrl = URL.createObjectURL(file);
-            
-            if (name === 'imagen') {
-                 setBlogEditado(prev => ({
-                    ...prev,
-                    imagenFile: file,
-                    imagenPreview: tempUrl,
-                 }));
-            } else if (name === 'img_autor') {
-                setBlogEditado(prev => ({
-                    ...prev,
-                    img_autorFile: file,
-                    img_autorPreview: tempUrl,
-                }));
-            }
-        } else { 
-            setBlogEditado(prev => ({
-                ...prev,
+        const { name, value, files } = e.target; 
+        if (name === 'imagen' && files.length > 0) {
+             setBlogEditado({
+                 ...blogEditado,
+                 imagen: files[0], //archivo
+                 imagenPreview: URL.createObjectURL(files[0])
+             });
+        } 
+        //img del autor
+        else if (name === 'img_autor' && files.length > 0) {
+            setBlogEditado({
+                ...blogEditado,
+                img_autor: files[0], //archivo 
+                img_autorPreview: URL.createObjectURL(files[0])
+            });
+        } 
+        //textos
+        else { 
+            setBlogEditado({
+                ...blogEditado,
                 [name]: value,
-            }));
+            });
         }
+        
     }; 
+
     const handleSubmit = async (e) => {
-        e.preventDefault();  
+        e.preventDefault(); 
         
         const formData = new FormData(); 
-        const blogData = {
-            id: blogEditado.id, 
-            fecha: blogEditado.fecha,
-            titulo: blogEditado.titulo,
-            descripcion_breve: blogEditado.descripcion_breve,
-            descripcion: blogEditado.descripcion,
-            descripcion_destacada: blogEditado.descripcion_destacada,
-            autor: blogEditado.autor,
-            frese: blogEditado.frase, 
-            imagen: blogEditado.imagen,
-            img_autor: blogEditado.img_autor,
-        }; 
-        formData.append('blog', new Blob([JSON.stringify(blogData)], {
-            type: "application/json"
-        })); 
-        if (blogEditado.imagenFile) {
-            formData.append('imagen', blogEditado.imagenFile);
-        }
-        if (blogEditado.img_autorFile) {
-            formData.append('img_autor', blogEditado.img_autorFile);
-        }
+        formData.append('fecha', blogEditado.fecha);
+        formData.append('titulo', blogEditado.titulo);
+        formData.append('descripcion_breve', blogEditado.descripcion_breve);
+        formData.append('descripcion', blogEditado.descripcion);
+        formData.append('descripcion_destacada', blogEditado.descripcion_destacada);
+        formData.append('autor', blogEditado.autor);
+        formData.append('frase', blogEditado.frase);
+        formData.append('rutUsuario', rutUsuario);
 
+        //archivo solo si nuevos
+        if (blogEditado.imagen instanceof File) {
+            formData.append('imagen', blogEditado.imagen);
+        }
+        if (blogEditado.img_autor instanceof File) {
+            formData.append('img_autor', blogEditado.img_autor);
+        }
 
         try {
             if (editando) {
@@ -132,29 +126,32 @@ function AdminBlog() {
             alert("Error al guardar blog. Revisa la consola y el backend.");
         }
     }; 
+
+
+
     const handleCancel = () => {
         setBlogEditado({
-            id: 0,
+            id: null,
             fecha: new Date().toISOString().substring(0, 10),
             titulo: '',
             descripcion_breve: '',
             descripcion: '',
             descripcion_destacada: '',
-            imagen: null, 
-            imagenFile: null, 
-            imagenPreview: null, 
+            imagen: '',  
+            imagenPreview: '', 
             autor: '',
-            img_autor: null,
-            img_autorFile: null, 
-            img_autorPreview: null, 
+            img_autor: '', 
+            img_autorPreview: '', 
             frase: ''
         });
         setEditando(false); 
     }; 
+
+
     const handleDelete = async (id, titulo) => {
         if (window.confirm(`¿Estás seguro de eliminar el blog ${titulo}?`)) {
             try {
-                await BlogService.delete(id);
+                await BlogService.delete(id,rutUsuario);
                 alert(`Blog ${titulo} eliminado.`);
                 cargarBlogs();
             } catch (error) {
@@ -191,16 +188,8 @@ function AdminBlog() {
                         accept="image/*"
                     />
 
-                    {(blogEditado.imagenPreview || blogEditado.imagen) && (
-                        <div>
-                            <p>Vista Previa Imagen Blog:</p>
-                            <img 
-                                src={blogEditado.imagenPreview || (blogEditado.imagen ? UPLOAD_BASE_URL + blogEditado.imagen : null)} 
-                                alt="Imagen Blog" 
-                                style={{width:'150px', height:'100px', objectFit: 'cover'}}
-                            />
-                        </div>
-                    )} 
+                    {blogEditado.imagenPreview && <img src={blogEditado.imagenPreview} alt="Vista" style={{width:'100px'}} />}
+                    
                     <label htmlFor="img_autor">Imagen del Autor:</label>
                     <input
                         id="img_autor"
@@ -209,17 +198,7 @@ function AdminBlog() {
                         onChange={handleChange}
                         accept="image/*"
                     />
-
-                    {(blogEditado.img_autorPreview || blogEditado.img_autor) && (
-                        <div>
-                            <p>Vista Previa Imagen Autor:</p>
-                            <img 
-                                src={blogEditado.img_autorPreview || (blogEditado.img_autor ? UPLOAD_BASE_URL + blogEditado.img_autor : null)} 
-                                alt="Imagen Autor" 
-                                style={{width:'100px', height:'100px', borderRadius: '50%', objectFit: 'cover'}}
-                            />
-                        </div>
-                    )}
+                    {blogEditado.img_autorPreview && <img src={blogEditado.img_autorPreview} alt="Vista" style={{width:'50px', borderRadius:'50%'}} />}
                  
                     <button type="submit">
                         {editando ? 'Guardar Cambios' : 'Agregar Blog'}

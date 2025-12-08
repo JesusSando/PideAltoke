@@ -7,6 +7,7 @@ import BlogService from "../service/BlogService";
 
 function PaginaBlog(){
   const UPLOAD_BASE_URL = "http://localhost:8080/uploads/";
+  const IMG_AUTOR_DEFAULT = "../src/assets/images/carrusel5.jpg";
 
     const { id } = useParams();  
     const [blog, setBlog] = useState(null); 
@@ -34,7 +35,7 @@ function PaginaBlog(){
     if (loading) return <div className="container py-5 text-center">Cargando artículo...</div>;
     if (!blog) return <div className="container py-5 text-center">Artículo no encontrado.</div>; 
 
-    const IMG_AUTOR_DEFAULT = "/src/assets/images/carrusel5.jpg";
+    
     return(
           <>
         <section className="blog_area single-post-area section-padding">
@@ -72,6 +73,8 @@ function PaginaBlog(){
                                 alt={blog.autor || "Autor Desconocido"} 
                             />
                             <div className="media-body"> 
+                                <h4>{blog.autor}</h4>
+                                <p>{blog.frase}</p>  
                             </div>
                         </div>
                       </div>

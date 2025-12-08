@@ -63,7 +63,7 @@ function App() {
       <Route path='ofertas'   element={<><Oferta/><TodasOfertas/></>}/>
       <Route path='contacto'  element={<Contacto/>}/>
       <Route path='blog'      element={<><Blog/> </>}/>
-      <Route path='/blog/:id' element={<><PaginaBlog/> </>}/>
+      <Route path='/blog/:id' element={<PaginaBlog/> }/> 
       <Route path='/producto/:id' element={<Producto/>}/>
 
       <Route path="/historial" element={<Historial />} />

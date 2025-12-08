@@ -18,8 +18,8 @@ class BlogService {
   }
  
  
-  delete(id) {
-   return axios.delete(`${API_URL}/${id}`); 
+  delete(id,rutUsuario) {
+   return axios.delete(`${API_URL}/${id}?rutUsuario=${rutUsuario}`); 
    }
 
 

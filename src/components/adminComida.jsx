@@ -144,7 +144,7 @@ function ComidaAdmin() {
         if (window.confirm(`¿Estás seguro de que quieres eliminar la comida "${nombre}"?`)) {
             try {
                 await ComidaService.delete(id, rutUsuario);
-                alert(`Comida "${nombre}" eliminada con éxito.`);
+                alert(`Comida "${nombre}" eliminada con exito.`);
                 loadComidas();
             } catch (error) {
                 console.error("Error al eliminar la comida:", error);
@@ -196,7 +196,7 @@ function ComidaAdmin() {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Selecciona una categoría</option>
+                                <option value="">Selecciona una categoria</option>
                                 <option value="pizza">Pizza</option>
                                 <option value="hamburguesa">Hamburguesa</option>
                                 <option value="acompañante">Acompañante</option>
@@ -221,12 +221,12 @@ function ComidaAdmin() {
                             id="precioOferta"
                             name="precioOferta"
                             type="number"
-                            step="0.01"
+                      
                             value={productoEditado.precioOferta}
                             onChange={handleChange}
                             placeholder="Precio de Oferta"
                             required={productoEditado.oferta}
-                            min={1}          
+                            min={0}          
                             max={500000} 
                         />
 
@@ -260,7 +260,7 @@ function ComidaAdmin() {
                                 <p>Nombre: {producto.nombre}</p>
                                 <p>Precio: {producto.precio}</p>
                                 <p>Categoria: {producto.tipoComida}</p>
-                                <p>Oferta: {producto.oferta ? 'Sí' : 'No'}</p>
+                                <p>Oferta: {producto.oferta ? 'si' : 'no'}</p>
                                 {producto.oferta && <p>Precio Oferta: {producto.precioOferta}</p>}
                                 <p>Descripcion: {producto.descripcion}</p> 
                             </div>

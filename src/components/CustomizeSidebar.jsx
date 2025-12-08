@@ -17,8 +17,7 @@ export default function CustomizeSidebar({
   const [cantidad, setCantidad] = useState(1);
 
   const precioBase = product.oferta ? product.precioOferta : product.precio;
-
-  // Calcular total dinámico
+ 
   const calcularTotal = () => {
     const precioExtras = extras.reduce((acc, ex) => acc + ex.precio, 0);
     const precioBebida = bebida ? bebida.precio : 0;
@@ -51,7 +50,7 @@ export default function CustomizeSidebar({
       precioUnitario: calcularTotal() / cantidad,
       total: calcularTotal(),
 
-      // Lo que guardaremos en la boleta, JSON limpio
+      //guardaremos en la boleta JSON limpio
       customizacion: {
         masa,
         borde,
@@ -60,7 +59,7 @@ export default function CustomizeSidebar({
         bebida,
       },
 
-      // Imagen y otros datos útiles
+      //imagen y otros datos  
       imagen: product.imagen,
     };
 
@@ -71,12 +70,12 @@ export default function CustomizeSidebar({
     <div className="customize-sidebar-overlay">
       <div className="customize-sidebar">
 
-        {/* Cerrar */}
+ 
         <button className="close-btn" onClick={onClose}>✖</button>
 
         <h2>Personalizar {product.nombre}</h2>
 
-        {/* MASA */}
+        {/* la masa */}
         <h4>Masa</h4>
         {data.masas.map((m) => (
           <label key={m}>
@@ -92,7 +91,7 @@ export default function CustomizeSidebar({
 
         <hr />
 
-        {/* BORDE */}
+        {/* el borde  */}
         <h4>Borde</h4>
         {data.bordes.map((b) => (
           <label key={b}>
@@ -138,7 +137,7 @@ export default function CustomizeSidebar({
 
         <hr />
 
-        {/* BEBIDAS */}
+        {/* la bebidas */}
         <h4>Bebida</h4>
         {data.bebidas.map((b) => (
           <label key={b.nombre}>
@@ -154,7 +153,7 @@ export default function CustomizeSidebar({
 
         <hr />
 
-        {/* CANTIDAD */}
+        {/* LA CANTIDAD DE ESAS PIZZAS */}
         <h4>Cantidad</h4>
         <div className="cantidad-box">
           <button onClick={() => cantidad > 1 && setCantidad(cantidad - 1)}>
@@ -166,10 +165,10 @@ export default function CustomizeSidebar({
 
         <hr />
 
-        {/* TOTAL */}
+        {/* EL TOTAL */}
         <h3>Total: ${calcularTotal()}</h3>
 
-        {/* CONFIRMAR */}
+        {/*BOTON DE  CONFIRMAR */}
         <button className="confirm-btn" onClick={confirmar}>
           Confirmar
         </button>

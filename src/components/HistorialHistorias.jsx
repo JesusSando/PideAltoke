@@ -8,7 +8,7 @@ import BoletaService from "../service/BoletaService";
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {  
+    useEffect(() => { 
         const fetchHistorial = async () => {
           try {  
   
@@ -28,6 +28,40 @@ import BoletaService from "../service/BoletaService";
 
         fetchHistorial(); 
     }, [ ]);
+
+
+    const cargarDetalles = (customizacionString)=>{
+    if(!customizacionString) return null;
+    try{
+      const data=JSON.parse(customizacionString);
+      if(Object.keys(data).length===0)
+        return null;
+      return(
+        <div className="mt-1 ps-3 border-start border-3 border-secondary" style={{fontSize: '0.85rem', color: '#555'}}>
+                  {Object.entries(data).map(([key, value]) => { 
+                      if (Array.isArray(value) && value.length > 0) {
+                          return (
+                              <div key={key}>
+                                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value.map(v => v.nombre || v).join(', ')}
+                              </div>
+                          );
+                      }
+                       
+                      if (value && value.nombre && !['extras', 'condimentos'].includes(key)) {
+                          return (
+                              <div key={key}>
+                                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value.nombre}
+                              </div>
+                          );
+                      }
+                      return null;
+                  })}
+              </div>
+          );
+      } catch (e) {
+          return null;  
+      }
+  };
 
     if (loading) return <div className="container py-5 text-center">Cargando historial de clientes...</div>;
     if (error) return <div className="container py-5 text-center alert alert-danger">{error}</div>;
@@ -67,6 +101,7 @@ import BoletaService from "../service/BoletaService";
                                                 {item.cantidad} x ${item.precioUnitario.toLocaleString()} = 
                                                 <strong> ${(item.cantidad * item.precioUnitario).toLocaleString()}</strong>
                                             </small>
+                                            {cargarDetalles(item.customizacion)}
                                         </li>
                                     ))}
                                 </ul>

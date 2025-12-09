@@ -1,0 +1,37 @@
+{
+  "tipo": "hamburguesa",
+  "pasos": [
+    {
+      "titulo": "Tipo de Pan",
+      "key": "pan",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "Brioche", "precio": 0, "calorias": 260, "grasas": 8, "colesterol": 40, "carbohidratos": 40, "azucares": 6, "proteinas": 7, "sal": 0.5 },
+        { "nombre": "Clásico con Sésamo", "precio": 0, "calorias": 190, "grasas": 3, "colesterol": 0, "carbohidratos": 35, "azucares": 3, "proteinas": 6, "sal": 0.4 },
+        { "nombre": "Pan Integral", "precio": 0, "calorias": 170, "grasas": 2, "colesterol": 0, "carbohidratos": 32, "azucares": 2, "proteinas": 8, "sal": 0.4 }
+      ]
+    },
+    {
+      "titulo": "Cocción de la Carne",
+      "key": "coccion",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "3/4 (Jugosa)", "precio": 0, "calorias": 0, "grasas": 0, "colesterol": 0, "carbohidratos": 0, "azucares": 0, "proteinas": 0, "sal": 0 },
+        { "nombre": "Al Punto", "precio": 0, "calorias": 0, "grasas": 0, "colesterol": 0, "carbohidratos": 0, "azucares": 0, "proteinas": 0, "sal": 0 },
+        { "nombre": "Bien Cocida", "precio": 0, "calorias": 0, "grasas": 0, "colesterol": 0, "carbohidratos": 0, "azucares": 0, "proteinas": 0, "sal": 0 }
+      ]
+    },
+    {
+      "titulo": "Agrega más sabor",
+      "key": "extras",
+      "tipoInput": "checkbox",
+      "opciones": [
+        { "nombre": "Queso Cheddar", "precio": 800, "calorias": 110, "grasas": 9, "colesterol": 30, "carbohidratos": 1, "azucares": 0, "proteinas": 7, "sal": 0.7 },
+        { "nombre": "Tocino Crujiente", "precio": 1200, "calorias": 160, "grasas": 12, "colesterol": 35, "carbohidratos": 0, "azucares": 0, "proteinas": 10, "sal": 1.0 },
+        { "nombre": "Cebolla Caramelizada", "precio": 700, "calorias": 80, "grasas": 3, "colesterol": 0, "carbohidratos": 12, "azucares": 8, "proteinas": 1, "sal": 0.2 },
+        { "nombre": "Huevo Frito", "precio": 900, "calorias": 90, "grasas": 7, "colesterol": 185, "carbohidratos": 0.5, "azucares": 0, "proteinas": 6, "sal": 0.1 },
+        { "nombre": "Pepinillos", "precio": 500, "calorias": 5, "grasas": 0, "colesterol": 0, "carbohidratos": 1, "azucares": 0, "proteinas": 0, "sal": 0.8 }
+      ]
+    }
+  ]
+}

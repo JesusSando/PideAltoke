@@ -1,0 +1,38 @@
+{
+  "tipo": "burrito",
+  "pasos": [
+    {
+      "titulo": "Tipo de Tortilla",
+      "key": "tortilla",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "Trigo (Clásica)", "precio": 0, "calorias": 210, "grasas": 5, "colesterol": 0, "carbohidratos": 35, "azucares": 1, "proteinas": 5, "sal": 0.6 },
+        { "nombre": "Maíz", "precio": 0, "calorias": 180, "grasas": 2, "colesterol": 0, "carbohidratos": 38, "azucares": 0, "proteinas": 4, "sal": 0.1 },
+        { "nombre": "Integral", "precio": 200, "calorias": 190, "grasas": 4, "colesterol": 0, "carbohidratos": 32, "azucares": 1, "proteinas": 6, "sal": 0.5 }
+      ]
+    },
+    {
+      "titulo": "Nivel de Picante",
+      "key": "picante",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "Sin picante", "precio": 0, "calorias": 0, "grasas": 0, "colesterol": 0, "carbohidratos": 0, "azucares": 0, "proteinas": 0, "sal": 0 },
+        { "nombre": "Nivel 1 (Suave)", "precio": 0, "calorias": 5, "grasas": 0, "colesterol": 0, "carbohidratos": 1, "azucares": 1, "proteinas": 0, "sal": 0.1 },
+        { "nombre": "Nivel 2 (Medio)", "precio": 0, "calorias": 10, "grasas": 0.1, "colesterol": 0, "carbohidratos": 2, "azucares": 1, "proteinas": 0, "sal": 0.2 },
+        { "nombre": "Nivel 3 (Fuego)", "precio": 0, "calorias": 15, "grasas": 0.2, "colesterol": 0, "carbohidratos": 3, "azucares": 2, "proteinas": 0, "sal": 0.3 }
+      ]
+    },
+    {
+      "titulo": "Relleno Extra",
+      "key": "extras",
+      "tipoInput": "checkbox",
+      "opciones": [
+        { "nombre": "Guacamole Extra", "precio": 1200, "calorias": 150, "grasas": 13, "colesterol": 0, "carbohidratos": 8, "azucares": 1, "proteinas": 2, "sal": 0.4 },
+        { "nombre": "Queso Cheddar", "precio": 900, "calorias": 110, "grasas": 9, "colesterol": 30, "carbohidratos": 1, "azucares": 0, "proteinas": 7, "sal": 0.7 },
+        { "nombre": "Doble Carne", "precio": 2000, "calorias": 250, "grasas": 15, "colesterol": 70, "carbohidratos": 0, "azucares": 0, "proteinas": 22, "sal": 0.5 },
+        { "nombre": "Frijoles Extra", "precio": 700, "calorias": 90, "grasas": 0.5, "colesterol": 0, "carbohidratos": 16, "azucares": 0, "proteinas": 6, "sal": 0.4 },
+        { "nombre": "Crema Ácida", "precio": 600, "calorias": 60, "grasas": 5, "colesterol": 15, "carbohidratos": 1, "azucares": 1, "proteinas": 1, "sal": 0.1 }
+      ]
+    }
+  ]
+}

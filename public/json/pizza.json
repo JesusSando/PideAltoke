@@ -1,15 +1,45 @@
 {
-  "masas": ["Tradicional", "Delgada"],
-  "extras": [
-    { "nombre": "Extra Queso", "precio": 1500 },
-    { "nombre": "Champiñones", "precio": 1000 },
-    { "nombre": "Aceitunas negras", "precio": 900 },
-    { "nombre": "Tocino", "precio": 1200 }
-  ],
-  "bordes": ["Normal", "Borde de Queso"],
-  "condimentos": ["Orégano", "Merkén"],
-  "bebidas": [
-    { "nombre": "Coca Cola", "precio": 0 },
-    { "nombre": "Coca Cola Light", "precio": 0 }
+  "tipo": "pizza",
+  "pasos": [
+    {
+      "titulo": "Selecciona tu Masa",
+      "key": "masa",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "Tradicional", "precio": 0, "calorias": 280, "grasas": 6, "colesterol": 0, "carbohidratos": 48, "azucares": 2, "proteinas": 9, "sal": 0.8 },
+        { "nombre": "Delgada", "precio": 0, "calorias": 180, "grasas": 4, "colesterol": 0, "carbohidratos": 32, "azucares": 1, "proteinas": 7, "sal": 0.5 },
+        { "nombre": "Sin Gluten", "precio": 1500, "calorias": 200, "grasas": 5, "colesterol": 0, "carbohidratos": 40, "azucares": 1, "proteinas": 4, "sal": 0.6 }
+      ]
+    },
+    {
+      "titulo": "Elige el Borde",
+      "key": "borde",
+      "tipoInput": "radio",
+      "opciones": [
+        { "nombre": "Normal", "precio": 0, "calorias": 0, "grasas": 0, "colesterol": 0, "carbohidratos": 0, "azucares": 0, "proteinas": 0, "sal": 0 },
+        { "nombre": "Borde de Queso", "precio": 1500, "calorias": 350, "grasas": 20, "colesterol": 60, "carbohidratos": 2, "azucares": 0, "proteinas": 18, "sal": 1.2 }
+      ]
+    },
+    {
+      "titulo": "Ingredientes Extra",
+      "key": "extras",
+      "tipoInput": "checkbox",
+      "opciones": [
+        { "nombre": "Extra Queso", "precio": 1500, "calorias": 220, "grasas": 18, "colesterol": 50, "carbohidratos": 2, "azucares": 0, "proteinas": 14, "sal": 0.9 },
+        { "nombre": "Champiñones", "precio": 1000, "calorias": 15, "grasas": 0.1, "colesterol": 0, "carbohidratos": 2, "azucares": 0, "proteinas": 2, "sal": 0 },
+        { "nombre": "Aceitunas Negras", "precio": 900, "calorias": 40, "grasas": 4, "colesterol": 0, "carbohidratos": 1, "azucares": 0, "proteinas": 0, "sal": 0.4 },
+        { "nombre": "Tocino", "precio": 1200, "calorias": 180, "grasas": 14, "colesterol": 35, "carbohidratos": 0, "azucares": 0, "proteinas": 12, "sal": 1.1 },
+        { "nombre": "Pepperoni", "precio": 1200, "calorias": 160, "grasas": 13, "colesterol": 30, "carbohidratos": 0, "azucares": 0, "proteinas": 7, "sal": 0.8 }
+      ]
+    },
+    {
+      "titulo": "Condimentos",
+      "key": "condimentos",
+      "tipoInput": "checkbox",
+      "opciones": [
+        { "nombre": "Orégano", "precio": 0, "calorias": 2, "grasas": 0, "colesterol": 0, "carbohidratos": 0.5, "azucares": 0, "proteinas": 0, "sal": 0 },
+        { "nombre": "Merkén", "precio": 0, "calorias": 5, "grasas": 0.2, "colesterol": 0, "carbohidratos": 1, "azucares": 0, "proteinas": 0, "sal": 0.1 }
+      ]
+    }
   ]
 }

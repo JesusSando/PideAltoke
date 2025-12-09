@@ -26,6 +26,7 @@ export function Historial() {
     const fetchHistorial = async () => {
       try { 
         const res = await BoletaService.getHistorialPorUsuario(u.id); 
+        const boletasOrdenadas = res.data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
         setBoletas(res.data);
       } catch (err) {
         console.error("Error al cargar el historial:", err); 
@@ -39,6 +40,39 @@ export function Historial() {
 
     fetchHistorial();  
   }, [navigate]);
+
+  const cargarDetalles = (customizacionString)=>{
+    if(!customizacionString) return null;
+    try{
+      const data=JSON.parse(customizacionString);
+      if(Object.keys(data).length===0)
+        return null;
+      return(
+        <div className="mt-1 ps-3 border-start border-3 border-secondary" style={{fontSize: '0.85rem', color: '#555'}}>
+                  {Object.entries(data).map(([key, value]) => { 
+                      if (Array.isArray(value) && value.length > 0) {
+                          return (
+                              <div key={key}>
+                                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value.map(v => v.nombre || v).join(', ')}
+                              </div>
+                          );
+                      }
+                       
+                      if (value && value.nombre && !['extras', 'condimentos'].includes(key)) {
+                          return (
+                              <div key={key}>
+                                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value.nombre}
+                              </div>
+                          );
+                      }
+                      return null;
+                  })}
+              </div>
+          );
+      } catch (e) {
+          return null;  
+      }
+  };
 
   if (loading) return <div className="container py-5 text-center">Cargando historial...</div>;
   if (error) return <div className="container py-5 text-center alert alert-danger">{error}</div>;
@@ -74,6 +108,7 @@ export function Historial() {
                         {item.cantidad} x ${item.precioUnitario.toLocaleString()} = 
                         <strong> ${(item.cantidad * item.precioUnitario).toLocaleString()}</strong>
                     </small>
+                    {cargarDetalles(item.customizacion)}
                 </li>
                   ))}
                 </ul>

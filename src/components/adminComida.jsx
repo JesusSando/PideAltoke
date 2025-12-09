@@ -13,10 +13,20 @@ function ComidaAdmin() {
         categoria: '',  
         oferta: false,
         precioOferta: 0,
+        ingredientes: '',
+        fondoImg: null,       
+        fondoImgPreview: '',   
         imagen: null,
         imagenPreview: '',
         nombre_modificado: '',
-        fecha_modificacion: ''
+        fecha_modificacion: '',
+        energia:'',
+        grasa:'',
+        colesterol:'',
+        carbohidratos:'',
+        azucar:'',
+        proteinas:'',
+        sal:''
     });
 
     const [editando, setEditando] = useState(false);
@@ -47,6 +57,10 @@ function ComidaAdmin() {
 
             oferta: producto.oferta || false,
             precioOferta: producto.precioOferta || 0,
+            ingredientes: producto.ingredientes || '',
+           fondoImgPreview: producto.fondoImg 
+                ? `http://localhost:8080/uploads/${producto.fondoImg}` 
+                : '',
             
             imagen: producto.imagen || null,
           
@@ -55,14 +69,29 @@ function ComidaAdmin() {
                 : '', 
             
             nombre_modificado: producto.nombre_modificado,
-            fecha_modificacion: producto.fecha_modificacion
+            fecha_modificacion: producto.fecha_modificacion,
+            energia:producto.energia ||0,
+            grasa:producto.grasa ||0,
+            colesterol:producto.colesterol ||0,
+            carbohidratos:producto.carbohidratos ||0,
+            azucar:producto.azucar ||0,
+            proteinas:producto.proteinas ||0,
+            sal:producto.sal ||0
         });
         setEditando(true);
     };
 
 
     const handleChange = (e) => {
-        const { name, value, files, type, checked } = e.target; 
+        const { name, value, files, type, checked} = e.target; 
+        if (name === 'fondoImg' && files.length > 0) {
+    setProductoEditado({
+        ...productoEditado,
+        fondoImg: files[0],  
+        fondoImgPreview: URL.createObjectURL(files[0]) 
+    });
+    return;
+}
 
         if (name === 'imagen' && files.length > 0) {
             setProductoEditado({
@@ -95,11 +124,22 @@ function ComidaAdmin() {
         formData.append('tipoComida', productoEditado.categoria || '');  
         formData.append('oferta', productoEditado.oferta);
         formData.append('precioOferta', productoEditado.precioOferta || 0);
+        formData.append('ingredientes', productoEditado.ingredientes);
+        if (productoEditado.fondoImg instanceof File) {
+            formData.append('fondoImg', productoEditado.fondoImg);
+        }
         if (productoEditado.imagen && typeof productoEditado.imagen !== 'string') {
             formData.append('imagen', productoEditado.imagen);
         }
         
-         formData.append('rutUsuario', rutUsuario);
+        formData.append('rutUsuario', rutUsuario);
+        formData.append('energia', productoEditado.energia);
+        formData.append('grasa', productoEditado.grasa);
+        formData.append('colesterol', productoEditado.colesterol);
+        formData.append('carbohidratos', productoEditado.carbohidratos);
+        formData.append('azucar', productoEditado.azucar);
+        formData.append('proteinas', productoEditado.proteinas);
+        formData.append('sal', productoEditado.sal);
 
         try {
             let res;
@@ -134,7 +174,14 @@ function ComidaAdmin() {
             imagen: null,
             imagenPreview: '',
             nombre_modificado: '',
-            fecha_modificacion: ''
+            fecha_modificacion: '',
+            energia:'',
+            grasa:'',
+            colesterol:'',
+            carbohidratos:'',
+            azucar:'',
+            proteinas:'',
+            sal:''
         });
         setEditando(false);
     };
@@ -199,48 +246,73 @@ function ComidaAdmin() {
                                 <option value="">Selecciona una categoria</option>
                                 <option value="pizza">Pizza</option>
                                 <option value="hamburguesa">Hamburguesa</option>
+                                <option value="burrito">Burrito</option>
                                 <option value="acompañante">Acompañante</option>
                                 <option value="bebida">Bebida</option>
                                 <option value="postre">Postre</option>
                             </select>
 
    
-                        <label>
-                            En Oferta:
-                            <input
-                                name="oferta"
-                                type="checkbox"
-                                checked={productoEditado.oferta}
-                                onChange={handleChange}
-                                
-                            />
-                        </label>
+                        <label> En Oferta:</label>
+                         <input name="oferta" type="checkbox"checked={productoEditado.oferta}onChange={handleChange}/>
+                        
 
                         <label htmlFor="precioOferta">Precio de Oferta:</label> 
-                        <input
-                            id="precioOferta"
-                            name="precioOferta"
-                            type="number"
-                      
-                            value={productoEditado.precioOferta}
-                            onChange={handleChange}
-                            placeholder="Precio de Oferta"
-                            required={productoEditado.oferta}
-                            min={0}          
-                            max={500000} 
-                        />
+                        <input  id="precioOferta" name="precioOferta" type="number"value={productoEditado.precioOferta}onChange={handleChange} placeholder="Precio de Oferta"required={productoEditado.oferta} min={0}   max={500000} />
 
+                        <label>Ingredientes:</label>
+                        <textarea name="ingredientes" value={productoEditado.ingredientes} onChange={handleChange} />
+
+                        <label>Imagen Promocional (Fondo Oferta):</label>
+                        <input name="fondoImg" type="file" onChange={handleChange} /> 
+                        {productoEditado.fondoImgPreview && (
+                            <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+                                <p>Vista Previa Fondo:</p>
+                                <img 
+                                    src={productoEditado.fondoImgPreview} 
+                                    alt="Vista previa fondo" 
+                                    style={{ width: '200px', height: '100px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '5px' }} 
+                                />
+                            </div>
+                        )}
+ 
+                        <label>Imagen de la comida:</label>
+                        <input name="imagen" type="file" onChange={handleChange}/>
                          
-
-                        <input
-                            name="imagen"
-                            type="file"
-                            onChange={handleChange}
-                        />
-
                         {productoEditado.imagenPreview && (
                             <img src={productoEditado.imagenPreview} alt="Vista previa" style={{ width: '150px' }} />
                         )}
+
+                         <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'15px'}}>
+                        <div>
+                            <label>Energia (kcal):</label>
+                            <input name="energia" type="number" min={0} max={50000}  step="0.01" value={productoEditado.energia} onChange={handleChange} placeholder="231" />
+                        </div>
+                        <div>
+                            <label>Grasa (g):</label>
+                            <input name="grasa" type="number" min={0} max={50000} step="0.01" value={productoEditado.grasa} onChange={handleChange} placeholder="11" />
+                        </div>
+                        <div>
+                            <label>Colesterol (mg):</label>
+                            <input name="colesterol" type="number" min={0} max={50000} step="0.01" value={productoEditado.colesterol} onChange={handleChange} placeholder="33.93" />
+                        </div>
+                        <div>
+                            <label>Carbohidratos (g):</label>
+                            <input name="carbohidratos" type="number" min={0} max={50000} step="0.01" value={productoEditado.carbohidratos} onChange={handleChange} placeholder="19" />
+                        </div>
+                        <div>
+                            <label>Azucares (g):</label>
+                            <input name="azucar" type="number" step="0.01" min={0} max={50000} value={productoEditado.azucar} onChange={handleChange} placeholder="4" />
+                        </div>
+                        <div>
+                            <label>Proteinas (g):</label>
+                            <input name="proteinas" type="number" min={0} max={50000} step="0.01" value={productoEditado.proteinas} onChange={handleChange} placeholder="12" />
+                        </div>
+                        <div>
+                            <label>Sal (g):</label>
+                            <input name="sal" type="number" step="0.01" min={0} max={50000} value={productoEditado.sal} onChange={handleChange} placeholder="1" />
+                        </div>
+                    </div>
 
                         <button type="submit">
                             {editando ? 'Guardar Cambios' : 'Agregar Producto'}
@@ -249,6 +321,9 @@ function ComidaAdmin() {
                         {editando && (
                             <button type="button" onClick={handleCancel}>Cancelar</button>
                         )}
+
+
+                       
                     </form>
                 </div>
 

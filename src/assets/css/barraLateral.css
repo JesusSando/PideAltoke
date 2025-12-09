@@ -1,60 +1,57 @@
-/* ---------- OVERLAY Y SIDEBAR ---------- */
-.customize-sidebar-overlay {
+ 
+.customizar-barra-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-end; /* sidebar a la derecha */
+  justify-content: flex-end; 
   z-index: 9999;
 }
 
 .overlay {
   position: absolute;
   left: 0;
-  width: 70%; /* parte oscura que cubre el resto */
+  width: 70%;  
   height: 100%;
   background: rgba(0,0,0,0.5);
 }
-
-/* ---------- SIDEBAR ---------- */
-.customize-sidebar {
+ 
+.customizar-barra {
   width: 30%;
   height: 100%;
   background: white;
   padding: 20px;
   overflow-y: auto;
   position: relative;
-  box-shadow: -4px 0 8px rgba(0,0,0,0.2);
   display: flex;
-  flex-direction: column; /* todo en vertical */
+  flex-direction: column;  
 }
-
-/* ---------- CERRAR ---------- */
-.close-btn {
+ 
+.cerrar-btn {
+  z-index:10;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 2px;
+  top: 5px;
   background: transparent;
   border: none;
-  font-size: 22px;
-  cursor: pointer;
+  font-size: 20px;
+  padding: 2px;
+  margin:5px;
 }
 
-/* ---------- TÍTULOS Y CATEGORÍAS ---------- */
-.customize-sidebar h2,
-.customize-sidebar h3,
-.customize-sidebar h4 {
-  margin-bottom: 10px;
+.cerrar-btn:hover {
+  background-color: red;  
 }
+ 
 
-.cs-category {
+
+.cs-categoria {
   margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
   padding-bottom: 10px;
   display: flex;
-  flex-direction: column; /* vertical */
+  flex-direction: column; 
 }
 
 .cs-item {
@@ -71,21 +68,13 @@
   cursor: pointer;
 }
 
-.cs-item input[type="radio"],
-.cs-item input[type="checkbox"] {
-  margin-right: 10px;
-  transform: scale(1.2);
-  cursor: pointer;
-}
 
-/* precio extra */
 .cs-extra {
   color: #d70000;
   margin-left: 5px;
   font-weight: bold;
 }
-
-/* ---------- CANTIDAD ---------- */
+ 
 .cantidad-box {
   display: flex;
   align-items: center;
@@ -96,10 +85,8 @@
 .cantidad-box button {
   padding: 6px 12px;
   font-size: 16px;
-  cursor: pointer;
 }
-
-/* ---------- BOTÓN CONFIRMAR ---------- */
+ 
 .confirm-btn {
   width: 100%;
   padding: 12px;
@@ -109,23 +96,22 @@
   font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: auto; /* siempre abajo */
+  margin-top: auto;  
 }
 
 .confirm-btn:hover {
   background: #a50000;
 }
-
-/* ---------- SCROLLBAR ---------- */
-.customize-sidebar::-webkit-scrollbar {
+ 
+.customizar-barra::-webkit-scrollbar {
   width: 6px;
 }
 
-.customize-sidebar::-webkit-scrollbar-thumb {
+.customizar-barra::-webkit-scrollbar-thumb {
   background: #999;
   border-radius: 8px;
 }
 
-.customize-sidebar::-webkit-scrollbar-thumb:hover {
+.customizar-barra::-webkit-scrollbar-thumb:hover {
   background: #777;
 }

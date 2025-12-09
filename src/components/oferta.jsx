@@ -3,10 +3,10 @@ import carrusel2 from '../assets/images/carrusel2.jpg'
 import carrusel1 from '../assets/images/oferta2.webp'
 import { Link } from "react-router-dom";
 import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
-
+ 
 
 import ComidaService from "../service/ComidaService";
-
+import BarraLateral from "./barraLateral";
 
 export function Oferta() {
 
@@ -53,10 +53,16 @@ const ofertasAMostrar = productos.slice(0, 2);
  
       <div className="imagen_producto_oferta">
         
-        <img  
-                            src={obtenerImagenURL(producto, index)} 
-                            alt={producto.nombre} 
-                        />
+        <img 
+                    src={
+                        producto.fondoImg 
+                        ? `${IMAGEN_BASE_URL}${producto.fondoImg}` 
+                        : (producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault)
+                    } 
+                    alt={producto.nombre} 
+                    className="img-oferta-fondo"
+                    onError={(e) => e.target.src = imgDefault} 
+                />
         <div className="descripcion_producto_oferta">
           <div className="texto_producto_oferta">
              
@@ -95,7 +101,10 @@ const ofertasAMostrar = productos.slice(0, 2);
 export function TodasOfertas() {
 
   
-    const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([]);
+  const tipo_complejo = ["pizza", "hamburguesa", "burrito"]; 
+  const [barraLateralAbierta, setbarraLateralAbierta] = useState(false);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   
     useEffect(() => {
       const cargarComida = async () => {
@@ -109,6 +118,18 @@ export function TodasOfertas() {
       cargarComida();
     }, []);
 
+    const pedirProducto = async (producto) => {
+    console.log("TIPO:", producto.tipoComida);
+
+    if (tipo_complejo.includes(producto.tipoComida?.toLowerCase())) {
+      
+      setProductoSeleccionado(producto); 
+      setbarraLateralAbierta(true);
+    } else {
+      agregarAlCarrito(producto); 
+    }
+  };
+
     const imgDefault = "/src/assets/images/f1.png";
     const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
               
@@ -116,6 +137,13 @@ export function TodasOfertas() {
    const productosEnOferta = productos.filter(p => p.oferta);
     return (
  <> 
+ <BarraLateral
+         open={barraLateralAbierta}
+         onClose={() => setbarraLateralAbierta(false)}
+         product={productoSeleccionado}
+         onConfirm={(detalle) => { 
+           setbarraLateralAbierta(false);
+         }} />
  
 <section className="seccion_comida relleno_diseño_inferior">
     <div className="container">
@@ -137,10 +165,13 @@ export function TodasOfertas() {
                         <></>
                       } <br />
 
-                <Link to={`/producto/${producto.id}`}className="btn btn-danger mr-3">ver producto</Link>
-                 <button onClick={() => agregarAlCarrito(producto)}  className="btn btn-danger">
-                   Pedir
+                <button onClick={() => pedirProducto(producto)} className="btn btn-danger mt-1 mr-3">
+                    Pedir
                   </button>
+
+                  <Link to={`/producto/${producto.id}`} className="btn btn-secondary mt-1 ">
+                      Ver producto
+                    </Link>
               </div>
             </div>
           </div>

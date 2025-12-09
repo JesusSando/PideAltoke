@@ -4,12 +4,16 @@ import { Link } from "react-router-dom";
 import PasarSeccionComida from '../assets/js/pasarSeccionComida';
 import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
     
-import CustomizeSidebar from "../components/CustomizeSidebar";
+import BarraLateral from "../components/barraLateral";
 
 
 export function Menu() {
-  const limite = 4;
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([]); 
+  const tipo_complejo = ["pizza", "hamburguesa", "burrito"];
+ 
+  const [barraLateralAbierta, setbarraLateralAbierta] = useState(false);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null); 
+  const limite = 4; 
 
   useEffect(() => {
     const cargarComida = async () => {
@@ -23,12 +27,33 @@ export function Menu() {
     cargarComida();
   }, []);
 
+  const pedirProducto = async (producto) => {
+    console.log("TIPO:", producto.tipoComida);
+
+    if (tipo_complejo.includes(producto.tipoComida?.toLowerCase())) {
+      
+      setProductoSeleccionado(producto); 
+      setbarraLateralAbierta(true);
+    } else {
+      agregarAlCarrito(producto); 
+    }
+  };
+
 
   const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
 
   return (
     <section className="seccion_comida relleno_diseño_inferior" id='menu'>
+      <BarraLateral
+        open={barraLateralAbierta}
+        onClose={() => setbarraLateralAbierta(false)}
+        product={productoSeleccionado}
+        onConfirm={(detalle) => {
+          alert("producto agregado al carrito")
+          setbarraLateralAbierta(false);
+        }}
+      />
       <div className="container">
         <h2 className='menuTitulo'>Menú</h2>
         <div className="contenido_filtro">
@@ -52,13 +77,15 @@ export function Menu() {
                         <><span className="text-danger">Precio:${producto.precio}</span></>
                       } <br />
 
-                    <Link to={`/producto/${producto.id}`} className="btn btn-danger mr-3">
+                    
+
+                    <button onClick={() => pedirProducto(producto)} className="btn btn-danger mt-1 mr-3">
+                    Pedir
+                  </button>
+
+                  <Link to={`/producto/${producto.id}`} className="btn btn-secondary mt-1 ">
                       Ver producto
                     </Link>
-
-                    <button onClick={() => pedirProducto(producto)} className="btn btn-danger">
-                      Pedir
-                    </button>
                   </div>
 
                 </div>
@@ -81,14 +108,13 @@ export function Menu() {
 export function PedirMenu() {
   const [productos, setProductos] = useState([]);
   const [filtroActivo, setFiltroActivo] = useState("*");
-
-  // PANEL LATERAL
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-  const [personalizacionData, setPersonalizacionData] = useState(null);
+ 
+  const [barraLateralAbierta, setbarraLateralAbierta] = useState(false);
+  const [productoSeleccionado, setProductoSeleccionado] = useState(null); 
 
   const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
+  const tipo_complejo = ["pizza", "hamburguesa", "burrito"];
 
   useEffect(() => {
     PasarSeccionComida();
@@ -99,20 +125,17 @@ export function PedirMenu() {
     };
     cargar();
   }, []);
-
-  // Cuando hago click en PEDIR
+ 
   const pedirProducto = async (producto) => {
     console.log("TIPO:", producto.tipoComida);
 
-    if (producto.tipoComida === "pizza") {
-      const res = await fetch("/json/pizza.json");
-      const data = await res.json();
-
-      setProductoSeleccionado(producto);
-      setPersonalizacionData(data);
-      setSidebarOpen(true);
+    if (tipo_complejo.includes(producto.tipoComida?.toLowerCase())) {
+      
+      setProductoSeleccionado(producto); 
+      setbarraLateralAbierta(true);
     } else {
       agregarAlCarrito(producto);
+      alert("producto agregado al carrito")
     }
   };
 
@@ -121,29 +144,22 @@ export function PedirMenu() {
   const productosFiltrados =
     filtroActivo === "*"
       ? productos
-      : productos.filter(
-          (p) =>
-            p.tipoComida &&
-            "." + p.tipoComida.toLowerCase() === filtroActivo
-        );
+      : productos.filter((p) => p.tipoComida &&"." + p.tipoComida.toLowerCase() === filtroActivo);
 
   return (
-    <section className="seccion_comida relleno_diseño_inferior">
-      {/* 🔵 SIDEBAR PERSONALIZACIÓN */}
-      <CustomizeSidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        product={productoSeleccionado}
-        data={personalizacionData}
-        onConfirm={(detalle) => {
-          console.log("Pizza Lista:", detalle);
 
-          agregarAlCarrito(detalle); // se almacena pizza + extras
-          setSidebarOpen(false);
+    <section className="seccion_comida relleno_diseño_inferior">
+  
+      <BarraLateral
+        open={barraLateralAbierta}
+        onClose={() => setbarraLateralAbierta(false)}
+        product={productoSeleccionado}
+        onConfirm={(detalle) => {
+          alert("producto agregado al carrito")
+          setbarraLateralAbierta(false);
         }}
       />
-
-      {/* 🟦 MENÚ */}
+ 
       <div className="container">
         <h2 className="menuTitulo">Menú</h2>
 
@@ -157,8 +173,18 @@ export function PedirMenu() {
           <li className={filtroActivo === ".pizza" ? "active" : ""} onClick={() => manejarFiltro(".pizza")}>
             Pizzas
           </li>
+          <li className={filtroActivo === ".burrito" ? "active" : ""} onClick={() => manejarFiltro(".burrito")}>
+            Burritos
+          </li>
           <li className={filtroActivo === ".bebida" ? "active" : ""} onClick={() => manejarFiltro(".bebida")}>
             Bebidas
+          </li>
+    
+          <li className={filtroActivo === ".acompañante" ? "active" : ""} onClick={() => manejarFiltro(".acompañante")}>
+            Acompañamientos
+          </li>
+          <li className={filtroActivo === ".postre" ? "active" : ""} onClick={() => manejarFiltro(".postre")}>
+            Postres
           </li>
         </ul>
 
@@ -187,13 +213,16 @@ export function PedirMenu() {
 
                   <br />
 
-                  <button onClick={() => pedirProducto(p)} className="btn btn-danger mt-2">
+                  
+
+                    <button onClick={() => pedirProducto(p)} className="btn btn-danger mt-2  ms-2 mr-3">
                     Pedir
                   </button>
 
                   <Link to={`/producto/${p.id}`} className="btn btn-secondary mt-2 ms-2">
                     Ver
                   </Link>
+                  
                 </div>
               </div>
             </div>

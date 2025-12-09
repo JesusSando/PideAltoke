@@ -20,18 +20,24 @@ function Boleta() {
   const neto = state?.totales?.neto ?? Math.round(total / (1 + IVA));
   const iva = state?.totales?.iva ?? (total - neto);
 
-  if (!state || productos.length === 0) {
-    return (
-      <div className="container py-5">
-        <div className="alert alert-info">
-          No encontramos una orden reciente.
-          <button className="btn btn-link p-0 ms-2" onClick={() => navigate("/carrito")}>
-            Volver al carrito
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const renderDetalles = (customizacionData) => {
+      if (!customizacionData) return null; 
+      const data = typeof customizacionData === 'string' ? JSON.parse(customizacionData) : customizacionData;
+
+      return (
+          <div className="text-muted fst-italic" style={{fontSize: '0.85rem'}}>
+              {Object.entries(data).map(([key, value]) => { 
+                  if (Array.isArray(value) && value.length > 0) {
+                      return <div key={key}>- {key}: {value.map(v => v.nombre || v).join(', ')}</div>;
+                  } 
+                  if (value && value.nombre && !['extras', 'condimentos'].includes(key)) {
+                      return <div key={key}>- {key}: {value.nombre}</div>;
+                  }
+                  return null;
+              })}
+          </div>
+      );
+  };
 
   const fecha = new Date().toLocaleString("es-CL");
 
@@ -74,6 +80,7 @@ function Boleta() {
                   <tr key={p.id}>
 
                     <td>{p.nombre}</td>
+                    
                     <td className="text-end">${p.precio.toLocaleString()}</td>
                     <td className="text-end">{p.cantidad}</td>
                     <td className="text-end">

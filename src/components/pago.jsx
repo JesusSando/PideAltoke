@@ -37,7 +37,7 @@ function Pago() {
     } else {
       setUsuario(u);
     }
-    setLoading(false);  
+    setLoading(false);  
   }, [navigate]);
 
   
@@ -113,11 +113,24 @@ function Pago() {
       return;
     }
 
-    const items = productos.map((p) => ({
-      comida: { id: p.id },
-      cantidad: p.cantidad,
-      precioUnitario: p.precio
-    }));
+    const items = productos.map((p) => { 
+     console.log("Enviando item:", p.nombre, "Custom:", p.customizacion);
+      let customString = "{}";
+      if (p.customizacion !== undefined && p.customizacion !== null) {
+  
+          if (typeof p.customizacion === 'object') {
+              customString = JSON.stringify(p.customizacion);
+          } else { 
+              customString = String(p.customizacion);
+          }
+      }
+     return {
+       comidaId: p.idOriginal || p.id,
+       cantidad: p.cantidad,
+       precioUnitario: p.precio,  
+       customizacion: customString
+     };
+   });
 
     const data = {
       usuarioId,
@@ -150,6 +163,8 @@ function Pago() {
       alert("Hubo un problema realizando la compra.");
     }
   };
+  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMG_DEFAULT = "/src/assets/images/f1.png"
 
   return (
     <section
@@ -161,8 +176,7 @@ function Pago() {
       <div className="container">
         <h2 className="text-center mb-4">Pago con Tarjeta de Débito</h2>
 
-        <div className="row">
-          {/* Resumen del pedido */}
+        <div className="row"> 
           <div className="col-md-7 mb-4">
             <div className="card">
               <div className="card-header">
@@ -188,10 +202,8 @@ function Pago() {
                           <tr key={p.id}>
                             <td>
                               <img
-                                src={p.img}
-                                alt={p.nombre}
-                                style={{ width: 60 }}
-                              />
+                                src={ p.imagen  ? `${IMAGEN_BASE_URL}${p.imagen}` : (p.img ? p.img : IMG_DEFAULT)    }
+                                alt={p.nombre || "Producto"}style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: '5px' }}/>
                             </td>
                             <td>{p.nombre}</td>
                             <td className="text-end">
@@ -226,7 +238,7 @@ function Pago() {
             </div>
           </div>
 
-          {/* Formulario */}
+          {/*formulario */}
           <div className="col-md-5 mb-4">
             <div className="card">
               <div className="card-header">

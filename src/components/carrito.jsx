@@ -65,6 +65,10 @@ function Carrito() {
     }
     navigate("/pago", { state: { items: productos, total: totalPagar } });
   };
+
+
+  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMG_DEFAULT = "/src/assets/images/f1.png"
   return (
     <>
       <div className="container mt-4">
@@ -103,10 +107,8 @@ function Carrito() {
                         <tr key={p.id}>
                           <td data-label="img">
                             <img
-                                src={p?.img ?? "/src/assets/images/f1.png"}
-                                alt={p?.nombre || "Imagen de producto"} // Usar || en vez de ?? para manejar valores falsy como "" o null
-                                style={{ width: 60 }}
-                              />
+                                src={ p.imagen  ? `${IMAGEN_BASE_URL}${p.imagen}` : (p.img ? p.img : IMG_DEFAULT)    }
+                                alt={p.nombre || "Producto"}style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: '5px' }}/>
                           </td>
                           <td data-label="producto">{p.nombre}</td>
                           <td data-label="precio">

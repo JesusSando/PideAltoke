@@ -1,26 +1,26 @@
 export function agregarAlCarrito(producto) {
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
- 
-    const existe = carrito.find(p => p.id === producto.id); 
-
-    
-    const precioFinal = producto.oferta ? producto.precioOferta : producto.precio; 
-    const imagenCarrito = producto.img_oferta || producto.img || "/src/assets/images/f1.png";
+    const cantidadAgregar = producto.cantidad || 1;
+    const existe = carrito.find((item) => item.id === producto.id); 
 
 
     if (existe) {
-        existe.cantidad += 1;
+        existe.cantidad += cantidadAgregar;
     } else {
         carrito.push({
             id: producto.id,
+            idOriginal: producto.idOriginal || producto.id,
             nombre: producto.nombre,
-            precio: precioFinal, 
-            img: imagenCarrito, 
-            cantidad: 1
+            imagen: producto.imagen || producto.img,
+            precio: producto.precio, 
+            cantidad: cantidadAgregar,
+            tipoComida: producto.tipoComida,
+            customizacion: producto.customizacion || null
         });
     }
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
     alert(`${producto.nombre} agregado al carrito`);
+    window.dispatchEvent(new Event("storage"));
 }

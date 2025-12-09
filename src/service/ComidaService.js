@@ -24,5 +24,10 @@ class ComidaService {
         return axios.delete(`${API_URL}/${id}?rutUsuario=${rutUsuario}`);
     }
  
+
+    getFiltrado() {
+        // Si en Java es @RequestMapping("/api/v1/comidas") y @GetMapping("/filtrado")
+        return axios.get(`${API_URL}/filtrado`); 
+    }
 }
 export default new ComidaService();

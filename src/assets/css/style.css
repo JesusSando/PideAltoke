@@ -683,6 +683,23 @@ ul{
 }
 
 
+/*ajustar carrusel para que no quede chico antes los otros grid*/
+.grid-area-carousel {
+    display: flex; /* Ayuda a eliminar espacios fantasma */
+}
+.grid-area-carousel img {
+    height: 100% !important;
+    width: 100%;
+    object-fit: cover;  
+    display: block;    
+}
+.grid-area-carousel .carousel,
+.grid-area-carousel .carousel-inner,
+.grid-area-carousel .carousel-item {
+    height: 100% !important;
+    width: 100%;
+}
+
 
 /*escroll en el carrucel*/
  
@@ -715,7 +732,7 @@ ul{
 /*eslogan*/
 
 .contenedor_eslogan.position-absolute{
-  top: 25%;
+  top: 34%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -772,8 +789,13 @@ ul{
  
 
 
-
-
+/*ajuste de tamaño de las carta de compra pata que la img tenga el mismo tamaño*/
+.card img{
+  height: 300px; 
+  width: 100%;
+  object-fit: scale-down; 
+  padding: 10px;
+}
 
 
 

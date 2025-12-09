@@ -7,7 +7,7 @@ import carrusel1 from '../assets/images/carrusel1.jpg'
 import carrusel2 from '../assets/images/carrusel2.jpg'
 import carrusel3 from '../assets/images/carrusel3.jpg'
 
-
+import ComidaService from "../service/ComidaService";
 
 
 import { obtenerUsuario, cerrarSesion } from '../assets/js/cargo';
@@ -174,8 +174,8 @@ export function Carrusel() {
                 <div className="seg_texto">
                   <span>A tu ritmo</span>
                 </div>
-                <h3>Pide <br />
-                  Pastas</h3>
+                <h3>Pide un<br />
+                  Burrito</h3>
                 <h4>Y Disfruta</h4>
               </div>
               <a href="#menu" className='scroll-down-arrow position-absolute bottom-0 start-50 traslate-middle-x mb-4 text-white'>
@@ -208,3 +208,83 @@ export function Carrusel() {
   );
 }
 
+
+export function HomeGrid() {
+  const [dataGrid, setDataGrid] = useState({ ofertas: [], populares: [] });
+  const [loading, setLoading] = useState(true);
+  
+  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        const res = await ComidaService.getFiltrado(); 
+        setDataGrid(res.data);
+      } catch (error) {
+        console.error("Error cargando el grid del home:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    cargarDatos();
+  }, []);
+
+  if (loading) return <div className="text-center py-5">Cargando portada...</div>;
+  const renderSmallBox = (producto, claseArea, etiqueta) => {
+    if (!producto) {
+        return <div className={`${claseArea} bg-light d-flex align-items-center justify-content-center text-muted`}>Pronto más productos</div>; 
+    }
+
+    return (
+      <div className={`${claseArea} grid-item-container`}>
+        <img 
+            src={
+                producto.fondoImg 
+                ? `${IMAGEN_BASE_URL}${producto.fondoImg}` 
+                : (producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault)
+            }
+            alt={producto.nombre} 
+            className="grid-img"
+            onError={(e) => e.target.src = imgDefault}
+        />
+        
+        <div className="grid-overlay"></div>
+        <div className="grid-text-top">
+            <span className={`grid-badge ${etiqueta === 'OFERTA' ? 'badge-oferta' : 'badge-popular'}`}>
+                {etiqueta}
+            </span>
+            <h5>{producto.nombre}</h5>
+        </div>
+        <div className="grid-price-tag">
+             ${producto.oferta ? producto.precioOferta.toLocaleString() : producto.precio.toLocaleString()}
+        </div>
+
+        <Link to={`/producto/${producto.id}`} className="grid-btn-ver shadow-sm">
+            Ver ➔
+        </Link>
+      </div>
+    );
+  };
+
+  return (
+    <div className="container-fluid p-0 mb-4">
+      
+      <div className="hero-grid-container">
+        
+        {/*carrusel*/}
+        <div className="grid-area-carousel">
+             <Carrusel /> 
+        </div>
+
+        {/*populares*/}
+        {renderSmallBox(dataGrid.populares[0], "grid-area-1", "POPULAR")}
+        {renderSmallBox(dataGrid.populares[1], "grid-area-2", "POPULAR")}
+
+        {/*ultima oferta */}
+        {renderSmallBox(dataGrid.ofertas[0], "grid-area-3", "OFERTA")}
+        {renderSmallBox(dataGrid.ofertas[1], "grid-area-4", "OFERTA")}
+
+      </div>
+    </div>
+  );
+}

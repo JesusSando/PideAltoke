@@ -10,7 +10,7 @@ import '../src/assets/js/estadisticas'
 
 import HistorialConsultas from './components/HistorialConsultas';
 import HistorialHistorias from './components/HistorialHistorias';
-import {Encabezado,Carrusel} from './components/encabezado';
+import {Encabezado,Carrusel,HomeGrid} from './components/encabezado';
 import {Menu,PedirMenu} from './components/menu';
 import {Oferta,TodasOfertas} from './components/oferta';
 import {IniciarSesion} from './components/iniciarsesion';
@@ -34,7 +34,7 @@ import AdminCuenta from './components/adminCuentas';
 
 import  Historial  from './components/Historial';
 
-
+ 
 
 function App() {
  
@@ -45,7 +45,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<> 
-        <Carrusel/>
+        <HomeGrid/>
         <Menu/> 
         <Oferta/>
         <Nosotros/>  

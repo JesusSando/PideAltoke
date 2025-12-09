@@ -181,7 +181,8 @@ function ComidaAdmin() {
             carbohidratos:'',
             azucar:'',
             proteinas:'',
-            sal:''
+            sal:'',
+            ingredientes: ''
         });
         setEditando(false);
     };

@@ -33,6 +33,13 @@ update(id, usuario) {
    verificarCorreoExistente(correo) { 
         return axios.get(`${API_URL}/verificar-correo/${correo}`);
     }
+
+
+    cambiarContrasenaOlvidada(correo, nuevaContrasena) {
+    return axios.put(`${API_URL}/recuperar-contrasena`, {
+        correo: correo,
+        nuevaContrasena: nuevaContrasena
+    });}
  
 }
 

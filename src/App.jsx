@@ -14,7 +14,7 @@ import {Encabezado,Carrusel,PrincipalGrid} from './components/encabezado';
 import {Menu,PedirMenu} from './components/menu';
 import {Oferta,TodasOfertas} from './components/oferta';
 import {IniciarSesion} from './components/iniciarsesion';
-import { OlvidadoContrasena } from './components/olvidadocontrasena';
+import { OlvidadoContrasena,OlvidoContraseñacodigo ,OlvidoContraseñaRestrablecer} from './components/olvidadocontrasena';
 import Nosotros from './components/nosotros';
 import Pie      from './components/pie';
 import Carrito  from './components/carrito';
@@ -59,7 +59,9 @@ function App() {
       <Route path='iniciarsesion' element={<><IniciarSesion/> </>}/>
       <Route path='registrarse'   element={<Registrarse/>}/>
       <Route path='registrarse'   element={<Registrarse/>}/>
-      <Route path='Olvidadocontrasena' element={<OlvidadoContrasena/>}/>
+      <Route path='Olvidadocontrasena' element={<OlvidadoContrasena/>}/> 
+      <Route path='olvidoContraseñacodigo' element={<OlvidoContraseñacodigo/>}/>  
+      <Route path='olvidoContraseñaRestrablecer' element={<OlvidoContraseñaRestrablecer/>}/>
       <Route path='pedirMenu' element={<><PedirMenu/> </>}/>
       <Route path='ofertas'   element={<><Oferta/><TodasOfertas/></>}/>
       <Route path='contacto'  element={<Contacto/>}/>

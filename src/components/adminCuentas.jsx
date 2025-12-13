@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UsuarioService from "../service/UsuarioService"; 
+import {validarCorreo,validarContraseñaSegura, validarRut } from "../assets/js/validarcorreo";
 
 function AdminCuenta() {
  
@@ -18,6 +19,9 @@ function AdminCuenta() {
     const [editando, setEditando] = useState(false);
     const [usuarios, setUsuarios] = useState([]); 
     const [loading, setLoading] = useState(true); 
+
+
+    const [errores, setErrores] = useState({});
     useEffect(() => {
         const cargarUsuarios = async () => { 
             try { 
@@ -31,6 +35,7 @@ function AdminCuenta() {
         };
         cargarUsuarios();
     }, []);  
+
     const handleEdit = (usuario) => {
         setUsuarioEditado({
             id: usuario.id,
@@ -44,6 +49,7 @@ function AdminCuenta() {
         }); 
         setRolIdInput(usuario.rol ? String(usuario.rol.id) : '2'); 
         setEditando(true);
+        setErrores({});
     };
  
     const handleChange = (e) => {
@@ -52,9 +58,72 @@ function AdminCuenta() {
             ...usuarioEditado,
             [name]: value,
         });
+        if (errores[name]) {
+            setErrores({ ...errores, [name]: null });
+        }
     };  
+
+
+
+    const handleEmailBlur = async () => {
+        if (!usuarioEditado.correo) return; 
+        if (editando) {
+            const usuarioOriginal = usuarios.find(u => u.id === usuarioEditado.id);
+            if (usuarioOriginal && usuarioOriginal.correo === usuarioEditado.correo) return;
+        }
+
+        if (!validarCorreo(usuarioEditado.correo)) {
+            setErrores(prev => ({ ...prev, correo: "Formato de correo inválido" }));
+            return; } 
+        try {
+            const res = await UsuarioService.verificarCorreoExistente(usuarioEditado.correo);
+            if (res.data === true) {
+                setErrores(prev => ({ ...prev, correo: "El correo ya está registrado en el sistema." }));
+            } else {
+                setErrores(prev => ({ ...prev, correo: null })); 
+            }
+        } catch (error) {
+            console.error("Error verificando correo", error);
+        }
+    };
+
+ 
+    const validarFormulario = () => {
+        const nuevosErrores = {}; 
+        if (!validarRut(usuarioEditado.rut)) {
+            nuevosErrores.rut = "RUT invalido (12345678-9)";
+        } 
+        if (!validarCorreo(usuarioEditado.correo)) {
+            nuevosErrores.correo = "Correo inválido";
+        } 
+        if (!editando || (editando && usuarioEditado.contrasena !== "")) {  
+             if (!validarContraseñaSegura(usuarioEditado.contrasena)) {
+                nuevosErrores.contrasena = "debe tener mayuscula minuscula numero y caracter especial";
+            }
+
+        } 
+
+
+        if (!usuarioEditado.comuna) {
+            nuevosErrores.comuna = "Debes seleccionar una comuna.";
+        } 
+        setErrores(nuevosErrores); 
+        return Object.keys(nuevosErrores).length === 0;
+    };
+
+
+
+
     const handleSubmit = async (e) => {
-        e.preventDefault();  
+        e.preventDefault();   
+        if (!validarFormulario()) {
+     
+            return;
+        } 
+        if (errores.correo) {
+            alert("El correo no es válido o ya existe.");
+            return;
+        }
         const rolParaPayload = { id: parseInt(rolIdInput) }; 
         const usuarioPayload = { 
             ...usuarioEditado, 
@@ -66,7 +135,8 @@ function AdminCuenta() {
                 await UsuarioService.update(usuarioPayload.id, usuarioPayload);
                 alert(`Usuario ${usuarioPayload.nombre} actualizado correctamente.`);
             } else {  
-                await UsuarioService.registrar(usuarioPayload);  
+                const { id, ...nuevoUsuario } = usuarioPayload;
+                await UsuarioService.registrar(usuarioPayload);  
                 alert(`Usuario ${usuarioPayload.nombre} agregado correctamente.`);
             }  
             const resLista = await UsuarioService.getAll();
@@ -75,7 +145,7 @@ function AdminCuenta() {
 
         } catch (error) {
             console.error("Error al guardar usuario:", error); 
-            alert("Error al guardar usuario. Revisa la consola y la implementación del Rol en el backend.");
+            alert("Error al guardar usuario revisa la consola");
         }
     }; 
     
@@ -118,74 +188,67 @@ function AdminCuenta() {
                 <form onSubmit={handleSubmit} className="row g-3">
        
                     <div className="col-md-6">
-                        <input
-                            name="rut"
-                            type="text"
-                            className="form-control"
-                            value={usuarioEditado.rut}
-                            onChange={handleChange}
-                            placeholder="RUT"
-                            required
-                        />
+                        <label className="form-label">RUT</label>
+                        <input name="rut"  type="text"className={`form-control ${errores.rut ? 'is-invalid' : ''}`} value={usuarioEditado.rut}
+                            onChange={handleChange}  placeholder="2187654-1" required  />
+                         {errores.rut && <div className="invalid-feedback">{errores.rut}</div>}
                     </div>  
+
                     <div className="col-md-6">
-                        <input
-                            name="nombre"
-                            type="text"
-                            className="form-control"
-                            value={usuarioEditado.nombre}
-                            onChange={handleChange}
-                            placeholder="Nombre"
-                            required
-                        />
+                        <label className="form-label">Nombre</label>
+                        <input name="nombre" type="text"
+                            className="form-control" value={usuarioEditado.nombre}
+                            onChange={handleChange} placeholder="Juan Torres" required  />
                     </div>  
+
                     <div className="col-md-6">
-                        <input
-                            name="correo"
-                            type="email"
-                            className="form-control"
-                            value={usuarioEditado.correo}
-                            onChange={handleChange}
-                            placeholder="Correo"
-                            required
-                        />
+                        <label className="form-label">Correo</label>
+                        <input  name="correo" type="email"
+                            className={`form-control ${errores.correo ? 'is-invalid' : ''}`} value={usuarioEditado.correo}
+                            onBlur={handleEmailBlur} onChange={handleChange}  placeholder="ejemplo@ejemplo.com" required />
+                            {errores.correo && <div className="invalid-feedback">{errores.correo}</div>}
                     </div>  
+
+
                     <div className="col-md-6">
-                        <input
-                            name="contrasena"
-                            type="text"  
-                            className="form-control"
-                            value={usuarioEditado.contrasena}
-                            onChange={handleChange}
-                            placeholder="Contraseña"
-                            required
-                        />
+                        <label className="form-label">Contraseña</label>
+                        <input name="contrasena" type="text"  className={`form-control ${errores.contrasena ? 'is-invalid' : ''}`}
+                            value={usuarioEditado.contrasena} onChange={handleChange} placeholder="abcABC123***"
+                            required />
+                            {errores.contrasena && <div className="invalid-feedback">{errores.contrasena}</div>}
                     </div>  
+
                     <div className="col-md-6">
-                        <input
-                            name="comuna"
-                            type="text"
-                            className="form-control"
-                            value={usuarioEditado.comuna}
-                            onChange={handleChange}
-                            placeholder="Comuna"
-                            required
-                        />
+                        <label className="form-label">Comuna</label><br />
+                        <select  name="comuna" value={usuarioEditado.comuna}  onChange={handleChange}  required  className={`form-select ${errores.comuna ? 'is-invalid' : ''}`} >
+                            <option value="">Selecciona tu comuna</option>
+                            <option value="1">Santiago</option>
+                            <option value="2">Maipu</option>
+                            <option value="3">Cerrillos</option>
+                            <option value="4">Estacion central</option>
+                            <option value="5">Las condes</option>
+                            <option value="6">La cisterna</option>
+                            <option value="7">La florida</option>
+                            <option value="8">Providencia</option>
+                            <option value="9">Quinta normal</option>
+                            <option value="10">Independencia</option>
+                            <option value="11">La pintana</option>
+                            <option value="12">Lo prado</option>
+                            <option value="13">macul</option>
+                        </select>
+                        {errores.comuna && <div className="invalid-feedback">{errores.comuna}</div>}
                     </div>  
+
+
                     <div className="col-md-6">
                         <label htmlFor="rolSelect" className="form-label">Rol del Usuario</label>
-                        <select
-                            id="rolSelect"
-                            className="form-control"
-                            value={rolIdInput}
-                            onChange={(e) => setRolIdInput(e.target.value)}
-                            required
-                        >
+                        <select  id="rolSelect"
+                            className="form-control" value={rolIdInput} onChange={(e) => setRolIdInput(e.target.value)} required  >
                             <option value="1">1 - ADMIN</option>
                             <option value="2">2 - CLIENTE</option> 
                         </select>
                     </div>
- 
+ 
                     <div className="col-12 mt-4">
                         <button type="submit" className={`btn btn-${editando ? 'success' : 'primary'} me-2`}>
                             {editando ? 'Guardar Cambios' : 'Agregar Usuario'}

@@ -3,7 +3,7 @@ import sobre from '../assets/images/sobre.png'
 function Nosotros() {
     return (
  
-  <section className="seccion_sobre relleno_diseño">
+  <section id="nosotros" className="seccion_sobre relleno_diseño">
     <div className="container">
       <div className="row">
         <div className="col-md-6 ">

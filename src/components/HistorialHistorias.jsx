@@ -68,7 +68,7 @@ import BoletaService from "../service/BoletaService";
 
     return (
         <div className="container py-5">
-            <h2 className="mb-4">Historial de Compras de Todos los Clientes</h2>
+            <h2 className="mb-4">todos los pedidos</h2>
             
             {boletas.length === 0 ? (
                 <div className="alert alert-info">No hay compras realizadas en el sistema.</div>

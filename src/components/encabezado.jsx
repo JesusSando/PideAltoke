@@ -47,7 +47,7 @@ export function Encabezado() {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid d-flex justify-content-between">
-          <Link className="navbar-brand" to="/">Pide Altoke</Link>
+          <Link  className="titulo_navbar navbar-brand" to="/">Pide Altoke</Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
@@ -58,7 +58,7 @@ export function Encabezado() {
 
               </li>
               <li className="nav-item">
-                <Link to='/nosotros' className="nav-link">Acerca</Link>
+                <a href='#nosotros' className="nav-link">Nosotros</a>
               </li>
               <li className="nav-item">
                 <Link to='/pedirMenu' className="nav-link">Menu</Link>
@@ -88,13 +88,14 @@ export function Encabezado() {
                   <input type="checkbox" id="dropdown-toggle" className="boton_baja_listo" />
                   <label htmlFor="dropdown-toggle" className="boton_baja_boton">Admin</label>
                   <div className="boton_baja_contenido">
+                    <Link to='/HistorialHistorias' className="nav-link link_opciones">Pedidos</Link>
                     <Link to='/adminProducto' className="nav-link link_opciones"> Productos</Link>
                     <Link to='/adminComida' className="nav-link link_opciones"> Comida</Link> 
                     <Link to='/adminBlog' className="nav-link link_opciones"> Blog</Link>
                     <Link to='/adminEstadisticas' className="nav-link link_opciones"> Estadisticas</Link>
                     <Link to='/adminCuenta' className="nav-link link_opciones"> Cuenta</Link>
                     <Link to='/HistorialConsultas' className="nav-link link_opciones">Consultas</Link>
-                    <Link to='/HistorialHistorias' className="nav-link link_opciones"> Historias</Link>
+                     
 
  
                   </div>

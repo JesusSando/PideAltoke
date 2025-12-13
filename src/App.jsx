@@ -25,7 +25,7 @@ import PaginaBlog  from './components/paginaBlog';
 import AdminOferta from './components/adminOferta';
 import AdminBlog from './components/adminBlog';
 import AdminProducto from './components/adminProductos';
-import AdminEstadisticas from './components/AdminEstadisticas';
+import {AdminEstadisticas,ResumenDiarioVentas} from './components/AdminEstadisticas';
 import Registrarse from './components/registrarse';
 import Pago   from './components/pago';
 import Boleta from './components/boleta';

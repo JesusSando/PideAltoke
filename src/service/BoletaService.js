@@ -18,7 +18,19 @@ class BoletaService {
 
   getAll() {
         return axios.get(API_URL); 
+    } 
+  getResumenVentas() {
+      return axios.get(`${API_URL}/estadisticas/resumenDiario`);} 
+  getResumenHoy() { 
+        return axios.get(API_URL + "/estadisticas/resumenHoy");} 
+  getCategoriasMes() {
+      return axios.get(`${API_URL}/estadisticas/categorias-mes`);
+  } 
+  getRendimientoAnual() {
+      return axios.get(`${API_URL}/estadisticas/rendimiento-anual`);
     }
+
+    
 }
 
 export default new BoletaService();

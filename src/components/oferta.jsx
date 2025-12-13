@@ -53,8 +53,7 @@ const ofertasAMostrar = productos.slice(0, 2);
  
       <div className="imagen_producto_oferta">
         
-        <img 
-                    src={
+        <img src={
                         producto.fondoImg 
                         ? `${IMAGEN_BASE_URL}${producto.fondoImg}` 
                         : (producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault)

@@ -1,129 +1,204 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState ,useMemo} from "react";
 
-const adminEstadistica = () => {
-  const visitas = 1200;
-  const compras = 150;
+import BoletaService from "../service/BoletaService";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar, Doughnut } from 'react-chartjs-2'; 
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-  useEffect(() => {
-    // Asegurarse de que Chart.js esté disponible
-    if (window.Chart) {
-      const ctx = document.getElementById('comprasVisitasChart').getContext('2d');
+export function ResumenDiarioVentas({ventas}) {
+  console.log("Props recibidas en la tabla:", ventas);
+    
+  const [paginaActual, setPaginaActual] = useState(1);
+  const itemsPorPagina = 10;
 
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Visitas', 'Compras'],
-          datasets: [{
-            label: 'Cantidad',
-            data: [visitas, compras],
-            backgroundColor: ['#007bff', '#28a745'],
-          }],
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false },
-          },
-          scales: {
-            y: { beginAtZero: true },
-          },
-        },
-      });
+  const indiceUltimo = paginaActual * itemsPorPagina;
+  const indicePrimero = indiceUltimo - itemsPorPagina;
+  const ventasVisibles = ventas.slice(indicePrimero, indiceUltimo);
+  const totalPaginas = Math.ceil(ventas.length / itemsPorPagina);
 
- 
-      document.getElementById('visitasMes').textContent = visitas;
-      document.getElementById('comprasMes').textContent = compras;
-    }
-  }, [visitas, compras]);
+  function irAnterior() {
+     setPaginaActual(p => p - 1);}
+  function irSiguiente() {
+     setPaginaActual(p => p + 1);
+  }
+   const totalDinero = useMemo(() => ventas.reduce((acc, v) => acc + (v.total || 0), 0), [ventas]);
+  const totalCantidad = useMemo(() => ventas.reduce((acc, v) => acc + (v.cantidad || 0), 0), [ventas]);
 
   return (
-    <>
+ <div className="container mt-4">
+      <h2>ventas del dia</h2>
+     <div className="table-responsive">
+      <table className="table table-hover table-bordered text-center align-middle">
+            <thead className="table-light">
+              <tr>
+                <th>Id Boleta</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ventasVisibles.length > 0 ? (
+                ventasVisibles.map((v, i) => (
+                  <tr key={i}>
+                    <td>{v.id_boleta}</td>
+                    <td>{v.producto}</td>
+                    <td>{v.cantidad} </td>
+                    <td >${v.total}</td>
+                    <td>{v.fecha ? new Date(v.fecha).toLocaleTimeString() : '-'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr><td colSpan="5">no hay ventas</td></tr>
+              )}
+            </tbody>
+          </table>
  
-      <section className="food_section relleno_diseño_inferior">
-        <div className="container">
-          <div className="heading_container encabezado_centro">
-            <h2 className="h2adm">Panel de Ventas</h2>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-md-10">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Resumen de Ventas</h5>
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                        <th>Fecha</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Pizza</td>
-                        <td>3</td>
-                        <td>$60.000</td>
-                        <td>2025-09-03</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Hamburguesa</td>
-                        <td>2</td>
-                        <td>$30.000</td>
-                        <td>2025-09-03</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Papas Fritas</td>
-                        <td>5</td>
-                        <td>$25.000</td>
-                        <td>2025-09-02</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      
+    </div>
+    <div className="d-flex justify-content-end mt-3">
+           <div className="border rounded p-2  ">
+              <span className="me-3">Cantidad venta: <b>{totalCantidad}</b></span>
+              <span className="mx-4" >Total ganacia: <b>${totalDinero}</b></span>
+           </div>
+     </div>
+    <nav className="mt-4">
+        <ul className="pagination justify-content-center">
+            <li className={`page-item ${paginaActual === 1 ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={irAnterior}>Anterior</button>
+            </li>
+            <li className="page-item disabled">
+                <span className="page-link text-dark"> 
+                    pagina {paginaActual}-{totalPaginas} 
+                </span>
+            </li>
+            <li className={`page-item ${paginaActual === totalPaginas ? 'disabled' : ''}`}>
+                <button className="page-link" onClick={irSiguiente}>Siguiente</button>
+            </li>
+        </ul>
+      </nav>
+
+  </div>
+
 
  
-    <section className="food_section" style={{ margin: "50px" }}>
-        <h3>Lo más vendido</h3>
-        <div className="progress">
-          <div className="progress-bar" role="progressbar" style={{ width: "30%" }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Pizza</div>
-        <div className="progress-bar bg-success" role="progressbar" style={{ width: "35%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Hamburguesa</div>
-          <div className="progress-bar bg-info" role="progressbar" style={{ width: "15%" }} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Pastas</div>
-     <div className="progress-bar bg-danger" role="progressbar" style={{ width: "20%" }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Pastas</div>
-        </div>
-      </section>
+  );
+}
+
+
+
+export function GraficoAnual({ data }) {
+  const chartData = {
+    labels: data.map(d => d.mes),
+    datasets: [{
+      label: 'Ingresos ($)',
+      data: data.map(d => d.total),
+      backgroundColor: 'lightgreen',
+      borderRadius: 5,
+    }],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } }};
+
+  return (
+    <div className="card shadow h-100">
+      <div className="card-header bg-primary text-white">
+        <h5 className="m-0">Ganancia anual</h5>
+      </div>
+      <div className="card-body" style={{ height: "300px" }}>
+        <Bar data={chartData} options={options} />
+      </div>
+    </div>
+  );
+}
+
+
+export function GraficoCategorias({ data }) {
+  const chartData = {
+    labels: data.map(d => d.name),
+    datasets: [{
+      data: data.map(d => d.value),
+      backgroundColor: [
+        'lightcoral',
+        'yellow',
+        'lightgreen',
+        'skyblue',
+        'plum',]
+    }],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'right' },
+  datalabels: {
+        color: 'black', 
+        font: { 
+          size: 15
+        },
+        formatter: (value) => { 
+          return value; 
+        }
+      } }
+  };
+
+  return (
+    <div className="card shadow h-100">
+      <div className="card-header bg-primary text-white">
+        <h5 className="m-0">Tipo comida mas vendida del mes</h5>
+      </div>
+      <div className="card-body" style={{ height: "300px" }}>
+        <Doughnut data={chartData} options={options}  plugins={[ChartDataLabels]}/>
+      </div>
+    </div>
+  );
+}
+
+export function AdminEstadisticas()  {
+
+  const [ventas, setVentas] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [anual, setAnual] = useState([]);
+
+  useEffect(() => {
+    BoletaService.getResumenHoy().then(res => setVentas(res.data));
+    BoletaService.getCategoriasMes().then(res => setCategorias(res.data));
+    BoletaService.getRendimientoAnual().then(res => setAnual(res.data));
+  }, []);
+
+  useEffect(() => { 
+    BoletaService.getResumenHoy().then(res => {
+        console.log("Datos recibidos:", res.data);  
+        setVentas(res.data);
+    });
+  }, []);
  
-      <section className="food_section relleno_diseño_inferior">
-        <div className="container">
-          <div className="heading_container encabezado_centro">
-            <h2 className="h2adm">Estadísticas del último mes</h2>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div className="card">
-                <div className="card-body text-center">
-                  <h5 className="card-title mb-4">Visitas y Compras</h5>
-                  <canvas id="comprasVisitasChart" height="120"></canvas>
-                  <div className="mt-4">
-                    <p><strong>Visitas a la página (último mes):</strong> <span id="visitasMes">{visitas}</span></p>
-                    <p><strong>Compras (último mes):</strong> <span id="comprasMes">{compras}</span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  return (
+    <>
+  <div className="container mt-4 mb-5">
+      <h2 className="mb-4 text-center fw-bold">Panel de Control</h2>
+
+     <div className="row mb-4">
+        <div className="col-lg-5 col-md-12 mb-3">
+           <GraficoCategorias data={categorias} />
         </div>
-      </section>
+        <div className="col-lg-7 col-md-12 mb-3">
+           <GraficoAnual data={anual} />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12">
+           <ResumenDiarioVentas ventas={ventas} />
+        </div>
+      </div>
+  </div>
     </>
   );
 };
 
-export default adminEstadistica;
+

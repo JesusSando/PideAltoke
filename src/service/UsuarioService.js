@@ -30,7 +30,9 @@ update(id, usuario) {
     }
 
   
-   
+   verificarCorreoExistente(correo) { 
+        return axios.get(`${API_URL}/verificar-correo/${correo}`);
+    }
  
 }
 

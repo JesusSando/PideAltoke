@@ -10,7 +10,7 @@ import '../src/assets/js/estadisticas'
 
 import HistorialConsultas from './components/HistorialConsultas';
 import HistorialHistorias from './components/HistorialHistorias';
-import {Encabezado,Carrusel,HomeGrid} from './components/encabezado';
+import {Encabezado,Carrusel,PrincipalGrid} from './components/encabezado';
 import {Menu,PedirMenu} from './components/menu';
 import {Oferta,TodasOfertas} from './components/oferta';
 import {IniciarSesion} from './components/iniciarsesion';
@@ -31,7 +31,7 @@ import Pago   from './components/pago';
 import Boleta from './components/boleta';
 import Contacto    from './components/contacto';
 import AdminCuenta from './components/adminCuentas';
-
+ 
 import  Historial  from './components/Historial';
 
  
@@ -45,7 +45,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<> 
-        <HomeGrid/>
+        <PrincipalGrid/>
         <Menu/> 
         <Oferta/>
         <Nosotros/>  
@@ -58,7 +58,8 @@ function App() {
       <Route path='boleta'   element={<><Boleta/> </>}/>
       <Route path='iniciarsesion' element={<><IniciarSesion/> </>}/>
       <Route path='registrarse'   element={<Registrarse/>}/>
-      <Route path='olvidadocontrasena' element={<OlvidadoContrasena/>}/>
+      <Route path='registrarse'   element={<Registrarse/>}/>
+      <Route path='Olvidadocontrasena' element={<OlvidadoContrasena/>}/>
       <Route path='pedirMenu' element={<><PedirMenu/> </>}/>
       <Route path='ofertas'   element={<><Oferta/><TodasOfertas/></>}/>
       <Route path='contacto'  element={<Contacto/>}/>

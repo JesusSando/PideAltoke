@@ -10,7 +10,7 @@ import BarraLateral from "./barraLateral";
 
 export function Oferta() {
 
-  const limite = 4;
+ 
     const [productos, setProductos] = useState([]);
   
     useEffect(() => {
@@ -35,15 +35,7 @@ export function Oferta() {
 const ofertasAMostrar = productos.slice(0, 2); 
 
 
-    const obtenerImagenURL = (producto, index) => {  
-        if (producto.img_oferta && producto.img_oferta.length > 0) {
-           return defaultImages[index % defaultImages.length]; 
-        } 
-        if (producto.imagen && producto.imagen.length > 0) {
-           return defaultImages[index % defaultImages.length]; 
-        }  
-        return defaultImages[index % defaultImages.length]; 
-    };
+    
     return (
  <> 
 <div className="area_producto_oferta">
@@ -56,7 +48,7 @@ const ofertasAMostrar = productos.slice(0, 2);
         <img src={
                         producto.fondoImg 
                         ? `${IMAGEN_BASE_URL}${producto.fondoImg}` 
-                        : (producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : imgDefault)
+                        : (producto.imagen ? `${IMAGEN_BASE_URL}${producto.imagen}` : defaultImages)
                     } 
                     alt={producto.nombre} 
                     className="img-oferta-fondo"

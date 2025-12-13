@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import "../assets/css/iniciarSesion-Registro.css";
-import { validarCorreo ,validarContraseñaSegura,validarRut} from "../assets/js/validarcorreo"; 
+import { validarCorreo ,validarContraseñaSegura,validarRut,verificarCorreoExiste} from "../assets/js/validarcorreo"; 
 import UsuarioService from "../service/UsuarioService";
 
 function Registrarse() {
@@ -12,9 +12,42 @@ function Registrarse() {
   const [comuna, setComuna] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const navigate = useNavigate();
+  const [rutValido, setRutValido] = useState(null);
+  const [correoValido, setCorreoValido] = useState(null);
+  const [verPassword, setVerPassword] = useState(false);
+  const [MensajeCorreo, setMensajeCorreo] = useState("");
 
-  const handleRegistro = async (e) => {
+    const navigate = useNavigate();
+
+    const handleRutChange = (e) => {
+    const valor = e.target.value;
+    setRut(valor);
+
+    if (valor.length > 3) {
+      setRutValido(validarRut(valor));
+    } else {
+      setRutValido(null);
+    }
+  };
+
+  const handleVerificarExistencia = () => {  
+      verificarCorreoExiste(correo, setCorreoValido, setMensajeCorreo);
+  };
+
+
+
+  const handleCorreoChange = (e) => {
+    const nuevoCorreo = e.target.value;
+    setCorreo(nuevoCorreo);
+
+    if (nuevoCorreo.length > 0) { 
+      setCorreoValido(validarCorreo(nuevoCorreo));
+    } else {
+      setCorreoValido(null);  
+    }
+  };
+
+    const handleRegistro = async (e) => {
     e.preventDefault();
     setMensaje("");
 
@@ -24,18 +57,29 @@ function Registrarse() {
     }
 
     if (!validarCorreo(correo)) {
-      setMensaje("Correo inválido.");
+      setMensaje("Correo inváalido.");
       return;
     }
+ 
+     const checkExiste = await UsuarioService.verificarCorreoExistente(correo);
+       if (checkExiste.data === true) {
+          setMensaje("El correo ya esta registrado");
+           setCorreoValido(false);  
+          return;  
+      }
+    
 
     if (!validarContraseñaSegura(contraseña)) {
       setMensaje("Contraseña insegura.");
       return;
     } 
     if (!validarRut(rut)) {
-      setMensaje("Rut no válido.");
+      setMensaje("Rut no valido.");
       return;
     }
+
+     
+    
 
     const data = { nombre, correo, contrasena: contraseña, rut, comuna };
 
@@ -49,6 +93,8 @@ function Registrarse() {
     }
   };
 
+ 
+
   return (
     <>
     <div className="contenedor">
@@ -57,27 +103,65 @@ function Registrarse() {
         {mensaje && <p style={{ color: "red", fontWeight: "bold" }}>{mensaje}</p>}
         <form onSubmit={handleRegistro}>
           <label>Nombre completo</label>
-          <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+          <input type="text" placeholder="Juan Torres" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
 
-          <label>Rut</label>
-          <input type="text" value={rut} onChange={(e) => setRut(e.target.value)} required />
+         <div className="mb-3">
+            <label className="form-label">Rut</label>
+            <input 
+                type="text" 
+                className={`form-control ${rutValido === true ? 'is-valid' : rutValido === false ? 'is-invalid' : ''}`}
+                placeholder="19.123.143-1"  value={rut}  onChange={handleRutChange}   required   />
+            {rutValido === false && <div className="invalid-feedback">RUT inválido</div>}
+          </div>
 
           <label>Correo</label>
-          <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
+          <div className="mb-3">
+            <input type="email"  placeholder="ejemplo@ejemplo.com"  value={correo}  onChange={handleCorreoChange}  onBlur={handleVerificarExistencia}
+              required  className={`form-control ${correoValido === true ? 'is-valid' : correoValido === false ? 'is-invalid' : ''}`}/>
+            <div className="invalid-feedback"> {MensajeCorreo}</div>
+          </div>
+
 
           <label>Contraseña</label>
-          <input type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)} required />
+          <div className="contraseña-registro">
+  
+            <input  type={verPassword ? "text" : "password"} 
+              className="form-control contraseña-input" 
+              value={contraseña} 
+              onChange={(e) => setContraseña(e.target.value)} 
+              required     />
+
+            <p className="contraseña-icono material-symbols-outlined"  onClick={() => setVerPassword(!verPassword)} >
+              {verPassword ? "visibility_off" : "visibility"}
+            </p> 
+          </div>
 
           <label>Comuna</label>
-          <input type="text" value={comuna} onChange={(e) => setComuna(e.target.value)} required />
+          <select value={comuna} onChange={(e) => setComuna(e.target.value)} required  className="form-select  "  >
+              <option value="">Selecciona tu comuna</option>
+              <option value="1">Santiago</option>
+              <option value="2">Maipu</option>
+              <option value="3">Cerrillos</option>
+              <option value="4">Estacion central</option>
+              <option value="5">Las condes</option>
+              <option value="6">La cisterna</option>
+              <option value="7">La florida</option>
+              <option value="8">Providencia</option>
+              <option value="9">Quinta normal</option>
+              <option value="10">Independencia</option>
+              <option value="11">La pintana</option>
+              <option value="12">Lo prado</option>
+              <option value="13">macul</option>
+          </select><br/><br/>
 
           <button type="submit">Registrarse</button>
         </form>
       </div>
       <br />
-      <Link to="/iniciarsesion" class="text-danger">
+      <Link to="/iniciarsesion" className="btn btn-danger  px-4">
         iniciar sesion
       </Link>
+      
     </div>
     </>
   );

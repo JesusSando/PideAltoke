@@ -25,8 +25,7 @@ class ComidaService {
     }
  
 
-    getFiltrado() {
-        // Si en Java es @RequestMapping("/api/v1/comidas") y @GetMapping("/filtrado")
+    getFiltrado() { 
         return axios.get(`${API_URL}/filtrado`); 
     }
 

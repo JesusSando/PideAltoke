@@ -210,7 +210,7 @@ export function Carrusel() {
 }
 
 
-export function HomeGrid() {
+export function PrincipalGrid() {
   const [dataGrid, setDataGrid] = useState({ ofertas: [], populares: [] });
   const [loading, setLoading] = useState(true);
   

@@ -238,12 +238,7 @@ function ComidaAdmin() {
                             required
                         />
                         <label>Tipo de Comida:</label>
-                            <select
-                                name="categoria"
-                                value={productoEditado.categoria}
-                                onChange={handleChange}
-                                required
-                            >
+                            <select name="categoria"  value={productoEditado.categoria} onChange={handleChange}  required >
                                 <option value="">Selecciona una categoria</option>
                                 <option value="pizza">Pizza</option>
                                 <option value="hamburguesa">Hamburguesa</option>

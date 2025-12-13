@@ -56,9 +56,13 @@ export function IniciarSesion() {
            
       </div>
       <br />
-      <Link to="/registrarse" class="text-danger" >
+      <Link to="/registrarse"  className="btn btn-danger px-4" >
         Regístrate aquí
       </Link>
+      <br />
+       <Link to="/olvidadocontrasena" className="btn btn-success mt-4  px-4">
+             Olvide contraseña
+       </Link>
     </div>
   );
 }

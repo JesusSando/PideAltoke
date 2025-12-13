@@ -5,15 +5,14 @@ html{
 }
  
 .material-symbols-outlined {
+ 
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
   'GRAD' 0,
   'opsz' 24
 }
- 
-
-
+  
 h1,
 h2 ,h3,span{
   font-family: 'Luckiest Guy', cursive;
@@ -729,6 +728,29 @@ ul{
   font-family: "Luckiest Guy", sans-serif;
 }
 
+
+ 
+ 
+
+/*ver contraseña y ocultarla*/
+ 
+.contraseña-registro {
+  position: relative;  
+  width: 100%;
+} 
+.contraseña-input{
+  padding-right: 40px;  
+}
+ 
+.contraseña-icono{
+  position: absolute;
+  right: 10px;          
+  top: 50%;           
+  transform: translateY(-50%);  
+  color: #080808;       
+        
+  user-select: none;    
+}
 
 /*eslogan*/
 

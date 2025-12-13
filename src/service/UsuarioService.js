@@ -8,9 +8,10 @@ class UsuarioService {
     return axios.post(API_URL, usuario);
   }
  
-  login(correo, contrasena) {
-    return axios.post(`${API_URL}/login`, { correo, contrasena });
-  }
+ login(datos) { 
+        return axios.post(`${API_URL}/login`, datos);
+    } 
+
  
   getAll() {
     return axios.get(API_URL);

@@ -17,8 +17,14 @@ function HistorialConsultas() {
                 setConsultas(res.data);
             } catch (err) {
                 console.error("Error al cargar las consultas:", err.response || err); 
-                navigate('/error');
-            }  
+                if (err.response && err.response.status === 403) { 
+                    setError("Acceso denegado (403). Verifica los permisos del endpoint.");
+                } else {
+                    setError("Error al cargar el historial de consultas.");
+                }
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchConsultas();

@@ -58,9 +58,7 @@ export function IniciarSesion() {
       } else {
         setError("Error al iniciar sesión. Intente más tarde.");
       }
-    }finally{
-      navigate('/error');
-    }
+    } 
   }; 
   return (
     <div className="contenedor">

@@ -14,7 +14,9 @@ export function OlvidadoContrasena() {
   const handleSubmit =async (e) => {
     e.preventDefault();
     setMensaje(""); 
+    try{
 
+     
     if (!validarCorreo(correo)) {
       setMensaje("Por favor, ingresa tu correo.");
       return;
@@ -30,6 +32,12 @@ export function OlvidadoContrasena() {
      } else {
             setMensaje("Este correo no esta registrado."); 
           }
+      }catch(error){
+        console.log(error)
+   
+            navigate('/error');
+        
+      }
     
 
   };

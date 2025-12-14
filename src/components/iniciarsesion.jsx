@@ -52,11 +52,14 @@ export function IniciarSesion() {
 
     } catch (err) {
       console.error(err);
+      navigate('/error');
       if (err.response && err.response.status === 401) {
         setError("Correo o contraseña incorrectos.");
       } else {
         setError("Error al iniciar sesión. Intente más tarde.");
       }
+    }finally{
+      navigate('/error');
     }
   }; 
   return (

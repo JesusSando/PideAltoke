@@ -10,17 +10,13 @@ import BoletaService from "../service/BoletaService";
 
     useEffect(() => { 
         const fetchHistorial = async () => {
-          try {  
+          try {  
   
                const res = await BoletaService.getAll(); 
                 setBoletas(res.data);
             } catch (err) {
                 console.error("Error al cargar el historial completo:", err.response || err); 
-                if (err.response && err.response.status === 403) {
-                    setError("Acceso denegado (403). Verifica los permisos del endpoint.");
-                } else {
-                    setError("Error al cargar el historial de compras de todos los clientes.");
-                }
+                
             } finally {
                 setLoading(false);
             }
@@ -28,6 +24,26 @@ import BoletaService from "../service/BoletaService";
 
         fetchHistorial(); 
     }, [ ]);
+
+
+    const handleChangeEstado = async (boletaId, nuevoEstado) => { 
+        const boletasAnteriores = [...boletas]; 
+        setBoletas(prevBoletas => 
+            prevBoletas.map(b => 
+                b.id === boletaId ? { ...b, estado: nuevoEstado } : b
+            )
+        ); 
+        try { 
+            await BoletaService.actualizarEstado(boletaId, nuevoEstado);
+            
+            alert(`Boleta ${boletaId} actualizada correctamente.`);
+            
+        } catch (error) {
+            console.error("Error al actualizar", error);
+            alert("no se pudo guardar el cambio  "); 
+            setBoletas(boletasAnteriores);
+        }
+    };
 
 
     const cargarDetalles = (customizacionString)=>{
@@ -79,16 +95,27 @@ import BoletaService from "../service/BoletaService";
                             <div className="d-flex w-100 justify-content-between">
                                 <h5 className="mb-1">Boleta N° {boleta.id}</h5>
                                 
-                                <small className="text-muted">
-                                    
-                                    Cliente: {boleta.usuario ? boleta.usuario.nombre : 'N/A'} | 
+                                <small className="text-muted"> Cliente: {boleta.usuario ? boleta.usuario.nombre : 'N/A'} | 
                                     Fecha: {new Date(boleta.fecha).toLocaleDateString()}
                                 </small>
                             </div>
-                            <p className="mb-1">
-                                <strong>Total:</strong> ${boleta.total.toLocaleString()} - 
-                                <strong> Estado:</strong> <span className={`badge bg-${boleta.estado === 'Pagado' ? 'success' : 'warning'}`}>{boleta.estado}</span>
-                            </p>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <div><strong>Total:</strong> ${boleta.total.toLocaleString()}</div>
+                                
+                                <div className="d-flex align-items-center">
+                                    <strong className="me-2">Estado:</strong>
+                                    <select  className={`form-select form-select-sm ${
+                                            boleta.estado === 'ENTREGADO' ? 'border-success text-success' : 
+                                            boleta.estado === 'EN_CAMINO' ? 'border-primary text-primary' : '' }`}
+                                        style={{ width: 'auto', minWidth: '150px' }} value={boleta.estado || ""} 
+                                        onChange={(e) => handleChangeEstado(boleta.id, e.target.value)} >
+                                        <option value="EN_ESPERA">En Espera</option>
+                                        <option value="PREPARANDO">Preparando</option>
+                                        <option value="EN_CAMINO">En Camino</option>
+                                        <option value="ENTREGADO">Entregado</option>
+                                    </select>
+                                </div>
+                            </div>
                             <details className="mt-2">
                                 <summary>Ver detalle de {boleta.compras.length} productos</summary>
                                 <ul className="list-group list-group-flush mt-2">

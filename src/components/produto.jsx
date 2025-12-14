@@ -27,6 +27,9 @@ useEffect(() => {
         setProducto(encontrado);
       } catch (error) {
         console.error("  error al cargar el producto:", error);
+        navigate('/error');
+      }finally{
+        navigate('/error');
       }
     };
 
@@ -49,7 +52,7 @@ useEffect(() => {
     }
   };
 
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
                
   const imgDefault = "/src/assets/images/f1.png";
 

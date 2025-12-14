@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import React, { useEffect ,useState} from 'react'; 
 import BlogService from "../service/BlogService";  
- 
-const UPLOAD_BASE_URL = "http://localhost:8080/uploads/"; 
+import { useNavigate } from "react-router-dom";
+const UPLOAD_BASE_URL = "http://98.95.19.168:8080/uploads/"; 
 
 function Blog(){
+    const navigate = useNavigate(); 
     const [blogs, setBlogs] = useState([]);  
     const [loading, setLoading] = useState(true);
  
@@ -16,8 +17,9 @@ function Blog(){
                 setBlogs(res.data);
             } catch (error) {
                 console.error('Error al cargar los blogs:', error); 
+            
             } finally {
-                setLoading(false);
+                setLoading(false); 
             }
         };
         cargarBlog();

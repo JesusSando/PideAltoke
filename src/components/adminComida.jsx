@@ -59,13 +59,13 @@ function ComidaAdmin() {
             precioOferta: producto.precioOferta || 0,
             ingredientes: producto.ingredientes || '',
            fondoImgPreview: producto.fondoImg 
-                ? `http://localhost:8080/uploads/${producto.fondoImg}` 
+                ? `http://98.95.19.168:8080/uploads/${producto.fondoImg}` 
                 : '',
             
             imagen: producto.imagen || null,
           
             imagenPreview: producto.imagen 
-                ? `http://localhost:8080/uploads/${producto.imagen}` 
+                ? `http://98.95.19.168:8080/uploads/${producto.imagen}` 
                 : '', 
             
             nombre_modificado: producto.nombre_modificado,
@@ -336,7 +336,7 @@ function ComidaAdmin() {
                                 <p>Descripcion: {producto.descripcion}</p> 
                             </div>
 
-                            {producto.imagen && <img src={`http://localhost:8080/uploads/${producto.imagen}`} alt="Producto" style={{ width: '150px', height: 'auto' }} />}
+                            {producto.imagen && <img src={`http://98.95.19.168:8080/uploads/${producto.imagen}`} alt="Producto" style={{ width: '150px', height: 'auto' }} />}
 
 
                             <div className="product-actions">

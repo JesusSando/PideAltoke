@@ -2,8 +2,8 @@
  
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react'; 
-import { Link, Navigate } from 'react-router-dom';
-
+import { Link, Navigate  } from 'react-router-dom';
+ 
 import   historial    from '../components/Historial';
 
 function Carrito() {
@@ -16,7 +16,9 @@ function Carrito() {
     } catch (e) {
       console.error("Error leyendo carrito de localStorage", e);
       return [];
-
+      navigate('/error');
+    }{
+      navigate('/error');
     }
 
   });
@@ -67,7 +69,7 @@ function Carrito() {
   };
 
 
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
   const IMG_DEFAULT = "/src/assets/images/f1.png"
   return (
     <>

@@ -6,7 +6,7 @@ import BlogService from "../service/BlogService";
 
 
 function PaginaBlog(){
-  const UPLOAD_BASE_URL = "http://localhost:8080/uploads/";
+  const UPLOAD_BASE_URL = "http://98.95.19.168:8080/uploads/";
   const IMG_AUTOR_DEFAULT = "../src/assets/images/carrusel5.jpg";
 
     const { id } = useParams();  
@@ -21,9 +21,9 @@ function PaginaBlog(){
                 setBlog(res.data);
             } catch (error) {
                 console.error(`Error al cargar el blog con ID ${id}:`, error);
-                setBlog(null);
+                setBlog(null); 
             } finally {
-                setLoading(false);
+                setLoading(false); 
             }
         }; 
         if (id) {

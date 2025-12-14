@@ -22,7 +22,7 @@ function BarraLateral({ open, onClose, product, onConfirm }) {
     bebidas: []
   });
 
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
 
   useEffect(() => {
     if (open && product) {

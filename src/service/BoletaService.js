@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/v1/boleta";
+const API_URL = "http://98.95.19.168:8080/api/v1/boleta";
 
 class BoletaService {
 
@@ -30,6 +30,14 @@ class BoletaService {
       return axios.get(`${API_URL}/estadisticas/rendimiento-anual`);
     }
 
+
+    actualizarEstado(id, nuevoEstado) { 
+        return axios.patch(`${API_URL}/${id}/estado`, null, {
+            params: {
+                nuevoEstado: nuevoEstado
+            }
+        });
+    }
     
 }
 

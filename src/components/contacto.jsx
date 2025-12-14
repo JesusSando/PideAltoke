@@ -39,6 +39,9 @@ function Contacto() {
         } catch (error) {
             console.error("Error al enviar el mensaje:", error.response || error);
             alert("Error al enviar el mensaje. Inténtalo de nuevo más tarde.");
+            navigate('/error');
+        }finally{
+          navigate('/error');
         }
     };
      

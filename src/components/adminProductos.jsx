@@ -46,7 +46,7 @@ function AdminProducto() {
             fecha_vencimiento: producto.fecha_vencimiento,
             img: producto.img || '',  
             imgFile: null, 
-            imgPreview: producto.img ? `http://localhost:8080/uploads/${producto.img}` : ''
+            imgPreview: producto.img ? `http://98.95.19.168:8080/uploads/${producto.img}` : ''
            
         });
         setEditando(true); 
@@ -205,7 +205,7 @@ function AdminProducto() {
                             <p><strong>{producto.nombre}</strong> ID: {producto.id}</p>
                             <small>Stock: {producto.stok}<br/> Vence: {producto.fecha_vencimiento}</small>
                         </div>
-                        {producto.img && <img src={`http://localhost:8080/uploads/${producto.img}`} alt="prod" style={{ width: '80px' }} />}
+                        {producto.img && <img src={`http://98.95.19.168:8080/uploads/${producto.img}`} alt="prod" style={{ width: '80px' }} />}
                         
                         <div className="product-actions">
                             <button onClick={() => handleEdit(producto)}>Editar</button>

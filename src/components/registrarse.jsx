@@ -89,7 +89,7 @@ function Registrarse() {
       navigate("/iniciarsesion");
     } catch (err) {
       console.error(err);
-      setMensaje(err.response?.data?.message || "Error al registrar usuario");
+      navigate('/error');
     }
   };
 

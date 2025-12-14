@@ -30,7 +30,7 @@ export function Oferta() {
         carrusel1
     ];
 
-    const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+    const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
    
 const ofertasAMostrar = productos.slice(0, 2); 
 
@@ -104,6 +104,9 @@ export function TodasOfertas() {
           setProductos(res.data);
         } catch (error) {
           console.error("Error al cargar las comidas:", error);
+          navigate('/error');
+        }finally{
+          navigate('/error');
         }
       };
       cargarComida();
@@ -122,7 +125,7 @@ export function TodasOfertas() {
   };
 
     const imgDefault = "/src/assets/images/f1.png";
-    const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+    const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
               
 
    const productosEnOferta = productos.filter(p => p.oferta);

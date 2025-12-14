@@ -2,8 +2,11 @@
 
 import React, { useEffect ,useState} from 'react';
  
-
+import { useNavigate } from 'react-router-dom'; 
+ 
 function AdminOferta() {
+ 
+ const navigate = useNavigate(); 
  
   const [productoEditado, setProductoEditado] = useState({
     id: null,            
@@ -45,20 +48,26 @@ function AdminOferta() {
  
   const handleChange = (e) => {
     const { name, value, files } = e.target;  
-    if (name === 'imagen' && files.length > 0) {
+    try{
+       if (name === 'imagen' && files.length > 0) {
  
-      setProductoEditado({
-        ...productoEditado,
-        imagen: files[0],
-        imagenPreview: URL.createObjectURL(files[0]),  
-      });
-    } else {
- 
-      setProductoEditado({
-        ...productoEditado,
-        [name]: value,
-      });
+        setProductoEditado({
+          ...productoEditado,
+          imagen: files[0],
+          imagenPreview: URL.createObjectURL(files[0]),  
+        });
+      } else {
+  
+        setProductoEditado({
+          ...productoEditado,
+          [name]: value,
+        });
+      }
+    }finally{ 
+      navigate('/error');
     }
+     
+    
   };
 
  

@@ -163,7 +163,7 @@ function Pago() {
       alert("Hubo un problema realizando la compra.");
     }
   };
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
   const IMG_DEFAULT = "/src/assets/images/f1.png"
 
   return (

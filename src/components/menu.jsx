@@ -22,6 +22,7 @@ export function Menu() {
         setProductos(res.data);
       } catch (error) {
         console.error("Error al cargar las comidas:", error);
+        navigate('/error');
       }
     };
     cargarComida();
@@ -40,7 +41,7 @@ export function Menu() {
   };
 
 
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
 
   return (
@@ -112,7 +113,7 @@ export function PedirMenu() {
   const [barraLateralAbierta, setbarraLateralAbierta] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null); 
 
-  const IMAGEN_BASE_URL = "http://localhost:8080/uploads/";
+  const IMAGEN_BASE_URL = "http://98.95.19.168:8080/uploads/";
   const imgDefault = "/src/assets/images/f1.png";
   const tipo_complejo = ["pizza", "hamburguesa", "burrito"];
 

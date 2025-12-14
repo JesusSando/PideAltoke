@@ -5,9 +5,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './assets/css/carrito.css'
 import '../src/assets/css/admin.css'
 import '../src/assets/js/estadisticas'
+ 
 
-
-
+import PaginaError from './components/PaginaError';
 import HistorialConsultas from './components/HistorialConsultas';
 import HistorialHistorias from './components/HistorialHistorias';
 import {Encabezado,Carrusel,PrincipalGrid} from './components/encabezado';
@@ -81,6 +81,8 @@ function App() {
 
       <Route path='HistorialConsultas' element={<><HistorialConsultas/> </>}/>
       <Route path='HistorialHistorias' element={<><HistorialHistorias/> </>}/>
+
+      <Route path='error' element={<><PaginaError/> </>}/>
 
       </Routes>
       

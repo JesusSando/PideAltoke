@@ -25,7 +25,7 @@ function AdminBlog() {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const rutUsuario = usuario?.rut || "Anonimo";
 
-    const UPLOAD_BASE_URL = "http://localhost:8080/uploads/"; 
+    const UPLOAD_BASE_URL = "http://98.95.19.168:8080/uploads/"; 
 
  
     const cargarBlogs = async () => { 

@@ -13,13 +13,16 @@
 .overlay {
   position: absolute;
   left: 0;
+  top: 0;
   width: 70%;  
   height: 100%;
   background: rgba(0,0,0,0.5);
+  z-index: 1; 
 }
  
 .customizar-barra {
   width: 30%;
+  max-width: 100%;
   height: 100%;
   background: white;
   padding: 20px;
@@ -27,18 +30,19 @@
   position: relative;
   display: flex;
   flex-direction: column;  
+  z-index: 2;
 }
  
 .cerrar-btn {
   z-index:10;
   position: absolute;
-  right: 2px;
-  top: 5px;
+  right: 10px;
+  top:10px;
   background: transparent;
   border: none;
-  font-size: 20px;
-  padding: 2px;
-  margin:5px;
+  font-size: 25px;
+  padding: 5px;
+  margin:0px;
 }
 
 .cerrar-btn:hover {
@@ -80,6 +84,7 @@
   align-items: center;
   gap: 15px;
   margin: 10px 0;
+  justify-content: center;
 }
 
 .cantidad-box button {
@@ -114,4 +119,28 @@
 
 .customizar-barra::-webkit-scrollbar-thumb:hover {
   background: #777;
+}
+
+
+@media (max-width: 768px) { 
+  
+  .customizar-barra {
+    width: 100%;  
+    max-width: 100%;
+    padding: 15px; 
+  } 
+  .cantidad-box button, 
+  .confirm-btn {
+    padding: 12px;  
+  }
+
+  .cerrar-btn {
+    font-size: 28px;  
+    top: 15px;
+    right: 15px;
+  }
+   
+  .steps-indicator small {
+      font-size: 0.7rem;
+  }
 }

@@ -1,0 +1,64 @@
+
+.menuTitulo {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem; 
+  font-family: 'Luckiest Guy', sans-serif; 
+} 
+.filtro_menu {
+  display: flex;
+  justify-content: center;  
+  flex-wrap: wrap;          
+  gap: 10px;               
+  list-style: none;        
+  padding: 0;
+  margin-bottom: 30px;
+} 
+.filtro_menu li {
+  padding: 8px 20px;
+  background-color: #f8f9fa;  
+ 
+  border-radius: 25px;        
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;        
+} 
+.filtro_menu li:hover {
+  background-color: #e2e6ea;
+ 
+} 
+.filtro_menu li.active {
+  background-color: #c22727; 
+  color: white;
+  border-color: #c22727;
+  box-shadow: 0 4px 6px rgba(194, 39, 39, 0.4);
+} 
+@media (max-width: 768px) {
+  
+  .filtro_menu {
+    display: flex;
+    flex-wrap: nowrap;     
+    justify-content: flex-start;  
+    overflow-x: auto;        
+    padding-bottom: 10px;     
+     
+    -webkit-overflow-scrolling: touch;  
+    padding-left: 15px;      
+    padding-right: 15px;
+  }
+
+  .filtro_menu li {
+    flex: 0 0 auto;   
+    font-size: 14px;  
+    padding: 6px 16px;
+  } 
+  .filtro_menu::-webkit-scrollbar {
+    display: none;
+  }
+  .filtro_menu {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+}

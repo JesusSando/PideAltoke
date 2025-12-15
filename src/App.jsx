@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route ,Navigate} from 'react-router-dom';
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
@@ -20,7 +20,7 @@ import Pie      from './components/pie';
 import Carrito  from './components/carrito';
 import ComidaAdmin from './components/adminComida';
 import Producto    from './components/produto';
-import Blog from './components/blog';
+import Blog from './components/blog'; 
 import PaginaBlog  from './components/paginaBlog';
 import AdminOferta from './components/adminOferta';
 import AdminBlog from './components/adminBlog';
@@ -71,7 +71,7 @@ function App() {
 
       <Route path="/historial" element={<Historial />} />
       <Route path='error' element={<><PaginaError/> </>}/>
-      
+
 <Route element={<RutaProtegida />} > 
       <Route path='adminProducto' element={<><AdminProducto/> </>}/>
       <Route path='adminComida'   element={<><ComidaAdmin/> </>}/>
@@ -84,7 +84,7 @@ function App() {
       <Route path='HistorialHistorias' element={<><HistorialHistorias/> </>}/>
 </Route>
        
-
+      <Route path="*" element={<Navigate to="/error" replace />} />
       </Routes>
       
       <Pie/>

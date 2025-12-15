@@ -51,8 +51,7 @@ export function IniciarSesion() {
       }
 
     } catch (err) {
-      console.error(err);
-      navigate('/error');
+      console.error(err); 
       if (err.response && err.response.status === 401) {
         setError("Correo o contraseña incorrectos.");
       } else {

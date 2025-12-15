@@ -453,9 +453,8 @@ ul{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 150px;
-  gap: 15px;
-  max-width: 900px;
+  padding:60px 100px 10px 100px;
+  gap: 15px; 
   margin: 0 auto;
 }
 
@@ -479,7 +478,7 @@ ul{
 .textoVistaProducto{
   display: flex;
   flex: 1;
-  min-width: 200px;
+  min-width: 400px;
   max-width: 380px;
   background-color: #fff;
   padding: 20px;
@@ -729,6 +728,12 @@ ul{
 }
 
 
+/*carta producto*/
+.cartaPrincipal img{
+ object-fit: scale-down;
+     height: 300px;
+    width: 100%;
+}
  
  
 

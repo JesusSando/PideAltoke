@@ -15,15 +15,16 @@ import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 export function Encabezado() {
+  
 
   const [usuario, setUsuario] = useState(null);
-  useEffect(() => {
+  useEffect(() => { 
+    const usr = obtenerUsuario();  
+    setUsuario(usr); 
     const actualizarUsuario = () => {
-      ;
-      const usr = obtenerUsuario();
-      setUsuario(usr);
+      const usrActualizado = obtenerUsuario();
+      setUsuario(usrActualizado);
     };
-    actualizarUsuario();
 
     window.addEventListener('usuarioCargado', actualizarUsuario);
     return () => {

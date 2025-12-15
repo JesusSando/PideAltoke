@@ -34,7 +34,7 @@ import AdminCuenta from './components/adminCuentas';
  
 import  Historial  from './components/Historial';
 
- 
+import RutaProtegida from './components/RutaProtegida';
 
 function App() {
  
@@ -51,7 +51,7 @@ function App() {
         <Nosotros/>  
         </>
       }/>
-
+       
       <Route path='nosotros' element={<><Nosotros/> </>}/>
       <Route path='carrito'  element={<><Carrito/> </>}/> 
       <Route path='pago'     element={<><Pago/> </>}/>
@@ -70,8 +70,9 @@ function App() {
       <Route path='/producto/:id' element={<Producto/>}/>
 
       <Route path="/historial" element={<Historial />} />
-
-
+      <Route path='error' element={<><PaginaError/> </>}/>
+      
+<Route element={<RutaProtegida />} > 
       <Route path='adminProducto' element={<><AdminProducto/> </>}/>
       <Route path='adminComida'   element={<><ComidaAdmin/> </>}/>
       <Route path='adminOferta'   element={<><AdminOferta/> </>}/>
@@ -81,8 +82,8 @@ function App() {
 
       <Route path='HistorialConsultas' element={<><HistorialConsultas/> </>}/>
       <Route path='HistorialHistorias' element={<><HistorialHistorias/> </>}/>
-
-      <Route path='error' element={<><PaginaError/> </>}/>
+</Route>
+       
 
       </Routes>
       

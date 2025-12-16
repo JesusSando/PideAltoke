@@ -1,6 +1,7 @@
  
 import React, { useEffect ,useState} from 'react'; 
 import ComidaService from '../service/ComidaService';
+import Swal from 'sweetalert2';
 
 function ComidaAdmin() {
  const [comidas, setComidas] = useState([]);
@@ -150,15 +151,25 @@ function ComidaAdmin() {
                 res = await ComidaService.add(formData);
             }
 
-            console.log(`Comida ${editando ? 'actualizada' : 'creada'}:`, res.data);
-            alert(`Comida ${editando ? 'actualizada' : 'creada'} con éxito!`);
+          
+           
+            Swal.fire({
+                    position: "top-end", 
+                    icon: "success",
+                    title: `Comida ${editando ? 'actualizada' : 'creada'} con exito`,
+                    showConfirmButton: false, 
+                    timer: 3000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#00f62dff' 
+                });
 
             await loadComidas();
             handleCancel();
 
         } catch (error) {
             console.error("Error en la operación:", error.response || error);
-            alert(`Error al ${editando ? 'editar' : 'agregar'} la comida. Revisa la consola.`);
+            alert(`Error al ${editando ? 'editar' : 'agregar'} la comida `);
         }
     };
 
@@ -192,11 +203,21 @@ function ComidaAdmin() {
         if (window.confirm(`¿Estás seguro de que quieres eliminar la comida "${nombre}"?`)) {
             try {
                 await ComidaService.delete(id, rutUsuario);
-                alert(`Comida "${nombre}" eliminada con exito.`);
+             
+                Swal.fire({
+                    position: "top-end", 
+                    icon: "error",
+                    title: `Comida "${nombre}" eliminada con exito`,
+                    showConfirmButton: false, 
+                    timer: 3000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#f60000ff' 
+                });
                 loadComidas();
             } catch (error) {
                 console.error("Error al eliminar la comida:", error);
-                alert("Error al eliminar la comida. Revisa el backend.");
+                alert("Error al eliminar la comida ");
             }
         }
     };
@@ -205,9 +226,9 @@ function ComidaAdmin() {
 
         <>
 
-            <div className="container">
+            <div id='formularioEditar' className="container">
 
-                <div className="form-container">
+                <div className="form-container" >
                     <h2>{editando ? 'Editar Comida' : 'Agregar Comida'}</h2>
                     <form onSubmit={handleSubmit}>
 
@@ -229,14 +250,9 @@ function ComidaAdmin() {
                             min={1}          
                             max={500000}     
                         />
-                        <input
-                            name="descripcion"
-                            type="text"
-                            value={productoEditado.descripcion}
-                            onChange={handleChange}
+                        <input name="descripcion"  type="text" value={productoEditado.descripcion} onChange={handleChange}
                             placeholder="Descripción"
-                            required
-                        />
+                            required />
                         <label>Tipo de Comida:</label>
                             <select name="categoria"  value={productoEditado.categoria} onChange={handleChange}  required >
                                 <option value="">Selecciona una categoria</option>
@@ -247,12 +263,11 @@ function ComidaAdmin() {
                                 <option value="bebida">Bebida</option>
                                 <option value="postre">Postre</option>
                             </select>
-
-   
-                        <label> En Oferta:</label>
-                         <input name="oferta" type="checkbox"checked={productoEditado.oferta}onChange={handleChange}/>
-                        
-
+ 
+                        <div className="form-check mb-3">
+                            <input  className="form-check-input"  type="checkbox"  name="oferta"  id="checkOferta" onChange={handleChange} />
+                            <label className="form-check-label" htmlFor="checkOferta"> En Oferta </label>
+                        </div> 
                         <label htmlFor="precioOferta">Precio de Oferta:</label> 
                         <input  id="precioOferta" name="precioOferta" type="number"value={productoEditado.precioOferta}onChange={handleChange} placeholder="Precio de Oferta"required={productoEditado.oferta} min={0}   max={500000} />
 
@@ -340,7 +355,7 @@ function ComidaAdmin() {
 
 
                             <div className="product-actions">
-                                <button onClick={() => handleEdit(producto)}>Editar</button>
+                                <a href='#formularioEditar' ><button onClick={() => handleEdit(producto)}> Editar </button></a>
                                 <button onClick={() => handleDelete(producto.id, producto.nombre)}>Eliminar</button>
                             </div>
                         </div>

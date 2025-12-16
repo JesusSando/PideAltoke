@@ -5,7 +5,8 @@ import { validarCorreo } from '../assets/js/validarcorreo';
 import { notificarCambioUsuario } from '../assets/js/cargo';
 
 
-
+import Swal from 'sweetalert2';
+ 
 
 
 export function IniciarSesion() {
@@ -36,8 +37,17 @@ export function IniciarSesion() {
         //gardar en localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(usuario));
-        notificarCambioUsuario();
-        alert("Bienvenido " + usuario.nombre);
+        notificarCambioUsuario(); 
+        Swal.fire({
+                position: "top-end", 
+                icon: "success",
+                title: "Bienvenido " + usuario.nombre,
+                showConfirmButton: false, 
+                timer: 1500, 
+                toast: true, 
+                background: '#333',
+                color: '#fff' 
+            }); 
         const rolNombre = usuario.rol ? usuario.rol.nombre : "";
 
         if (rolNombre === "ADMIN" || rolNombre === "EMPLEADO") {

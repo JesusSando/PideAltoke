@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import BoletaService from "../service/BoletaService";
+import Swal from 'sweetalert2';
 
  function HistorialHistorias() {  
     const navigate = useNavigate(); 
@@ -35,8 +36,17 @@ import BoletaService from "../service/BoletaService";
         ); 
         try { 
             await BoletaService.actualizarEstado(boletaId, nuevoEstado);
-            
-            alert(`Boleta ${boletaId} actualizada correctamente.`);
+             
+           await Swal.fire({
+                    position: "top-end", 
+                    icon: "success",
+                    title: `Boleta ${boletaId} actualizada correctamente`,
+                    showConfirmButton: false, 
+                    timer: 3000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#fff' 
+                });
             
         } catch (error) {
             console.error("Error al actualizar", error);

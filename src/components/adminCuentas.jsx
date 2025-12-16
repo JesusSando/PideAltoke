@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UsuarioService from "../service/UsuarioService"; 
 import {validarCorreo,validarContraseñaSegura, validarRut } from "../assets/js/validarcorreo";
-
+import Swal from 'sweetalert2';
 function AdminCuenta() {
  
     const [usuarioEditado, setUsuarioEditado] = useState({ 
@@ -121,7 +121,7 @@ function AdminCuenta() {
             return;
         } 
         if (errores.correo) {
-            alert("El correo no es válido o ya existe.");
+            alert("El correo no es válido o ya existe");
             return;
         }
         const rolParaPayload = { id: parseInt(rolIdInput) }; 
@@ -133,11 +133,30 @@ function AdminCuenta() {
         try {
             if (editando) { 
                 await UsuarioService.update(usuarioPayload.id, usuarioPayload);
-                alert(`Usuario ${usuarioPayload.nombre} actualizado correctamente.`);
+               await Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: `Usuario ${usuarioPayload.nombre} actualizado correctamente`,
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#4af380ff' 
+                    }); 
             } else {  
                 const { id, ...nuevoUsuario } = usuarioPayload;
                 await UsuarioService.registrar(usuarioPayload);  
-                alert(`Usuario ${usuarioPayload.nombre} agregado correctamente.`);
+                await Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: `Usuario ${usuarioPayload.nombre} agregado correctamente.`,
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#4af380ff' 
+                    }); 
+                 
             }  
             const resLista = await UsuarioService.getAll();
             setUsuarios(resLista.data); 
@@ -145,20 +164,29 @@ function AdminCuenta() {
 
         } catch (error) {
             console.error("Error al guardar usuario:", error); 
-            alert("Error al guardar usuario revisa la consola");
+            alert("Error al guardar usuario");
         }
     }; 
     
     const handleDelete = async (id, nombre) => {
         if (window.confirm(`¿Estás seguro de eliminar al usuario ${nombre}?`)) {
             try {
-                await UsuarioService.delete(id);
-                alert(`Usuario ${nombre} eliminado.`); 
+                await UsuarioService.delete(id); 
+                await Swal.fire({
+                        position: "top-end", 
+                        icon: "error",
+                        title: `Usuario ${nombre} eliminado`,
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#f34a4aff' 
+                    }); 
                 const resLista = await UsuarioService.getAll();
                 setUsuarios(resLista.data);
             } catch (error) {
                 console.error("Error al eliminar usuario:", error);
-                alert("Error al eliminar usuario.");
+                alert("Error al eliminar usuario");
             }
         }
     }; 
@@ -182,7 +210,7 @@ function AdminCuenta() {
 
     if (loading) return <div className="container py-5 text-center">Cargando usuarios...</div>; 
     return (
-        <div className="container py-4"> 
+        <div className="container py-4" id='formularioEditar'> 
             <div className="form-container mb-5 p-4 border rounded shadow-sm">
                 <h2 className="mb-4">{editando ? `Editar: ${usuarioEditado.nombre}` : 'Agregar Nuevo Usuario'}</h2>
                 <form onSubmit={handleSubmit} className="row g-3">
@@ -264,7 +292,7 @@ function AdminCuenta() {
             </div>
 
             <hr/>
- 
+ 
             <h3 className="mb-3">Lista de Usuarios ({usuarios.length})</h3>
             <div className="list-group">
                 {usuarios.map((usuario) => ( 
@@ -276,7 +304,7 @@ function AdminCuenta() {
                         </div>
                         
                         <div className="product-actions">
-                            <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(usuario)}>Editar</button>
+                           <a href='#formularioEditar' >   <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(usuario)}>Editar</button></a>
                             <button className="btn btn-sm btn-danger" onClick={() => handleDelete(usuario.id, usuario.nombre)}>Eliminar</button>
                         </div>
                     </div>

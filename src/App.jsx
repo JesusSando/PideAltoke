@@ -21,8 +21,7 @@ import Carrito  from './components/carrito';
 import ComidaAdmin from './components/adminComida';
 import Producto    from './components/produto';
 import Blog from './components/blog'; 
-import PaginaBlog  from './components/paginaBlog';
-import AdminOferta from './components/adminOferta';
+import PaginaBlog  from './components/paginaBlog'; 
 import AdminBlog from './components/adminBlog';
 import AdminProducto from './components/adminProductos';
 import {AdminEstadisticas,ResumenDiarioVentas} from './components/AdminEstadisticas';
@@ -74,8 +73,7 @@ function App() {
 
 <Route element={<RutaProtegida />} > 
       <Route path='adminProducto' element={<><AdminProducto/> </>}/>
-      <Route path='adminComida'   element={<><ComidaAdmin/> </>}/>
-      <Route path='adminOferta'   element={<><AdminOferta/> </>}/>
+      <Route path='adminComida'   element={<><ComidaAdmin/> </>}/> 
       <Route path='adminBlog'     element={<><AdminBlog/> </>}/>
       <Route path='adminCuenta'   element={<><AdminCuenta/> </>}/>
       <Route path='adminEstadisticas' element={<><AdminEstadisticas/> </>}/>

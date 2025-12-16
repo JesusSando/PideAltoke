@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { validarTarjeta } from "../assets/js/validarTarjeta";
 import BoletaService from "../service/BoletaService";
-
+import Swal from 'sweetalert2';
 
 const IVA = 0.19;
 
@@ -32,7 +32,7 @@ function Pago() {
     const u = JSON.parse(localStorage.getItem("usuario"));
     
     if (!u) {
-      alert("Debes iniciar sesión para realizar la compra.");
+      Swal.fire({ icon: "warning", title: "ERROR", text: "Debes iniciar sesion" });
       navigate("/iniciarsesion");
     } else {
       setUsuario(u);
@@ -54,9 +54,7 @@ function Pago() {
               Redirigiendo al inicio de sesión...
           </div>
       );
-  }
-
-  
+  } 
   const usuarioId = usuario.id;
 
   
@@ -142,6 +140,16 @@ function Pago() {
       const res = await BoletaService.crearBoleta(data);
 
       const boletaGuardada = res.data;
+      Swal.fire({
+              position: "top-end", 
+              icon: "success",
+              title: "Compra completada :)",
+              showConfirmButton: false, 
+              timer: 3000, 
+              toast: true, 
+              background: '#333',
+              color: '#5ef48eff' 
+          });
 
       navigate("/boleta", {
         state: {

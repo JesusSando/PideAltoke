@@ -172,7 +172,7 @@ function BarraLateral({ open, onClose, product, onConfirm }) {
        }, 0));
 
 
-       console.log("GUARDANDO EN CARRITO - Customización:", seleccionJson);
+      
     const itemPrincipal = {
       ...product,
       id: product.id + Math.random(), 
@@ -337,7 +337,7 @@ function BarraLateral({ open, onClose, product, onConfirm }) {
                 <h3 className="m-0 text-danger">${totales.precio.toLocaleString()}</h3>
                 <div className="d-flex gap-2">
                     {esComplejo && pasoActual > 1 && (
-                        <button className="btn btn-outline-secondary" onClick={() => setPasoActual(pasoActual - 1)}>Atrás</button>
+                        <button className="btn btn-outline-secondary" onClick={() => setPasoActual(pasoActual - 1)}>Atras</button>
                     )}
                     
                     {esComplejo && pasoActual < 3 ? (

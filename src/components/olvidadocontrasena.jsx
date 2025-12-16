@@ -2,7 +2,7 @@ import React, { useState , useEffect} from "react";
 import { validarCorreo } from '../assets/js/validarcorreo';
 import UsuarioService from "../service/UsuarioService";
 import { useNavigate, Link } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 import { validarContraseñaSegura } from "../assets/js/validarcorreo"
 
 export function OlvidadoContrasena() {
@@ -26,8 +26,16 @@ export function OlvidadoContrasena() {
       if (response.data === true) {
         
        localStorage.setItem("correoRecuperacion", correo);
-            
-            alert("Codigo enviado al correo");
+             Swal.fire({
+                    position: "top-end", 
+                    icon: "success",
+                    title: "Codigo enviado al correo",
+                    showConfirmButton: false, 
+                    timer: 2000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#fff' 
+                }); 
             navigate('/olvidoContraseñacodigo');
      } else {
             setMensaje("Este correo no esta registrado."); 
@@ -70,7 +78,18 @@ export function OlvidoContraseñacodigo(){
     useEffect(() => {
         const correoGuardado = localStorage.getItem("correoRecuperacion");
         if (!correoGuardado) {
-            alert("no hay correo para validar.");
+          
+         
+            Swal.fire({
+                    position: "top-end", 
+                    icon: "warning",
+                    title: "no hay correo para validar",
+                    showConfirmButton: false, 
+                    timer: 2000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#fff' 
+                }); 
             navigate('/olvidadoContrasena'); 
         }
     }, [navigate]);
@@ -89,7 +108,7 @@ export function OlvidoContraseñacodigo(){
       <div className="formulario" id="olvidar">
   <h2 className="titulo">Verificacion</h2>
   {mensaje && <p style={{ color: "red" }}>{mensaje}</p>}
-  <p>Introduce el codigo</p>
+  <p className="text-white">Introduce el codigo</p>
   <form onSubmit={handleSubmit}>
     <label  >Codigo</label>
     <input type="text"   value={codigo} onChange={(e) => setCodigo(e.target.value)} placeholder="ABCabc123***" className="form-control" required />
@@ -139,7 +158,17 @@ export function OlvidoContraseñaRestrablecer(){
  
            await UsuarioService.cambiarContrasenaOlvidada(correo, pass1);
            
-           alert("contraseña actualizada "); 
+         
+           Swal.fire({
+                    position: "top-end", 
+                    icon: "success",
+                    title: "contraseña actualizada",
+                    showConfirmButton: false, 
+                    timer: 2000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#fff' 
+                }); 
            localStorage.removeItem("correoRecuperacion");
            
            navigate("/iniciarsesion");

@@ -1,35 +1,59 @@
 import React, { useState } from "react";
 import ContactoService from "../service/ContactoService"; 
+import { validarCorreo } from "../assets/js/validarcorreo";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function Contacto() {
-    const [formData, setFormData] = useState({
-        nombre: "",
-        email: "",
-        mensaje: "",
-    });
+  const navigate = useNavigate();
+    const [formData, setFormData] = useState({  nombre: "", email: "", mensaje: "", });
 
+    const [emailValido, setEmailValido] = useState(null);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        if (name === "email") { 
+            if (value.length === 0) {
+                setEmailValido(null);
+            } else { 
+                setEmailValido(validarCorreo(value));
+            }
+        }
     };
+ 
 
     const handleSubmit = async (e) => {  
         e.preventDefault();
-
+  //Validar campos vacíos
         if (!formData.nombre.trim() || !formData.email.trim() || !formData.mensaje.trim()) {
-            alert("Por favor, completa todos los campos antes de enviar.");
-            return;
+            Swal.fire({
+                icon: "warning",
+                title: "Campos incompletos",
+                text: "Por favor, completa todos los campos antes de enviar"
+            });
+            return;  
         }
 
-        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailValido.test(formData.email)) {
-            alert("Por favor, ingresa un correo electrónico válido.");
+        if (!validarCorreo(formData.email)) {
+             Swal.fire({ icon: "error", title: "Correo inválido",  text: "El formato del correo no es correcto." });
             return;
         }
+    
+        
 
         try { 
-            await ContactoService.add(formData); 
-            alert("Mensaje enviado correctamente. ¡Gracias por contactarnos!");
+            await ContactoService.add(formData);  
+          await  Swal.fire({
+                    position: "top-end", 
+                    icon: "success",
+                    title: "Mensaje enviado correctamente",
+                    showConfirmButton: false, 
+                    timer: 3000, 
+                    toast: true, 
+                    background: '#333',
+                    color: '#fff' 
+                });
 
             setFormData({
                 nombre: "",
@@ -38,11 +62,8 @@ function Contacto() {
             });
         } catch (error) {
             console.error("Error al enviar el mensaje:", error.response || error);
-            alert("Error al enviar el mensaje. Inténtalo de nuevo más tarde.");
-            navigate('/error');
-        }finally{
-          navigate('/error');
-        }
+            alert("Error al enviar el mensaje"); 
+        } 
     };
      
     return (
@@ -58,6 +79,7 @@ function Contacto() {
                   <div className="mb-3">
                     <label className="form-label">Nombre</label>
                     <input
+
                       type="text"
                       name="nombre"
                       className="form-control"
@@ -70,15 +92,9 @@ function Contacto() {
 
                   <div className="mb-3">
                     <label className="form-label">Correo electrónico</label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="form-control"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="ejemplo@correo.com"
-                      required
-                    />
+                    <input  type="email" name="email" className="form-control"
+                      value={formData.email} onChange={handleChange}  placeholder="ejemplo@correo.com"
+                      required />
                   </div>
 
                   <div className="mb-3">

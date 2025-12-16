@@ -2,7 +2,7 @@ import { useParams,Link } from 'react-router-dom';
 import { useEffect, useState } from 'react'; 
 import ComidaService from "../service/ComidaService";
 import {agregarAlCarrito}  from '../assets/js/agregarCarrito';
-import barraLateral from "../components/barraLateral";
+import BarraLateral from "../components/barraLateral";
 
 
 function Producto() {
@@ -58,12 +58,11 @@ useEffect(() => {
   return (
     
     <div className="vistaProducto">
-      <barraLateral
+      <BarraLateral
               open={barraLateralAbierta}
               onClose={() => setbarraLateralAbierta(false)}
               product={productoSeleccionado}
               onConfirm={(detalle) => {
-                alert("producto agregado al carrito")
                 setbarraLateralAbierta(false);
               }}
             />
@@ -90,6 +89,7 @@ useEffect(() => {
         </div>
         
         <div className="botonVista">
+        
          
         <button onClick={() => pedirProducto(producto)} className="btn btn-danger mt-1 me-3 px-5" style={{ fontSize: "20px" }}>
         <strong>PEDIR</strong> </button>

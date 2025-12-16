@@ -3,8 +3,9 @@
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react'; 
 import { Link, Navigate  } from 'react-router-dom';
- 
-import   historial    from '../components/Historial';
+  
+import Swal from 'sweetalert2';
+
 
 function Carrito() {
   const navigate = useNavigate();
@@ -37,12 +38,19 @@ function Carrito() {
   const eliminarProducto = (id) => {
     const nuevoCarrito = productos.filter((p) => p.id !== id);
     setProductos(nuevoCarrito);
-    alert("Producto eliminado");
+     
+    Swal.fire({
+            position: "top-end", 
+            icon: "error",
+            title: "Producto eliminado",
+            showConfirmButton: false, 
+            timer: 1500, 
+            toast: true, 
+            background: '#333',
+            color: '#fff' 
+        });
 
-  };
-
-
-
+  }; 
   const cambiarCantidad = (id, nuevaCantidad) => {
     const n = Math.max(1, Math.min(10, parseInt(nuevaCantidad || "1", 10)));
     const actualizado = productos.map((p) =>
@@ -50,10 +58,7 @@ function Carrito() {
     );
     setProductos(actualizado);
 
-  };
-
-
-
+  }; 
   const totalProductos = productos.reduce((acc, p) => acc + p.cantidad, 0);
   const totalPagar = productos.reduce(
     (acc, p) => acc + p.precio * p.cantidad,
@@ -62,9 +67,19 @@ function Carrito() {
 
   const irAPago = () => {
     if (productos.length === 0) {
-      alert("Tu carrito está vacío.");
+      Swal.fire({
+        position: "top-end", 
+        icon: "warning",
+        title: "Carrito vacio",
+        showConfirmButton: false, 
+        timer: 1500, 
+        toast: true, 
+        background: '#333',
+        color: '#fff' 
+    });
       return;
     }
+      
     navigate("/pago", { state: { items: productos, total: totalPagar } });
   };
 
@@ -77,6 +92,7 @@ function Carrito() {
         {mensaje && (
           <div className="alert alert-warning text-center" role="alert">
             {mensaje}
+            
           </div>
         )}
         <div className="row">

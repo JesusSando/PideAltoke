@@ -1,6 +1,6 @@
 import React, { useEffect ,useState} from 'react';
-import ProductoService from "../service/ProductoService"; 
-import axios from 'axios';
+import ProductoService from "../service/ProductoService";  
+import Swal from 'sweetalert2';
 
 function AdminProducto() {
     const [productoEditado, setProductoEditado] = useState({
@@ -81,17 +81,36 @@ function AdminProducto() {
 
         try {
             if (editando) {  
-                await ProductoService.update(productoEditado.id, formData);
-                alert('Producto actualizado con éxito');
+                await ProductoService.update(productoEditado.id, formData); 
+                Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: 'Producto actualizado con exito',
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#04ff00ff' 
+                    });
             } else { 
-                await ProductoService.registrar(formData);
-                alert('Producto creado con éxito');
+                await ProductoService.registrar(formData); 
+                Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: 'Producto creado con exito',
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#04ff00ff' 
+                    });
+                
             }
             cargarProductos();
             handleCancel();
         } catch (error) {
             console.error("Error al guardar:", error);
-            alert("Error al guardar producto. Revisa la consola.");
+            alert("Error al guardar producto ");
         }
     };
 
@@ -113,12 +132,22 @@ function AdminProducto() {
     const handleDelete = async (id, nombre) => {
         if (window.confirm(`¿Estás seguro de eliminar ${nombre}?`)) {
             try { 
-                await ProductoService.delete(id, rutUsuario); 
-                alert('Producto eliminado.');
+                await ProductoService.delete(id, rutUsuario);  
+
+                Swal.fire({
+                        position: "top-end", 
+                        icon: "error",
+                        title: 'Producto eliminado',
+                        showConfirmButton: false, 
+                        timer: 3000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#ff0000ff' 
+                    });
                 cargarProductos();
             } catch (error) {
                 console.error("Error al eliminar:", error);
-                alert("Error al eliminar.");
+                alert("Error al eliminar");
             }
         }
     };
@@ -129,7 +158,7 @@ function AdminProducto() {
     return (
         <div className="container"> 
             
-            <div className="form-container">
+            <div className="form-container" id='formularioEditar'>
                 <h2>{editando ? 'Editar Producto' : 'Agregar Nuevo Producto'}</h2>
                 <form onSubmit={handleSubmit}>
                     <p>Nombre producto </p>
@@ -166,13 +195,8 @@ function AdminProducto() {
                    
 
                     <label htmlFor="imgFile">Imagen del producto:</label> 
-                    <input
-                        id="imgFile"
-                        name="img" 
-                        type="file"
-                        onChange={handleChange}
-                        accept="image/*"
-                    />
+                    <input id="imgFile" name="img"  type="file" onChange={handleChange}
+                        accept="image/*"  />
 
 
                     {(productoEditado.imgPreview) && (
@@ -198,7 +222,7 @@ function AdminProducto() {
             <hr/> 
             <div className="product-list">
                 <h3>Lista de Productos</h3>
-                {productos.map((producto) => (
+                {productos.filter(producto => producto.activo === true).map((producto) => (
                     <div key={producto.id} className="product-item">
 
                         <div className="product-details">
@@ -208,7 +232,7 @@ function AdminProducto() {
                         {producto.img && <img src={`http://98.95.19.168:8080/uploads/${producto.img}`} alt="prod" style={{ width: '80px' }} />}
                         
                         <div className="product-actions">
-                            <button onClick={() => handleEdit(producto)}>Editar</button>
+                           <a href='#formularioEditar' >  <button onClick={() => handleEdit(producto)}>Editar</button></a>
                             <button onClick={() => handleDelete(producto.id, producto.nombre)}>Eliminar</button>
                         </div>
                     </div>

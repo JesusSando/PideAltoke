@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
- 
+import Swal from 'sweetalert2';
 import { obtenerUsuario } from '../assets/js/cargo';  
 
 import BoletaService from "../service/BoletaService";
@@ -16,7 +16,8 @@ export function Historial() {
     const u = obtenerUsuario(); 
      
     if (!u || !u.id) {  
-      alert("Debes iniciar sesión para ver tu historial.");
+      Swal.fire({  icon: "warning", title: "ERROR",
+                      text: "Debes iniciar sesion" });
       navigate("/iniciarsesion");
       return;
     } 

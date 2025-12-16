@@ -52,7 +52,7 @@ export function Menu() {
         onClose={() => setbarraLateralAbierta(false)}
         product={productoSeleccionado}
         onConfirm={(detalle) => {
-          alert("producto agregado al carrito")
+        
           setbarraLateralAbierta(false);
         }}
       />
@@ -136,8 +136,7 @@ export function PedirMenu() {
       setProductoSeleccionado(producto); 
       setbarraLateralAbierta(true);
     } else {
-      agregarAlCarrito(producto);
-      alert("producto agregado al carrito")
+      agregarAlCarrito(producto); 
     }
   };
 
@@ -157,7 +156,7 @@ export function PedirMenu() {
         onClose={() => setbarraLateralAbierta(false)}
         product={productoSeleccionado}
         onConfirm={(detalle) => {
-          alert("producto agregado al carrito")
+          
           setbarraLateralAbierta(false);
         }}
       />

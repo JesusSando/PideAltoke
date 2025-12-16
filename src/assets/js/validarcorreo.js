@@ -1,6 +1,6 @@
  
 import UsuarioService from "../../service/UsuarioService";
-
+import Swal from 'sweetalert2';
 export function validarCorreo(correo) {
   
  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
@@ -42,6 +42,7 @@ export function validarRut(rut) {
     if (response.data === true) {
       setCorreoValido(false);  
       setMensajeCorreo("El correo ya existe");
+      
     } else {  
       setCorreoValido(true);  
       setMensajeCorreo(""); 

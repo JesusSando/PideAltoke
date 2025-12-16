@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import "../assets/css/iniciarSesion-Registro.css";
 import { validarCorreo ,validarContraseñaSegura,validarRut,verificarCorreoExiste} from "../assets/js/validarcorreo"; 
 import UsuarioService from "../service/UsuarioService";
+import Swal from 'sweetalert2';
+
 
 function Registrarse() {
    const [nombre, setNombre] = useState("");
@@ -57,7 +59,7 @@ function Registrarse() {
     }
 
     if (!validarCorreo(correo)) {
-      setMensaje("Correo inváalido.");
+      setMensaje("Correo invalido.");
       return;
     }
  
@@ -84,8 +86,17 @@ function Registrarse() {
     const data = { nombre, correo, contrasena: contraseña, rut, comuna };
 
     try {
-      await UsuarioService.registrar(data);
-      alert("Registro completado");
+      await UsuarioService.registrar(data); 
+       await Swal.fire({
+              position: "top-end", 
+              icon: "success",
+              title: "Registro completado",
+              showConfirmButton: false, 
+              timer: 2000, 
+              toast: true, 
+              background: '#333',
+              color: '#fff' 
+          }); 
       navigate("/iniciarsesion");
     } catch (err) {
       console.error(err);

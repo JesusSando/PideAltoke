@@ -1,7 +1,7 @@
 import React, { useEffect ,useState} from 'react';
 import BlogService from "../service/BlogService";  
 
- 
+ import Swal from 'sweetalert2';
 
 function AdminBlog() {
     const [blogEditado, setBlogEditado] = useState({
@@ -113,17 +113,37 @@ function AdminBlog() {
         try {
             if (editando) {
                 await BlogService.update(blogEditado.id, formData);
-                alert(`Blog ${blogEditado.titulo} actualizado.`);
+                
+        
+                await Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: `Blog ${blogEditado.titulo} actualizado.`,
+                        showConfirmButton: false, 
+                        timer: 2000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#fff' 
+                    });
             } else {
                 await BlogService.add(formData);
-                alert(`Blog ${blogEditado.titulo} agregado.`);
+                await Swal.fire({
+                        position: "top-end", 
+                        icon: "success",
+                        title: `Blog ${blogEditado.titulo} agregado`,
+                        showConfirmButton: false, 
+                        timer: 2000, 
+                        toast: true, 
+                        background: '#333',
+                        color: '#fff' 
+                    }); 
             } 
             cargarBlogs();
             handleCancel(); 
 
         } catch (error) {
             console.error("Error al guardar blog:", error.response || error);
-            alert("Error al guardar blog. Revisa la consola y el backend.");
+            alert("Error al guardar blog");
         }
     }; 
 
@@ -151,12 +171,20 @@ function AdminBlog() {
     const handleDelete = async (id, titulo) => {
         if (window.confirm(`¿Estás seguro de eliminar el blog ${titulo}?`)) {
             try {
-                await BlogService.delete(id,rutUsuario);
-                alert(`Blog ${titulo} eliminado.`);
+                await BlogService.delete(id,rutUsuario); 
+                await Swal.fire({
+                            position: "top-end", 
+                            icon: "error",
+                            title: `Blog ${titulo} eliminado.`,
+                            showConfirmButton: false, 
+                            timer: 2000, 
+                            toast: true, 
+                            background: '#333',
+                            color: '#fff' }); 
                 cargarBlogs();
             } catch (error) {
                 console.error("Error al eliminar blog:", error);
-                alert("Error al eliminar blog.");
+                alert("Error al eliminar blog");
             }
         }
     };
@@ -167,7 +195,7 @@ function AdminBlog() {
 
         <div className="container"> 
             
-            <div className="form-container">
+            <div className="form-container" id='formularioEditar'>
                 <h2>{editando ? 'Editar Blog' : 'Agregar Nuevo Blog'}</h2>
                 <form onSubmit={handleSubmit}> 
                     <input name="fecha" type="date" value={blogEditado.fecha} onChange={handleChange} placeholder="Fecha (AAAA-MM-DD)" required/>
@@ -231,7 +259,7 @@ function AdminBlog() {
                         {blog.img_autor && <img src={UPLOAD_BASE_URL + blog.img_autor} alt="Autor" style={{width:'50px', height:'50px', borderRadius: '50%', objectFit: 'cover'}}/>}
                         
                         <div className="product-actions">
-                            <button onClick={() => handleEdit(blog)}>Editar</button>
+                             <a href='#formularioEditar' > <button onClick={() => handleEdit(blog)}>Editar</button></a>
                             <button onClick={() => handleDelete(blog.id, blog.titulo)}>Eliminar</button>
                         </div>
                     </div>

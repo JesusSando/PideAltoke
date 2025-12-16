@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+ 
+
 export function agregarAlCarrito(producto) {
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -21,6 +24,15 @@ export function agregarAlCarrito(producto) {
     }
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert(`${producto.nombre} agregado al carrito`);
+    Swal.fire({
+        position: "top-end", 
+        icon: "success",
+        title: "Producto agregado al carrito",
+        showConfirmButton: false, 
+        timer: 1500, 
+        toast: true, 
+        background: '#333',
+        color: '#fff' 
+    });
     window.dispatchEvent(new Event("storage"));
 }

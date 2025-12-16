@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import ComidaService from "../service/ComidaService";
 import { Link } from "react-router-dom";
 import PasarSeccionComida from '../assets/js/pasarSeccionComida';

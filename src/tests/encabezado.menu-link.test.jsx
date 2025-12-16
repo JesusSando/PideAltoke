@@ -12,7 +12,7 @@ vi.mock("../assets/js/cargo", () => ({
 }));
 
 beforeEach(() => {
-  // por si tu componente agrega listeners, dejamos limpio
+  
   vi.restoreAllMocks();
 });
 
